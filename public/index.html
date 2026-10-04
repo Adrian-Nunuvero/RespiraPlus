@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="es" class="light">
+<head>
+  <!-- SEO & Meta Tags Fundamentales -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <title>RespiraPlus MediRehab Pro - Plataforma Médica de Fisioterapia & Rehabilitación</title>
+  <meta name="description" content="Plataforma médica interactiva e interoperable de ejercicios guiados con audio, videos clínicos explicativos, recordatorios, escala EVA de dolor, teleconsulta y soporte 100% offline.">
+  <meta name="keywords" content="fisioterapia, telemedicina, rehabilitacion motora, rehabilitacion pulmonar, escala EVA dolor, manguito rotador, ejercicios guiados, salud digital">
+  <meta name="author" content="RespiraPlus Medical Systems">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="theme-color" content="#0d9488">
+  <link rel="canonical" href="http://localhost:3000/">
+
+  <!-- Open Graph / Redes Sociales -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://localhost:3000/">
+  <meta property="og:title" content="RespiraPlus MediRehab Pro - Plataforma Médica de Fisioterapia">
+  <meta property="og:description" content="Rehabilitación médica guiada paso a paso, supervisión remota y fichas descargables con funcionamiento sin internet.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&auto=format&fit=crop&q=80">
+  <meta property="og:site_name" content="RespiraPlus MediRehab Pro">
+  <meta property="og:locale" content="es_ES">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="RespiraPlus MediRehab Pro - Portal Médico Digital">
+  <meta name="twitter:description" content="Ejercicios guiados, escala EVA, seguimiento analítico de dolor y teleconsulta médica.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&auto=format&fit=crop&q=80">
+
+  <!-- PWA Manifest & App Icons -->
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230d9488'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-size='60' fill='white' font-weight='bold'>+</text></svg>">
+
+  <!-- Datos Estructurados Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalWebPage",
+    "name": "RespiraPlus MediRehab Pro",
+    "description": "Portal médico digital de ejercicios fisioterapéuticos prescritos y supervisión médica remota.",
+    "audience": {
+      "@type": "Patient",
+      "name": "Pacientes en rehabilitación muscular y respiratoria"
+    },
+    "medicalAudience": "Physiotherapists, Pulmonologists, Patients",
+    "mainEntity": {
+      "@type": "MedicalTherapy",
+      "name": "Fisioterapia Motora & Respiratoria",
+      "contraindication": "Dolor agudo superior a 6/10 en escala EVA"
+    }
+  }
+  </script>
+
+  <!-- Tailwind CSS & Custom Styles -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              500: '#14b8a6',
+              600: '#0d9488',
+              700: '#0f766e',
+              800: '#115e59',
+              900: '#134e4a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased font-sans min-h-screen transition-colors duration-200">
+
+  <!-- ============================================================== -->
+  <!-- SCREEN 1: LOGIN & REGISTER (AUTENTICACIÓN Y ROLES) -->
+  <!-- ============================================================== -->
+  <div id="screen-login" class="min-h-screen w-full flex items-center justify-center p-4 bg-gradient-to-br from-teal-500/10 via-slate-50 to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-teal-950/20">
+    <div class="w-full max-w-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
+      <!-- Dark mode switch in login header -->
+      <div class="absolute top-4 right-4 flex items-center gap-2">
+        <button type="button" onclick="toggleDarkMode()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition text-sm" title="Alternar Modo Oscuro">
+          <span class="dark:hidden">🌙</span>
+          <span class="hidden dark:inline">☀️</span>
+        </button>
+      </div>
+
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 rounded-2xl bg-teal-600 text-white flex items-center justify-center font-bold text-2xl shadow-lg shadow-teal-500/30">
+          +
+        </div>
+        <div>
+          <h1 class="text-xl font-black tracking-tight text-slate-900 dark:text-white">RespiraPlus</h1>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Portal Clínico de Fisioterapia & Rehabilitación v2.4</p>
+        </div>
+      </div>
+
+      <!-- Tabs: Iniciar Sesión / Registrarse -->
+      <div class="flex border-b border-slate-200 dark:border-slate-800 mb-6 text-xs font-bold">
+        <button type="button" onclick="setAuthMode('login')" id="auth-tab-login" class="flex-1 py-2.5 border-b-2 border-teal-600 text-teal-600 dark:text-teal-400 transition">
+          Iniciar Sesión
+        </button>
+        <button type="button" onclick="setAuthMode('register')" id="auth-tab-register" class="flex-1 py-2.5 border-b-2 border-transparent text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 transition">
+          Crear Cuenta (Registro)
+        </button>
+      </div>
+
+      <!-- FORM 1: LOGIN -->
+      <form id="form-login" onsubmit="handleLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Correo Electrónico / Identificación</label>
+          <input type="email" id="login-email" value="carlos.vega@hospital.med" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-teal-500 focus:outline-none transition">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Contraseña Clínica</label>
+          <input type="password" id="login-password" value="12345678" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-teal-500 focus:outline-none transition">
+        </div>
+
+        <div class="flex items-center justify-between text-xs">
+          <label class="flex items-center gap-2 cursor-pointer text-slate-600 dark:text-slate-400">
+            <input type="checkbox" checked class="rounded border-slate-300 text-teal-600 focus:ring-teal-500">
+            <span>Recordar este equipo</span>
+          </label>
+          <button type="button" onclick="showToast('Recuperación', 'Se envió un enlace temporal a su correo.', '📧')" class="text-teal-600 dark:text-teal-400 hover:underline font-semibold">¿Olvidaste clave?</button>
+        </div>
+
+        <button type="submit" class="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-bold shadow-lg shadow-teal-600/30 transition cursor-pointer">
+          Ingresar al Portal
+        </button>
+      </form>
+
+      <!-- FORM 2: REGISTER -->
+      <form id="form-register" onsubmit="handleRegister(event)" class="space-y-3.5 hidden">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Nombre Completo</label>
+          <input type="text" id="reg-name" placeholder="Ej: Dr. Fernando Ruiz / Ana Morales" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-teal-500 focus:outline-none">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Correo Electrónico</label>
+            <input type="email" id="reg-email" placeholder="usuario@hospital.med" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-teal-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Tipo de Perfil / Rol</label>
+            <select id="reg-role" onchange="toggleRegisterRoleFields(this.value)" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-teal-500 focus:outline-none">
+              <option value="patient">Paciente en Rehabilitación</option>
+              <option value="doctor">Médico / Especialista Fisiatra</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Contraseña</label>
+          <input type="password" id="reg-password" placeholder="Mínimo 6 caracteres" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-teal-500 focus:outline-none">
+        </div>
+
+        <div id="patient-only-fields" class="space-y-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Diagnóstico Inicial (Opcional)</label>
+            <input type="text" id="reg-diagnosis" placeholder="Ej: Lesión escapular / Disnea post-viral" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Meta de Recuperación</label>
+            <input type="text" id="reg-goal" placeholder="Ej: Recuperar rango de movimiento sin dolor" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs">
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-bold shadow-lg shadow-teal-600/30 transition cursor-pointer mt-2">
+          Crear Cuenta y Conectar a SQLite
+        </button>
+      </form>
+
+      <!-- Quick demo login helpers -->
+      <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 space-y-2 text-[11px]">
+        <p class="text-slate-500 font-semibold">Accesos Rápidos Demo:</p>
+        <div class="grid grid-cols-2 gap-2">
+          <button type="button" onclick="quickFillPatient()" class="p-2 rounded-xl bg-teal-50 dark:bg-teal-950/40 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 font-bold hover:bg-teal-100 transition text-center">
+            👤 Paciente: Carlos Vega
+          </button>
+          <button type="button" onclick="quickFillDoctor()" class="p-2 rounded-xl bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 font-bold hover:bg-purple-100 transition text-center">
+            🩺 Doctor: Dr. Martínez (Admin)
+          </button>
+        </div>
+      </div>
+
+      <!-- Legal footer -->
+      <div class="mt-4 text-center">
+        <button type="button" onclick="openTermsModal()" class="text-[11px] text-slate-500 hover:text-teal-600 dark:hover:text-teal-400 transition underline">
+          Términos de Servicio y Privacidad de Datos Médicos (HIPAA / GDPR)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- SCREEN 2: MAIN APPLICATION SHELL (PATIENT & ADMIN MODES) -->
+  <!-- ============================================================== -->
+  <div id="screen-app" class="hidden min-h-screen w-full flex-col md:flex-row">
+    
+    <!-- Sidebar -->
+    <aside class="w-full md:w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 p-4 flex flex-col justify-between shrink-0 shadow-sm">
+      <div>
+        <!-- Brand & Global controls -->
+        <div class="flex items-center justify-between px-2 py-2 mb-3 border-b border-slate-200 dark:border-slate-800">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-teal-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-teal-600/20">
+              +
+            </div>
+            <div>
+              <h1 class="font-bold text-sm leading-tight text-slate-900 dark:text-white">RespiraPlus</h1>
+              <p class="text-[10px] text-slate-500 dark:text-slate-400">Portal Médico v2.4</p>
+            </div>
+          </div>
+
+          <!-- Night Mode Toggle -->
+          <button onclick="toggleDarkMode()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition text-sm" title="Cambiar Tema Día/Noche">
+            <span class="dark:hidden">🌙</span>
+            <span class="hidden dark:inline">☀️</span>
+          </button>
+        </div>
+
+        <!-- User Profile Card -->
+        <div onclick="switchTab('tab-profile')" class="bg-teal-50 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800/80 rounded-2xl p-3 mb-4 cursor-pointer hover:border-teal-400 transition group">
+          <div class="flex items-center gap-3">
+            <div class="user-avatar-text w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center font-bold text-sm shadow">
+              CV
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <p class="user-name-text font-bold text-xs text-teal-950 dark:text-teal-200 truncate">Carlos Vega</p>
+                <span class="user-phase-badge text-[9px] bg-teal-200 dark:bg-teal-800 text-teal-900 dark:text-teal-100 px-1.5 py-0.5 rounded-full font-bold">Fase 2</span>
+              </div>
+              <p class="user-condition-text text-[11px] text-teal-700 dark:text-teal-400 truncate">Tendinopatía Manguito Rotador</p>
+            </div>
+          </div>
+          <div class="mt-2 pt-2 border-t border-teal-200/60 dark:border-teal-900/60 flex items-center justify-between text-[10px] text-teal-800 dark:text-teal-300 font-semibold">
+            <span>⚙️ Expediente & Ajustes</span>
+            <span class="group-hover:translate-x-0.5 transition">→</span>
+          </div>
+        </div>
+
+        <!-- Doctor / Admin Portal Shortcut Banner (Visible when user is doctor or toggle is pressed) -->
+        <div id="admin-switch-banner" class="mb-3 hidden">
+          <button onclick="switchTab('tab-admin')" id="btn-admin-portal" class="w-full py-2 px-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs flex items-center justify-between shadow-md transition">
+            <span>🛠️ Panel de Control AdminSite</span>
+            <span>→</span>
+          </button>
+        </div>
+
+        <!-- Navigation items -->
+        <nav class="space-y-1 text-xs font-semibold">
+          <button onclick="switchTab('tab-guided')" id="btn-tab-guided" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-teal-600 text-white transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span>1. Ejercicios Guiados</span>
+          </button>
+
+          <button onclick="switchTab('tab-videos')" id="btn-tab-videos" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            <span>2. Videos Explicativos</span>
+          </button>
+
+          <button onclick="switchTab('tab-reminders')" id="btn-tab-reminders" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span>3. Recordatorios</span>
+          </button>
+
+          <button onclick="switchTab('tab-logging')" id="btn-tab-logging" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+            <span>4. Registro de Sesión (EVA)</span>
+          </button>
+
+          <button onclick="switchTab('tab-progress')" id="btn-tab-progress" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+            <span>5. Seguimiento & Progreso</span>
+          </button>
+
+          <button onclick="switchTab('tab-telehealth')" id="btn-tab-telehealth" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
+            <span>6. Teleconsulta & Supervisión</span>
+          </button>
+
+          <button onclick="switchTab('tab-offline')" id="btn-tab-offline" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            <span>7. Modo Offline & Descargas</span>
+          </button>
+
+          <!-- Admin Tab Button (Direct Access) -->
+          <button onclick="switchTab('tab-admin')" id="btn-tab-admin" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-950/40 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            <span>AdminSite & Gestión</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- Bottom controls & Logout -->
+      <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 space-y-3">
+        <!-- Terms Link & Offline Simulator -->
+        <div class="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 px-1">
+          <button onclick="openTermsModal()" class="hover:underline flex items-center gap-1">
+            <span>🛡️ Privacidad & HIPAA</span>
+          </button>
+          <button onclick="toggleOfflineSim()" id="net-sim-btn" class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold border border-slate-300 dark:border-slate-700 text-[10px]">
+            Sin Red
+          </button>
+        </div>
+
+        <!-- Logout Button -->
+        <button onclick="handleLogout()" class="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30 hover:bg-red-100 dark:hover:bg-red-900/40 border border-red-200 dark:border-red-900/60 transition cursor-pointer">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+          <span>Cerrar Sesión</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 p-4 md:p-8 overflow-y-auto max-w-6xl mx-auto w-full">
+
+      <!-- Offline alert bar -->
+      <div id="offline-alert" class="hidden mb-6 bg-amber-50 dark:bg-amber-950/50 border-l-4 border-amber-500 p-4 rounded-r-2xl shadow-sm text-amber-900 dark:text-amber-200 text-xs flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span>⚠️ <strong>Modo Sin Conexión Activado:</strong> Ejecutando desde base local segura. Tus registros (<span id="pending-sync-count" class="font-bold">0</span> pendientes) se sincronizarán al reconectar.</span>
+        </div>
+        <button onclick="triggerManualSync()" class="text-[10px] bg-amber-200 hover:bg-amber-300 dark:bg-amber-800 text-amber-900 dark:text-amber-100 px-2.5 py-1 rounded font-bold transition cursor-pointer">
+          Sincronizar Ahora
+        </button>
+      </div>
+
+      <!-- ============================================================== -->
+      <!-- TAB 1: EJERCICIOS GUIADOS -->
+      <!-- ============================================================== -->
+      <section id="tab-guided" class="tab-content active space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">1. Sesión de Ejercicios Guiados</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Rutina interactiva guiada con audio-cues automáticos, pautas biomecánicas y control de series.</p>
+          </div>
+          <span id="ex-prescription-badge" class="self-start inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300 border border-teal-200 dark:border-teal-800">
+            <span class="w-2 h-2 rounded-full bg-teal-600 animate-pulse"></span>
+            Prescripción: 3 series x 12 reps
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <span id="ex-category" class="text-xs uppercase font-bold text-teal-600 dark:text-teal-400 tracking-wider">Movilidad Escapular</span>
+                <h3 id="ex-title" class="text-xl font-bold text-slate-900 dark:text-white mt-0.5">Rotación Externa con Banda Elástica</h3>
+              </div>
+              <span id="ex-step-badge" class="px-3 py-1 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Ejercicio 1 de 4</span>
+            </div>
+
+            <!-- Avatar / Animation Frame -->
+            <div class="relative bg-slate-950 rounded-2xl h-64 flex flex-col items-center justify-center overflow-hidden border border-slate-800 text-white shadow-inner">
+              <div class="transition-all duration-700 transform flex flex-col items-center">
+                <div class="w-16 h-16 rounded-2xl bg-teal-500/20 border-2 border-teal-400 flex items-center justify-center mb-2">
+                  <span class="text-3xl">🫁</span>
+                </div>
+                <p id="posture-hint" class="text-xs text-slate-300 font-medium px-4 text-center">"Mantén los codos pegados a 90° y realiza una rotación externa controlada."</p>
+              </div>
+
+              <!-- Large Countdown in bottom center -->
+              <div class="absolute bottom-3 right-4 bg-black/40 backdrop-blur px-3 py-1 rounded-xl border border-white/10">
+                <span id="timer-large" class="text-2xl font-mono font-black text-teal-400">00:30</span>
+              </div>
+            </div>
+
+            <!-- Timer controls -->
+            <div class="mt-6 space-y-4">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-slate-700 dark:text-slate-300">Tiempo de ejecución / descanso</span>
+                <span id="timer-display" class="font-mono font-bold text-base text-teal-600 dark:text-teal-400">00:30</span>
+              </div>
+              
+              <div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2.5 overflow-hidden">
+                <div id="timer-bar" class="bg-teal-500 h-full rounded-full transition-all duration-300" style="width: 100%;"></div>
+              </div>
+
+              <div class="flex items-center justify-between pt-2">
+                <button onclick="prevExercise()" class="px-4 py-2 text-xs font-bold rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition cursor-pointer">Anterior</button>
+                <div class="flex items-center gap-2">
+                  <button onclick="toggleTimer()" id="btn-timer-toggle" class="px-6 py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-xl shadow-md transition flex items-center gap-2 cursor-pointer">
+                    <span id="btn-timer-text">Iniciar Guía</span>
+                  </button>
+                  <button onclick="resetTimer()" class="p-2.5 text-slate-500 hover:text-slate-800 dark:hover:text-white border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer" title="Reiniciar">
+                    🔄
+                  </button>
+                </div>
+                <button onclick="nextExercise()" class="px-4 py-2 text-xs font-bold rounded-xl bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 hover:bg-slate-800 transition cursor-pointer">Siguiente</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Routine list -->
+          <div class="space-y-4">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm">
+              <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-2">Pautas de Bioseguridad</h4>
+              <p id="ex-safety-text" class="text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 p-3 rounded-xl border border-amber-200 dark:border-amber-900">
+                Si el dolor supera 3/10 EVA, detén la serie y aplica crioterapia.
+              </p>
+            </div>
+
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm">
+              <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-3">Bloque de Hoy (SQLite)</h4>
+              <div class="space-y-2" id="routine-list">
+                <!-- Dynamically rendered -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 2: VIDEOS EXPLICATIVOS -->
+      <!-- ============================================================== -->
+      <section id="tab-videos" class="tab-content space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">2. Videos Explicativos Médicos</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Demostraciones en alta resolución con marcadores de técnica y streaming.</p>
+          </div>
+          <button onclick="switchTab('tab-admin')" class="px-3.5 py-1.5 rounded-xl bg-purple-100 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 font-bold text-xs border border-purple-300 dark:border-purple-800 hover:bg-purple-200 transition">
+            + Ingresar Nuevos Videos (Admin)
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm">
+            <div class="relative bg-slate-950 aspect-video flex items-center justify-center">
+              <video id="main-video-player" controls class="w-full h-full object-cover hidden"></video>
+              <div id="main-video-placeholder" class="text-center p-6">
+                <div class="w-14 h-14 rounded-2xl bg-teal-500/30 border border-teal-400 flex items-center justify-center mx-auto mb-2 text-teal-300 text-xl font-bold">
+                  ▶
+                </div>
+                <h3 id="vid-player-title" class="text-base font-bold text-white">Técnica: Elevación en Plano Escapular</h3>
+                <p id="vid-player-author" class="text-xs text-slate-400 mt-0.5">Especialista: Dr. Roberto Martínez</p>
+                <button onclick="playCurrentVideo()" class="mt-3 px-4 py-1.5 bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs rounded-xl shadow transition">
+                  Iniciar Reproducción HD
+                </button>
+              </div>
+            </div>
+
+            <div class="p-5 space-y-3">
+              <h4 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Marcadores de Técnica Postural:</h4>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs" id="video-markers-list">
+                <!-- Dynamically rendered -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Video Playlist -->
+          <div class="space-y-3">
+            <h4 class="font-bold text-xs text-slate-900 dark:text-white">Lista de Reproducción Clínica</h4>
+            <div class="space-y-2 text-xs" id="video-playlist">
+              <!-- Dynamically rendered -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 3: RECORDATORIOS -->
+      <!-- ============================================================== -->
+      <section id="tab-reminders" class="tab-content space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">3. Recordatorios Personalizados</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Alarmas programables con sincronización en base de datos y control de adherencia.</p>
+          </div>
+          <button onclick="openAddReminderModal()" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-bold shadow transition self-start cursor-pointer">
+            + Añadir Alarma
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="md:col-span-2 space-y-3" id="reminders-list">
+            <!-- Dynamically rendered -->
+          </div>
+
+          <div class="bg-gradient-to-br from-teal-700 to-teal-950 text-white rounded-3xl p-5 flex flex-col justify-between shadow-lg">
+            <div>
+              <span class="text-xs uppercase tracking-wider text-teal-200 font-bold">Adherencia Semanal</span>
+              <h3 class="text-4xl font-black mt-2">92%</h3>
+              <p class="text-xs text-teal-100 mt-2">Cumplimiento excelente. Has completado tus recordatorios prescritos.</p>
+            </div>
+            <button onclick="testPushNotification()" class="mt-4 w-full py-2 bg-white/20 hover:bg-white/30 text-white rounded-xl text-xs font-bold transition cursor-pointer">
+              🔔 Probar Notificación Push
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 4: REGISTRO DE EJERCICIOS -->
+      <!-- ============================================================== -->
+      <section id="tab-logging" class="tab-content space-y-6">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white">4. Registro Diario de Ejercicios</h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Anota tus repeticiones y evalúa el dolor en la escala médica EVA (0 a 10).</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
+            <form id="log-form" onsubmit="handleLogSubmit(event)" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Ejercicio Prescrito</label>
+                  <select id="log-exercise" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+                    <!-- Populated dynamically -->
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Series x Reps</label>
+                  <div class="grid grid-cols-2 gap-2">
+                    <input type="number" id="log-sets" value="3" min="1" max="10" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-center font-bold">
+                    <input type="number" id="log-reps" value="12" min="1" max="50" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-center font-bold">
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200 dark:border-slate-700">
+                <div class="flex items-center justify-between mb-2">
+                  <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Nivel de Dolor (Escala EVA 0-10)</label>
+                  <span id="pain-val-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">2 / 10 - Dolor Mínimo</span>
+                </div>
+                <input type="range" id="log-pain" min="0" max="10" value="2" oninput="updatePainLabel(this.value)" class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer">
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Observación Clínica / Sensaciones</label>
+                <textarea id="log-notes" rows="2" placeholder="Sensaciones musculares, respiratorias o molestias sentidas..." class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"></textarea>
+              </div>
+
+              <button type="submit" class="w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-xl shadow transition cursor-pointer">
+                Guardar en Expediente SQLite
+              </button>
+            </form>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm">
+            <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-3">Historial Clínico Reciente</h4>
+            <div class="space-y-2 overflow-y-auto max-h-72" id="log-history-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 5: SEGUIMIENTO DEL PROGRESO -->
+      <!-- ============================================================== -->
+      <section id="tab-progress" class="tab-content space-y-6">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white">5. Seguimiento Clínico & Progreso</h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Métricas analíticas calculadas en tiempo real para evaluar la evolución del tratamiento.</p>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
+            <p class="text-[11px] text-slate-500 font-semibold">Reducción del Dolor</p>
+            <p id="stat-pain-reduction" class="text-2xl font-black text-emerald-600 mt-1">-60%</p>
+          </div>
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
+            <p class="text-[11px] text-slate-500 font-semibold">Movilidad (ROM)</p>
+            <p id="stat-rom" class="text-2xl font-black text-teal-600 mt-1">145° <span class="text-[10px] text-emerald-600 font-bold">+25°</span></p>
+          </div>
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
+            <p class="text-[11px] text-slate-500 font-semibold">Sesiones Cumplidas</p>
+            <p id="stat-sessions" class="text-2xl font-black text-blue-600 mt-1">18 / 20</p>
+          </div>
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
+            <p class="text-[11px] text-slate-500 font-semibold">Tiempo Estimado Alta</p>
+            <p id="stat-discharge" class="text-2xl font-black text-purple-600 mt-1">14 días</p>
+          </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm">
+            <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-4">Curva de Dolor EVA (Evolución Semanal)</h4>
+            <div id="eva-bars-container" class="h-44 flex items-end justify-between gap-2 pt-6 px-2 border-b border-l border-slate-200 dark:border-slate-700">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm">
+            <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-4">Cumplimiento Semanal del Protocolo</h4>
+            <div class="grid grid-cols-7 gap-1.5 text-center" id="compliance-grid">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 6: VIDEOLLAMADA Y SUPERVISIÓN -->
+      <!-- ============================================================== -->
+      <section id="tab-telehealth" class="tab-content space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">6. Teleconsulta & Supervisión en Vivo</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Conexión con tu especialista médico para evaluación biomecánica y corrección de postura.</p>
+          </div>
+          <button onclick="startTelehealthCall()" id="call-start-btn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow transition flex items-center gap-2 self-start cursor-pointer">
+            <span>Conectar con Dr. Martínez</span>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 bg-slate-900 rounded-3xl overflow-hidden shadow-xl border border-slate-800 flex flex-col justify-between min-h-[360px] relative text-white">
+            <div class="p-6 flex flex-col items-center justify-center flex-1 text-center">
+              <div id="doctor-status-avatar" class="w-20 h-20 rounded-full bg-teal-900 border-4 border-teal-500/40 flex items-center justify-center mb-3 text-3xl">
+                👨‍⚕️
+              </div>
+              <h3 class="font-bold text-base">Dr. Roberto Martínez</h3>
+              <p id="call-status-badge" class="text-xs text-slate-400 mt-0.5">En espera de conexión segura E2E</p>
+            </div>
+
+            <!-- Self Camera PIP Frame -->
+            <div class="absolute top-4 right-4 w-28 h-20 bg-slate-800 border border-slate-700 rounded-xl overflow-hidden flex items-center justify-center text-[10px] text-slate-400 shadow-md">
+              <video id="camera-video" autoplay playsinline muted class="w-full h-full object-cover hidden"></video>
+              <span id="camera-placeholder">Tú (Cámara)</span>
+            </div>
+
+            <div class="p-4 bg-slate-950/80 backdrop-blur border-t border-slate-800 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <button onclick="showToast('Micrófono', 'Micrófono activo.', '🎤')" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs">🎤 Mic</button>
+                <button onclick="showToast('Cámara', 'Cámara activa.', '📷')" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs">📷 Cam</button>
+              </div>
+              <button onclick="endTelehealthCall()" id="end-call-btn" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold hidden cursor-pointer">
+                Finalizar Consulta
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm flex flex-col justify-between h-[380px]">
+            <div>
+              <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-3">Notas & Chat Médico</h4>
+              <div class="space-y-2 text-xs overflow-y-auto max-h-56 pr-1" id="chat-messages">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800 flex gap-2">
+              <input type="text" id="chat-input" onkeydown="if(event.key==='Enter') sendChatMessage()" placeholder="Mensaje al médico..." class="flex-1 text-xs p-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+              <button onclick="sendChatMessage()" class="px-3 py-2 bg-teal-600 text-white rounded-xl text-xs font-bold cursor-pointer">Enviar</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 7: EJERCICIOS DESCARGABLES & OFFLINE -->
+      <!-- ============================================================== -->
+      <section id="tab-offline" class="tab-content space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">7. Ejercicios Descargables (Modo Offline)</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Descarga tu ficha médica en PDF con PDFKit o guarda el paquete en la caché local PWA.</p>
+          </div>
+          <button onclick="downloadAllOfflinePack()" class="px-4 py-2 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 rounded-xl text-xs font-bold shadow transition self-start cursor-pointer">
+            Descargar Paquete Offline Completo (32 MB)
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm space-y-3">
+            <h4 class="font-bold text-xs text-slate-900 dark:text-white">Memoria Local Cacheada</h4>
+            <div class="text-xs space-y-1.5 text-slate-600 dark:text-slate-400">
+              <p>• Rutina Fase 2: <strong>4.2 MB (Listo)</strong></p>
+              <p>• Videos HD: <strong>28.5 MB (Listo)</strong></p>
+              <p>• Registros pendientes sync: <strong id="pending-sync-count-box">0</strong></p>
+            </div>
+            <button onclick="triggerManualSync()" class="w-full py-2 bg-teal-50 dark:bg-teal-950 text-teal-800 dark:text-teal-200 text-xs font-bold rounded-xl border border-teal-200 dark:border-teal-800 cursor-pointer">
+              Sincronizar Datos con Servidor
+            </button>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-300 flex items-center justify-center font-bold text-lg mb-2">📄</div>
+              <h4 class="font-bold text-xs text-slate-900 dark:text-white">Ficha Imprimible PDF</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Generación dinámica en servidor Express con PDFKit, rutinas y bioseguridad.</p>
+            </div>
+            <button onclick="downloadPDFExerciseSheet()" class="mt-4 w-full py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold transition cursor-pointer">
+              Descargar Ficha PDF Oficial
+            </button>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-bold text-lg mb-2">🛡️</div>
+              <h4 class="font-bold text-xs text-slate-900 dark:text-white">Seguridad & HIPAA</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Cifrado de datos de salud en reposo y en tránsito según estándares médicos internacionales.</p>
+            </div>
+            <span class="mt-4 text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">● Cifrado Local Activo</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 8: PERSONALIZACIÓN DE USUARIO & PERFIL -->
+      <!-- ============================================================== -->
+      <section id="tab-profile" class="tab-content space-y-6">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Personalización del Paciente & Expediente</h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Modifica tus datos clínicos, diagnóstico y objetivos con guardado permanente en SQLite.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Profile Card -->
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm flex flex-col items-center text-center">
+            <div class="user-avatar-text w-24 h-24 rounded-3xl bg-teal-600 text-white flex items-center justify-center text-3xl font-black shadow-lg shadow-teal-600/30 mb-4">
+              CV
+            </div>
+            <h3 class="user-name-text font-bold text-base text-slate-900 dark:text-white">Carlos Vega</h3>
+            <p class="user-condition-text text-xs text-teal-600 dark:text-teal-400 font-semibold mt-0.5">Tendinopatía Manguito Rotador</p>
+            <p class="text-[11px] text-slate-500 mt-1">ID Clínico: #MED-88421 • Paciente Activo</p>
+
+            <div class="w-full mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 flex justify-between text-xs text-slate-600 dark:text-slate-400">
+              <span>Tema Visual:</span>
+              <button onclick="toggleDarkMode()" class="font-bold text-teal-600 dark:text-teal-400 hover:underline">
+                Alternar Día / Noche
+              </button>
+            </div>
+          </div>
+
+          <!-- Edit Profile Form -->
+          <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
+            <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-4">Editar Información Personal & Clínica</h3>
+            <form onsubmit="handleProfileUpdate(event)" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Nombre Completo</label>
+                  <input type="text" id="input-prof-name" value="Carlos Vega" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Diagnóstico Médico</label>
+                  <input type="text" id="input-prof-condition" value="Tendinopatía Manguito Rotador" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Médico Fisioterapeuta Asignado</label>
+                  <input type="text" value="Dr. Roberto Martínez (Especialista en Rehabilitación)" readonly class="w-full text-xs p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/50 text-slate-500">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Objetivo de Rehabilitación</label>
+                  <input type="text" id="input-prof-goal" value="Recuperar abducción a 180° y capacidad ventilatoria" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+                </div>
+              </div>
+
+              <div class="pt-2 flex justify-end gap-3">
+                <button type="submit" class="px-5 py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-xl shadow transition cursor-pointer">
+                  Guardar Cambios en SQLite
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 9: ADMINSITE / PANEL MÉDICO & GESTIÓN DE CONTENIDOS -->
+      <!-- ============================================================== -->
+      <section id="tab-admin" class="tab-content space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-full bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 font-bold text-xs uppercase">AdminSite</span>
+              <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Panel de Control & Gestión Médica</h2>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Crea ejercicios, sube videos clínicos, supervisa expedientes y ajusta fases terapéuticas.</p>
+          </div>
+          <div class="flex items-center gap-2 self-start">
+            <button onclick="loadAdminData()" class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold hover:bg-slate-200 transition">
+              🔄 Actualizar Datos
+            </button>
+          </div>
+        </div>
+
+        <!-- Admin KPI Metric Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
+            <p class="text-[11px] text-slate-500 font-semibold">Pacientes Registrados</p>
+            <p id="adm-stat-patients" class="text-2xl font-black text-purple-600 mt-1">0</p>
+          </div>
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
+            <p class="text-[11px] text-slate-500 font-semibold">Ejercicios en Catálogo</p>
+            <p id="adm-stat-exercises" class="text-2xl font-black text-teal-600 mt-1">0</p>
+          </div>
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
+            <p class="text-[11px] text-slate-500 font-semibold">Videos Demostrativos</p>
+            <p id="adm-stat-videos" class="text-2xl font-black text-blue-600 mt-1">0</p>
+          </div>
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
+            <p class="text-[11px] text-slate-500 font-semibold">Registros Clínicos EVA</p>
+            <p id="adm-stat-logs" class="text-2xl font-black text-emerald-600 mt-1">0</p>
+          </div>
+        </div>
+
+        <!-- Admin Sub-modules Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+          <!-- 1. GESTOR DE VIDEOS CLÍNICOS -->
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+                <span>🎬</span> Ingresar Nuevo Video Clínico
+              </h3>
+              <span class="text-[10px] text-purple-600 dark:text-purple-400 font-bold bg-purple-50 dark:bg-purple-950 px-2 py-0.5 rounded">Catálogo</span>
+            </div>
+
+            <form onsubmit="handleAdminCreateVideo(event)" class="space-y-3">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Título del Video</label>
+                <input type="text" id="adm-vid-title" placeholder="Ej: Técnica de Abducción con Mancuerna Ligera" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Categoría Médica</label>
+                  <input type="text" id="adm-vid-cat" placeholder="Ej: Fuerza Escapular / Neumología" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Especialista</label>
+                  <input type="text" id="adm-vid-doc" value="Dr. Roberto Martínez" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Duración (mm:ss)</label>
+                  <input type="text" id="adm-vid-dur" value="03:45" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">URL Video (MP4 / Web)</label>
+                  <input type="url" id="adm-vid-url" value="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Marcador Inicial de Técnica</label>
+                <input type="text" id="adm-vid-marker" placeholder="Ej: 00:30 - Control de respiración" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
+              </div>
+
+              <button type="submit" class="w-full py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-bold shadow transition cursor-pointer">
+                + Guardar Video en SQLite
+              </button>
+            </form>
+
+            <div class="pt-3 border-t border-slate-200 dark:border-slate-800">
+              <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-2">Videos Actualmente Registrados</h4>
+              <div class="space-y-2 max-h-44 overflow-y-auto" id="adm-videos-list">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. GESTOR DE EJERCICIOS Y PROTOCOLOS -->
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+                <span>💪</span> Añadir Ejercicio a la Rutina
+              </h3>
+              <span class="text-[10px] text-teal-600 dark:text-teal-400 font-bold bg-teal-50 dark:bg-teal-950 px-2 py-0.5 rounded">Protocolo</span>
+            </div>
+
+            <form onsubmit="handleAdminCreateExercise(event)" class="space-y-3">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Nombre del Ejercicio</label>
+                <input type="text" id="adm-ex-title" placeholder="Ej: Tracción con Polea para Serrato" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Categoría</label>
+                  <input type="text" id="adm-ex-cat" placeholder="Ej: Fortalecimiento Escapular" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Prescripción</label>
+                  <input type="text" id="adm-ex-pres" value="3 series x 10 reps" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Duración (segundos)</label>
+                  <input type="number" id="adm-ex-dur" value="45" min="10" max="300" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Bioseguridad</label>
+                  <input type="text" id="adm-ex-safe" value="Detener si dolor EVA > 3/10" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Consejo Postural & Biomecánica</label>
+                <textarea id="adm-ex-hint" rows="2" placeholder="Indicaciones para el paciente durante la ejecución..." required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white"></textarea>
+              </div>
+
+              <button type="submit" class="w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-bold shadow transition cursor-pointer">
+                + Guardar Ejercicio en SQLite
+              </button>
+            </form>
+
+            <div class="pt-3 border-t border-slate-200 dark:border-slate-800">
+              <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-2">Ejercicios Activos en el Sistema</h4>
+              <div class="space-y-2 max-h-44 overflow-y-auto" id="adm-exercises-list">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 3. EXPEDIENTES DE PACIENTES REGISTRADOS -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+              <span>👥</span> Directorio de Pacientes & Historial Clínico
+            </h3>
+            <span class="text-xs text-slate-500">Expedientes sincronizados en tiempo real</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 font-bold border-b border-slate-200 dark:border-slate-800">
+                <tr>
+                  <th class="p-3">Paciente</th>
+                  <th class="p-3">Diagnóstico</th>
+                  <th class="p-3">Fase</th>
+                  <th class="p-3">Sesiones</th>
+                  <th class="p-3">Último Dolor EVA</th>
+                  <th class="p-3 text-right">Acción Médica</th>
+                </tr>
+              </thead>
+              <tbody id="adm-patients-table-body" class="divide-y divide-slate-100 dark:divide-slate-800">
+                <!-- Dynamically rendered -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL: AGREGAR RECORDATORIO -->
+  <!-- ============================================================== -->
+  <div id="modal-add-reminder" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+        <h3 class="font-bold text-sm text-slate-900 dark:text-white">⏰ Crear Nuevo Recordatorio</h3>
+        <button onclick="closeAddReminderModal()" class="text-slate-500 hover:text-slate-800 text-lg font-bold">✕</button>
+      </div>
+      <form onsubmit="handleAddReminderSubmit(event)" class="space-y-3 mt-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Título del Recordatorio</label>
+          <input type="text" id="new-rem-title" placeholder="Ej: Ejercicio de Flexibilidad Tarde" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Hora</label>
+            <input type="time" id="new-rem-time" value="16:00" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Icono</label>
+            <select id="new-rem-icon" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+              <option value="⏰">⏰ Alarma Reloj</option>
+              <option value="🧊">🧊 Crioterapia / Hielo</option>
+              <option value="🫁">🫁 Respiración Diafragmática</option>
+              <option value="💊">💊 Medicamento</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Detalle / Duración</label>
+          <input type="text" id="new-rem-detail" placeholder="Ej: 15 minutos • 3 series" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+        </div>
+        <div class="pt-2 flex justify-end gap-2">
+          <button type="button" onclick="closeAddReminderModal()" class="px-4 py-2 text-xs rounded-xl border border-slate-300 text-slate-600">Cancelar</button>
+          <button type="submit" class="px-4 py-2 bg-teal-600 text-white rounded-xl text-xs font-bold">Crear Alarma</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL: CAMBIAR FASE DE PACIENTE (ADMIN) -->
+  <!-- ============================================================== -->
+  <div id="modal-patient-phase" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="w-full max-w-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+        <h3 class="font-bold text-sm text-slate-900 dark:text-white">🩺 Actualizar Fase Terapéutica</h3>
+        <button onclick="closePatientPhaseModal()" class="text-slate-500 hover:text-slate-800 text-lg font-bold">✕</button>
+      </div>
+      <form onsubmit="handleSavePatientPhase(event)" class="space-y-3 mt-4">
+        <input type="hidden" id="edit-patient-id">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Paciente</label>
+          <p id="edit-patient-name" class="font-bold text-xs text-teal-600 dark:text-teal-400"></p>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Nueva Fase Terapéutica</label>
+          <select id="edit-patient-phase-select" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+            <option value="Fase 1">Fase 1 (Control de Inflamación y Dolor)</option>
+            <option value="Fase 2">Fase 2 (Movilidad y Fortalecimiento Activo)</option>
+            <option value="Fase 3">Fase 3 (Readaptación Funcional)</option>
+            <option value="Alta Médica">Alta Médica (Mantenimiento)</option>
+          </select>
+        </div>
+        <div class="pt-2 flex justify-end gap-2">
+          <button type="button" onclick="closePatientPhaseModal()" class="px-4 py-2 text-xs rounded-xl border border-slate-300 text-slate-600">Cancelar</button>
+          <button type="submit" class="px-4 py-2 bg-purple-600 text-white rounded-xl text-xs font-bold">Guardar Cambios</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL: TÉRMINOS Y PRIVACIDAD -->
+  <!-- ============================================================== -->
+  <div id="modal-terms" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="w-full max-w-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-2xl max-h-[85vh] flex flex-col justify-between">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">📜</span>
+          <h3 class="font-bold text-base text-slate-900 dark:text-white">Términos de Servicio & Privacidad de Datos de Salud</h3>
+        </div>
+        <button onclick="closeTermsModal()" class="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 text-lg font-bold">✕</button>
+      </div>
+
+      <div class="overflow-y-auto py-4 space-y-4 text-xs text-slate-600 dark:text-slate-300 leading-relaxed pr-2">
+        <div class="p-3 bg-teal-50 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800 rounded-2xl">
+          <p class="font-bold text-teal-950 dark:text-teal-200">Consentimiento Informado para Tele-Rehabilitación y Almacenamiento Clínico</p>
+          <p class="text-[11px] text-teal-800 dark:text-teal-300 mt-1">Versión vigente: 2026.1 • Certificación internacional de interoperabilidad en salud.</p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-slate-900 dark:text-white uppercase text-[11px]">1. Tratamiento de Datos Médicos (HIPAA / GDPR / Ley de Datos)</h4>
+          <p class="mt-1">Toda la información capturada en los registros diarios (escala EVA de dolor, repeticiones, grabaciones y transcripciones de teleconsulta) es cifrada en tránsito (TLS 1.3) y en reposo mediante cifrado AES-256 en la base de datos persistente SQLite.</p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-slate-900 dark:text-white uppercase text-[11px]">2. Responsabilidad y Supervisión Fisioterapéutica</h4>
+          <p class="mt-1">Los ejercicios guiados y videos explicativos constituyen una herramienta de apoyo a la prescripción médica. En caso de dolor agudo insoportable (> 6/10 EVA) o dificultad respiratoria, detén de inmediato la actividad y comunícate con tu especialista.</p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-slate-900 dark:text-white uppercase text-[11px]">3. Funcionamiento Fuera de Línea (Offline)</h4>
+          <p class="mt-1">La aplicación utiliza Service Workers para almacenar la rutina médica en caché local. Al recuperar conexión, los registros se transmiten de forma segura a la base de datos central.</p>
+        </div>
+      </div>
+
+      <div class="border-t border-slate-200 dark:border-slate-800 pt-3 flex justify-end gap-2">
+        <button onclick="closeTermsModal()" class="px-5 py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-bold transition cursor-pointer">
+          Entendido y Acepto las Condiciones
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Toast Notification -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-slate-700 dark:border-slate-300">
+      <span id="toast-icon" class="text-lg">✅</span>
+      <div>
+        <p id="toast-title" class="font-bold text-xs">Acción</p>
+        <p id="toast-msg" class="text-[11px] text-slate-300 dark:text-slate-700">Mensaje</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Scripts -->
+  <script src="/js/api.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/sw-register.js"></script>
+</body>
+</html>

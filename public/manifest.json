@@ -1,0 +1,18 @@
+{
+  "name": "RespiraPlus - Portal Clínico de Fisioterapia & Rehabilitación",
+  "short_name": "RespiraPlus",
+  "description": "Plataforma médica de ejercicios guiados, videos explicativos, teleconsulta y rehabilitación respiratoria y motora con soporte offline.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0d9488",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230d9488'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-size='60' fill='white' font-weight='bold'>+</text></svg>",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["medical", "health", "fitness", "productivity"]
+}

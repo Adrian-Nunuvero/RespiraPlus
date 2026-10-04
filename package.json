@@ -1,0 +1,30 @@
+{
+  "name": "respiraplus",
+  "version": "1.0.0",
+  "description": "Plataforma Médica Integral de Fisioterapia y Rehabilitación Pulmonar/Motora - RespiraPlus MediRehab Pro",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node -e \"console.log('Test OK')\""
+  },
+  "keywords": [
+    "fisioterapia",
+    "rehabilitacion",
+    "salud-digital",
+    "telemedicina",
+    "ejercicios-guiados",
+    "eva-dolor",
+    "pwa",
+    "express",
+    "sqlite"
+  ],
+  "author": "RespiraPlus Medical Team",
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^11.8.1",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "pdfkit": "^0.16.0"
+  }
+}

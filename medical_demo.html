@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="es" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediRehab Pro - Plataforma Médica Integral</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              500: '#14b8a6',
+              600: '#0d9488',
+              700: '#0f766e',
+              800: '#115e59',
+              900: '#134e4a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(100,116,139,0.3); border-radius: 9999px; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .view-screen { display: none; }
+    .view-screen.active { display: flex; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased font-sans min-h-screen transition-colors duration-200">
+
+  <!-- ============================================================== -->
+  <!-- SCREEN 1: LOGIN / AUTENTICACIÓN -->
+  <!-- ============================================================== -->
+  <div id="screen-login" class="min-h-screen w-full flex items-center justify-center p-4 bg-gradient-to-br from-teal-500/10 via-slate-50 to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-teal-950/20">
+    <div class="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
+      <!-- Dark mode switch in login header -->
+      <div class="absolute top-4 right-4 flex items-center gap-2">
+        <button type="button" onclick="toggleDarkMode()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition text-sm" title="Alternar Modo Oscuro">
+          <span class="dark:hidden">🌙</span>
+          <span class="hidden dark:inline">☀️</span>
+        </button>
+      </div>
+
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 rounded-2xl bg-teal-600 text-white flex items-center justify-center font-bold text-2xl shadow-lg shadow-teal-500/30">
+          +
+        </div>
+        <div>
+          <h1 class="text-xl font-black tracking-tight text-slate-900 dark:text-white">MediRehab Pro</h1>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Portal Clínico de Fisioterapia & Rehabilitación</p>
+        </div>
+      </div>
+
+      <div class="mb-6">
+        <h2 class="text-lg font-bold text-slate-800 dark:text-slate-100">Iniciar Sesión</h2>
+        <p class="text-xs text-slate-500 dark:text-slate-400">Ingresa tus credenciales médicas o accede como paciente demo.</p>
+      </div>
+
+      <form id="form-login" onsubmit="handleLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Correo Electrónico / Identificación</label>
+          <input type="email" id="login-email" value="carlos.vega@hospital.med" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-teal-500 focus:outline-none transition">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Contraseña Clínica</label>
+          <input type="password" id="login-password" value="12345678" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-teal-500 focus:outline-none transition">
+        </div>
+
+        <div class="flex items-center justify-between text-xs">
+          <label class="flex items-center gap-2 cursor-pointer text-slate-600 dark:text-slate-400">
+            <input type="checkbox" checked class="rounded border-slate-300 text-teal-600 focus:ring-teal-500">
+            <span>Recordar este equipo</span>
+          </label>
+          <button type="button" onclick="showToast('Recuperación', 'Se envió un enlace temporal a su correo.', '📧')" class="text-teal-600 dark:text-teal-400 hover:underline font-semibold">¿Olvidaste clave?</button>
+        </div>
+
+        <button type="button" onclick="handleLogin(event)" class="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-bold shadow-lg shadow-teal-600/30 transition cursor-pointer">
+          Ingresar al Portal del Paciente
+        </button>
+      </form>
+
+      <!-- Demo quick login helpers -->
+      <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-[11px]">
+        <span class="text-slate-500">Acceso Rápido Demo:</span>
+        <button type="button" onclick="quickFillPatient()" class="px-2.5 py-1 rounded-lg bg-teal-50 dark:bg-teal-950/40 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 font-bold hover:bg-teal-100 transition">
+          Cargar Paciente de Prueba
+        </button>
+      </div>
+
+      <!-- Legal footer -->
+      <div class="mt-6 text-center">
+        <button type="button" onclick="openTermsModal()" class="text-[11px] text-slate-500 hover:text-teal-600 dark:hover:text-teal-400 transition underline">
+          Términos de Servicio y Política de Privacidad de Datos de Salud (HIPAA / GDPR)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- SCREEN 2: MAIN DASHBOARD & APP SHELL -->
+  <!-- ============================================================== -->
+  <div id="screen-app" class="hidden min-h-screen w-full flex-col md:flex-row">
+    
+    <!-- Sidebar -->
+    <aside class="w-full md:w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 p-4 flex flex-col justify-between shrink-0 shadow-sm">
+      <div>
+        <!-- Brand & Global controls -->
+        <div class="flex items-center justify-between px-2 py-2 mb-3 border-b border-slate-200 dark:border-slate-800">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-teal-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-teal-600/20">
+              +
+            </div>
+            <div>
+              <h1 class="font-bold text-sm leading-tight text-slate-900 dark:text-white">MediRehab Pro</h1>
+              <p class="text-[10px] text-slate-500 dark:text-slate-400">Portal Médico v2.4</p>
+            </div>
+          </div>
+
+          <!-- Night Mode Toggle -->
+          <button onclick="toggleDarkMode()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition text-sm" title="Cambiar Tema Día/Noche">
+            <span class="dark:hidden">🌙</span>
+            <span class="hidden dark:inline">☀️</span>
+          </button>
+        </div>
+
+        <!-- Custom User Profile Card (Clickable to Edit Profile) -->
+        <div onclick="switchTab('tab-profile')" class="bg-teal-50 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800/80 rounded-2xl p-3 mb-4 cursor-pointer hover:border-teal-400 transition group">
+          <div class="flex items-center gap-3">
+            <div id="user-avatar-badge" class="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center font-bold text-sm shadow">
+              CV
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <p id="user-display-name" class="font-bold text-xs text-teal-950 dark:text-teal-200 truncate">Carlos Vega</p>
+                <span class="text-[9px] bg-teal-200 dark:bg-teal-800 text-teal-900 dark:text-teal-100 px-1.5 py-0.5 rounded-full font-bold">Fase 2</span>
+              </div>
+              <p id="user-display-condition" class="text-[11px] text-teal-700 dark:text-teal-400 truncate">Tendinopatía Manguito Rotador</p>
+            </div>
+          </div>
+          <div class="mt-2 pt-2 border-t border-teal-200/60 dark:border-teal-900/60 flex items-center justify-between text-[10px] text-teal-800 dark:text-teal-300 font-semibold">
+            <span>⚙️ Personalizar Perfil</span>
+            <span class="group-hover:translate-x-0.5 transition">→</span>
+          </div>
+        </div>
+
+        <!-- Navigation items -->
+        <nav class="space-y-1 text-xs font-semibold">
+          <button onclick="switchTab('tab-guided')" id="btn-tab-guided" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-teal-600 text-white transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span>1. Ejercicios Guiados</span>
+          </button>
+
+          <button onclick="switchTab('tab-videos')" id="btn-tab-videos" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            <span>2. Videos Explicativos</span>
+          </button>
+
+          <button onclick="switchTab('tab-reminders')" id="btn-tab-reminders" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span>3. Recordatorios</span>
+          </button>
+
+          <button onclick="switchTab('tab-logging')" id="btn-tab-logging" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+            <span>4. Registro de Sesión</span>
+          </button>
+
+          <button onclick="switchTab('tab-progress')" id="btn-tab-progress" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+            <span>5. Seguimiento & Progreso</span>
+          </button>
+
+          <button onclick="switchTab('tab-telehealth')" id="btn-tab-telehealth" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
+            <span>6. Teleconsulta & Supervisión</span>
+          </button>
+
+          <button onclick="switchTab('tab-offline')" id="btn-tab-offline" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            <span>7. Modo Offline & Descargas</span>
+          </button>
+
+          <button onclick="switchTab('tab-profile')" id="btn-tab-profile" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            <span>Personalización y Perfil</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- Bottom controls & Logout -->
+      <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 space-y-3">
+        <!-- Terms Link -->
+        <div class="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 px-1">
+          <button onclick="openTermsModal()" class="hover:underline flex items-center gap-1">
+            <span>🛡️ Términos & Privacidad</span>
+          </button>
+          <button onclick="toggleOfflineSim()" id="net-sim-btn" class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold border border-slate-300 dark:border-slate-700 text-[10px]">
+            Sin Red
+          </button>
+        </div>
+
+        <!-- Logout Button -->
+        <button onclick="handleLogout()" class="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30 hover:bg-red-100 dark:hover:bg-red-900/40 border border-red-200 dark:border-red-900/60 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+          <span>Cerrar Sesión (Logout)</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 p-4 md:p-8 overflow-y-auto max-w-6xl mx-auto w-full">
+
+      <!-- Offline alert bar -->
+      <div id="offline-alert" class="hidden mb-6 bg-amber-50 dark:bg-amber-950/50 border-l-4 border-amber-500 p-4 rounded-r-2xl shadow-sm text-amber-900 dark:text-amber-200 text-xs flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span>⚠️ <strong>Modo Sin Conexión Activado:</strong> Ejecutando desde memoria local. Tus ejercicios y registros se sincronizarán al reconectar.</span>
+        </div>
+        <span class="text-[10px] bg-amber-200 dark:bg-amber-800 text-amber-900 dark:text-amber-100 px-2 py-0.5 rounded font-bold">Offline</span>
+      </div>
+
+      <!-- ============================================================== -->
+      <!-- TAB 1: EJERCICIOS GUIADOS -->
+      <!-- ============================================================== -->
+      <section id="tab-guided" class="tab-content active space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">1. Sesión de Ejercicios Guiados</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Rutina interactiva guiada con audio-cues automáticos y control de series.</p>
+          </div>
+          <span class="self-start inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300 border border-teal-200 dark:border-teal-800">
+            <span class="w-2 h-2 rounded-full bg-teal-600 animate-pulse"></span>
+            Prescripción: 3 series x 12 reps
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <span id="ex-category" class="text-xs uppercase font-bold text-teal-600 dark:text-teal-400 tracking-wider">Movilidad Escapular</span>
+                <h3 id="ex-title" class="text-xl font-bold text-slate-900 dark:text-white mt-0.5">Rotación Externa con Banda</h3>
+              </div>
+              <span id="ex-step-badge" class="px-3 py-1 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Paso 1 de 3</span>
+            </div>
+
+            <!-- Avatar simulation frame -->
+            <div class="relative bg-slate-950 rounded-2xl h-64 flex flex-col items-center justify-center overflow-hidden border border-slate-800 text-white shadow-inner">
+              <div class="transition-all duration-700 transform flex flex-col items-center">
+                <div class="w-16 h-16 rounded-2xl bg-teal-500/20 border-2 border-teal-400 flex items-center justify-center mb-2">
+                  <svg class="w-8 h-8 text-teal-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                </div>
+                <p id="posture-hint" class="text-xs text-slate-300 font-medium px-4 text-center">"Mantén los codos pegados a 90° y contrae las escápulas atrás"</p>
+              </div>
+
+              <!-- Large Countdown -->
+              <div id="countdown-overlay" class="absolute inset-0 bg-black/60 flex items-center justify-center hidden">
+                <span id="timer-large" class="text-6xl font-black text-teal-400 tracking-tighter">00:30</span>
+              </div>
+            </div>
+
+            <!-- Timer controls -->
+            <div class="mt-6 space-y-4">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-slate-700 dark:text-slate-300">Tiempo de ejecución / descanso</span>
+                <span id="timer-display" class="font-mono font-bold text-base text-teal-600 dark:text-teal-400">00:30</span>
+              </div>
+              
+              <div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2.5 overflow-hidden">
+                <div id="timer-bar" class="bg-teal-500 h-full rounded-full transition-all duration-300" style="width: 100%;"></div>
+              </div>
+
+              <div class="flex items-center justify-between pt-2">
+                <button onclick="prevExercise()" class="px-4 py-2 text-xs font-bold rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition">Anterior</button>
+                <div class="flex items-center gap-2">
+                  <button onclick="toggleTimer()" id="btn-timer-toggle" class="px-6 py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-xl shadow-md transition flex items-center gap-2">
+                    <span id="btn-timer-text">Iniciar Guía</span>
+                  </button>
+                  <button onclick="resetTimer()" class="p-2.5 text-slate-500 hover:text-slate-800 dark:hover:text-white border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800">
+                    🔄
+                  </button>
+                </div>
+                <button onclick="nextExercise()" class="px-4 py-2 text-xs font-bold rounded-xl bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 hover:bg-slate-800 transition">Siguiente</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Routine list -->
+          <div class="space-y-4">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm">
+              <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-3">Pautas de Bioseguridad</h4>
+              <ul class="text-xs space-y-2 text-slate-600 dark:text-slate-400">
+                <li class="flex items-start gap-2">
+                  <span class="text-teal-600 font-bold">•</span>
+                  <span>Si el dolor supera <strong>3/10</strong>, pausa la repetición.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-teal-600 font-bold">•</span>
+                  <span>Exhala en la fase de mayor esfuerzo.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm">
+              <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-3">Bloque de Hoy</h4>
+              <div class="space-y-2" id="routine-list">
+                <!-- Dynamically rendered -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 2: VIDEOS EXPLICATIVOS -->
+      <!-- ============================================================== -->
+      <section id="tab-videos" class="tab-content space-y-6">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white">2. Videos Explicativos Médicos</h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Demostraciones en alta resolución guiadas por médicos especialistas.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm">
+            <div class="relative bg-slate-950 aspect-video flex items-center justify-center">
+              <div class="text-center p-6">
+                <div class="w-14 h-14 rounded-2xl bg-teal-500/30 border border-teal-400 flex items-center justify-center mx-auto mb-2 text-teal-300 text-xl font-bold">
+                  ▶
+                </div>
+                <h3 id="vid-player-title" class="text-base font-bold text-white">Técnica: Elevación Lateral Escapular</h3>
+                <p id="vid-player-author" class="text-xs text-slate-400 mt-0.5">Especialista: Dr. Roberto Martínez</p>
+              </div>
+
+              <div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/90 to-transparent">
+                <div class="flex items-center gap-3 text-white text-xs">
+                  <button onclick="showToast('Reproductor', 'Iniciando reproducción HD...', '▶️')" class="p-1 hover:bg-white/20 rounded">▶</button>
+                  <span id="vid-time" class="text-[11px] font-mono">01:42 / 04:15</span>
+                  <div class="flex-1 bg-white/30 h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-teal-400 h-full rounded-full" style="width: 45%;"></div>
+                  </div>
+                  <span class="text-[9px] bg-teal-600 px-1.5 py-0.5 rounded font-bold">1080p</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-5 space-y-3">
+              <h4 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Marcadores de Técnica:</h4>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-teal-400 transition" onclick="showToast('Capítulo 1', '00:20 - Alineación de hombros cargada.', '📍')">
+                  <span class="font-bold text-teal-600 dark:text-teal-400">00:20</span> - Postura Inicial
+                </div>
+                <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-teal-400 transition" onclick="showToast('Capítulo 2', '01:30 - Activación de trapecio inferior.', '📍')">
+                  <span class="font-bold text-teal-600 dark:text-teal-400">01:30</span> - Activación
+                </div>
+                <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-teal-400 transition" onclick="showToast('Alerta', '03:10 - Error común: encoger cuello.', '⚠️')">
+                  <span class="font-bold text-amber-600 dark:text-amber-400">03:10</span> - ⚠️ Error Típico
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video Playlist -->
+          <div class="space-y-3">
+            <h4 class="font-bold text-xs text-slate-900 dark:text-white">Lista de Reproducción Clínica</h4>
+            <div class="space-y-2 text-xs">
+              <div class="p-3 rounded-2xl border-2 border-teal-500 bg-teal-50/50 dark:bg-teal-950/30 flex gap-3">
+                <div class="w-12 h-10 rounded-lg bg-slate-800 shrink-0 flex items-center justify-center text-white text-[10px] font-bold">04:15</div>
+                <div>
+                  <p class="font-bold text-slate-900 dark:text-white">Elevación Escapular</p>
+                  <p class="text-[10px] text-slate-500">Manguito Rotador</p>
+                </div>
+              </div>
+              <div class="p-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex gap-3 hover:border-teal-400 cursor-pointer transition" onclick="showToast('Video', 'Cargando Estiramiento Cápsula Posterior...', '🎬')">
+                <div class="w-12 h-10 rounded-lg bg-slate-800 shrink-0 flex items-center justify-center text-white text-[10px] font-bold">03:40</div>
+                <div>
+                  <p class="font-bold text-slate-900 dark:text-white">Estiramiento Posterior</p>
+                  <p class="text-[10px] text-slate-500">Flexibilidad & Alivio</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 3: RECORDATORIOS -->
+      <!-- ============================================================== -->
+      <section id="tab-reminders" class="tab-content space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">3. Recordatorios Personalizados</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Alarmas programables y control de cumplimiento médico.</p>
+          </div>
+          <button onclick="showToast('Nuevo Recordatorio', 'Se agregó alarma a las 04:00 PM.', '⏰')" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-bold shadow transition self-start">
+            + Añadir Alarma
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="md:col-span-2 space-y-3">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 flex items-center justify-center font-bold text-base">⏰</div>
+                <div>
+                  <h4 class="font-bold text-xs text-slate-900 dark:text-white">Movilidad Matutina</h4>
+                  <p class="text-[11px] text-slate-500 dark:text-slate-400">08:30 AM • 15 minutos</p>
+                </div>
+              </div>
+              <input type="checkbox" checked class="w-5 h-5 accent-teal-600 cursor-pointer">
+            </div>
+
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 flex items-center justify-center font-bold text-base">🧊</div>
+                <div>
+                  <h4 class="font-bold text-xs text-slate-900 dark:text-white">Crioterapia Post-Entrenamiento</h4>
+                  <p class="text-[11px] text-slate-500 dark:text-slate-400">07:00 PM • Compresa fría 10 min</p>
+                </div>
+              </div>
+              <input type="checkbox" checked class="w-5 h-5 accent-teal-600 cursor-pointer">
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-br from-teal-700 to-teal-950 text-white rounded-3xl p-5 flex flex-col justify-between shadow-lg">
+            <div>
+              <span class="text-xs uppercase tracking-wider text-teal-200 font-bold">Adherencia Semanal</span>
+              <h3 class="text-4xl font-black mt-2">92%</h3>
+              <p class="text-xs text-teal-100 mt-2">Has completado 13 de 14 recordatorios esta semana.</p>
+            </div>
+            <button onclick="showToast('Push Demo', '¡Hora de tu sesión de ejercicios!', '🔔')" class="mt-4 w-full py-2 bg-white/20 hover:bg-white/30 text-white rounded-xl text-xs font-bold transition">
+              🔔 Probar Notificación
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 4: REGISTRO DE EJERCICIOS -->
+      <!-- ============================================================== -->
+      <section id="tab-logging" class="tab-content space-y-6">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white">4. Registro Diario de Ejercicios</h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Anota tus series y evalúa el dolor en la escala médica EVA.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
+            <form id="log-form" onsubmit="handleLogSubmit(event)" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Ejercicio</label>
+                  <select id="log-exercise" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+                    <option>Rotación Externa con Banda</option>
+                    <option>Elevación en Plano Escapular</option>
+                    <option>Retracción Escapular Isométrica</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Series x Reps</label>
+                  <div class="grid grid-cols-2 gap-2">
+                    <input type="number" id="log-sets" value="3" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-center font-bold">
+                    <input type="number" id="log-reps" value="12" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-center font-bold">
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200 dark:border-slate-700">
+                <div class="flex items-center justify-between mb-2">
+                  <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Nivel de Dolor (Escala EVA 0-10)</label>
+                  <span id="pain-val-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">2 / 10 - Leve</span>
+                </div>
+                <input type="range" id="log-pain" min="0" max="10" value="2" oninput="updatePainLabel(this.value)" class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-teal-600">
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Comentario para el Especialista</label>
+                <textarea id="log-notes" rows="2" placeholder="Sensaciones o molestias sentidas..." class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"></textarea>
+              </div>
+
+              <button type="submit" class="w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-xl shadow transition">
+                Guardar en Expediente
+              </button>
+            </form>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm">
+            <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-3">Registros Recientes</h4>
+            <div class="space-y-2 overflow-y-auto max-h-72" id="log-history-list">
+              <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs">
+                <div class="flex justify-between font-bold text-slate-800 dark:text-slate-200">
+                  <span>Rotación Externa</span>
+                  <span class="text-emerald-600 font-bold text-[11px]">Dolor: 2/10</span>
+                </div>
+                <p class="text-[10px] text-slate-500 mt-0.5">3 series x 12 reps • 09:15 AM</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 5: SEGUIMIENTO DEL PROGRESO -->
+      <!-- ============================================================== -->
+      <section id="tab-progress" class="tab-content space-y-6">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white">5. Seguimiento Clínico y Progreso</h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Analítica de evolución articular y reducción de dolor.</p>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
+            <p class="text-[11px] text-slate-500 font-semibold">Reducción del Dolor</p>
+            <p class="text-2xl font-black text-emerald-600 mt-1">-60%</p>
+          </div>
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
+            <p class="text-[11px] text-slate-500 font-semibold">Movilidad (ROM)</p>
+            <p class="text-2xl font-black text-teal-600 mt-1">145° <span class="text-[10px] text-emerald-600 font-bold">+25°</span></p>
+          </div>
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
+            <p class="text-[11px] text-slate-500 font-semibold">Sesiones Cumplidas</p>
+            <p class="text-2xl font-black text-blue-600 mt-1">18 / 20</p>
+          </div>
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
+            <p class="text-[11px] text-slate-500 font-semibold">Tiempo Estimado Alta</p>
+            <p class="text-2xl font-black text-purple-600 mt-1">14 días</p>
+          </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm">
+            <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-4">Curva de Dolor EVA (Últimas 4 semanas)</h4>
+            <div class="h-44 flex items-end justify-between gap-2 pt-6 px-2 border-b border-l border-slate-200 dark:border-slate-700">
+              <div class="flex-1 flex flex-col items-center gap-1">
+                <span class="text-[10px] font-bold">8.0</span>
+                <div class="w-full bg-red-400 rounded-t-lg" style="height: 80%;"></div>
+                <span class="text-[10px] text-slate-400">Sem 1</span>
+              </div>
+              <div class="flex-1 flex flex-col items-center gap-1">
+                <span class="text-[10px] font-bold">5.5</span>
+                <div class="w-full bg-amber-400 rounded-t-lg" style="height: 55%;"></div>
+                <span class="text-[10px] text-slate-400">Sem 2</span>
+              </div>
+              <div class="flex-1 flex flex-col items-center gap-1">
+                <span class="text-[10px] font-bold">3.5</span>
+                <div class="w-full bg-teal-400 rounded-t-lg" style="height: 35%;"></div>
+                <span class="text-[10px] text-slate-400">Sem 3</span>
+              </div>
+              <div class="flex-1 flex flex-col items-center gap-1">
+                <span class="text-[10px] font-bold text-emerald-600">2.0</span>
+                <div class="w-full bg-emerald-500 rounded-t-lg" style="height: 20%;"></div>
+                <span class="text-[10px] text-emerald-600 font-bold">Sem 4</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm">
+            <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-4">Cumplimiento Semanal</h4>
+            <div class="grid grid-cols-7 gap-1.5 text-center">
+              <div class="p-2 rounded-xl bg-teal-500 text-white text-xs font-bold">LUN<br>✓</div>
+              <div class="p-2 rounded-xl bg-teal-500 text-white text-xs font-bold">MAR<br>✓</div>
+              <div class="p-2 rounded-xl bg-teal-500 text-white text-xs font-bold">MIÉ<br>✓</div>
+              <div class="p-2 rounded-xl bg-teal-500 text-white text-xs font-bold">JUE<br>✓</div>
+              <div class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 text-xs font-bold">VIE<br>-</div>
+              <div class="p-2 rounded-xl bg-teal-500 text-white text-xs font-bold">SÁB<br>✓</div>
+              <div class="p-2 rounded-xl border-2 border-dashed border-teal-500 bg-teal-50 dark:bg-teal-950 text-teal-800 dark:text-teal-200 text-xs font-bold">DOM<br>Hoy</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 6: VIDEOLLAMADA Y SUPERVISIÓN -->
+      <!-- ============================================================== -->
+      <section id="tab-telehealth" class="tab-content space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">6. Teleconsulta & Supervisión en Vivo</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Conexión directa con tu especialista médico para evaluación postural remota.</p>
+          </div>
+          <button onclick="startTelehealthCall()" id="call-start-btn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow transition flex items-center gap-2 self-start">
+            <span>Conectar con Dr. Martínez</span>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 bg-slate-900 rounded-3xl overflow-hidden shadow-xl border border-slate-800 flex flex-col justify-between min-h-[360px] relative text-white">
+            <div class="p-6 flex flex-col items-center justify-center flex-1 text-center">
+              <div id="doctor-status-avatar" class="w-20 h-20 rounded-full bg-teal-900 border-4 border-teal-500/40 flex items-center justify-center mb-3 text-3xl">
+                👨‍⚕️
+              </div>
+              <h3 class="font-bold text-base">Dr. Roberto Martínez</h3>
+              <p id="call-status-badge" class="text-xs text-slate-400 mt-0.5">En espera de conexión segura E2E</p>
+            </div>
+
+            <div class="absolute top-4 right-4 w-24 h-16 bg-slate-800 border border-slate-700 rounded-xl flex items-center justify-center text-[10px] text-slate-400">
+              Tú (Cámara)
+            </div>
+
+            <div class="p-4 bg-slate-950/80 backdrop-blur border-t border-slate-800 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <button class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs">🎤 Mic</button>
+                <button class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs">📷 Cam</button>
+              </div>
+              <button onclick="endTelehealthCall()" id="end-call-btn" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold hidden">
+                Finalizar Consulta
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm flex flex-col justify-between">
+            <div>
+              <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-3">Notas de la Sesión</h4>
+              <div class="space-y-2 text-xs" id="chat-messages">
+                <div class="p-2.5 rounded-xl bg-teal-50 dark:bg-teal-950/40 border border-teal-100 dark:border-teal-900 text-teal-900 dark:text-teal-200">
+                  <span class="font-bold">Dr. Martínez:</span>
+                  <p class="mt-0.5">"La rotación externa mostró gran mejora en estabilidad escapular."</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800 flex gap-2">
+              <input type="text" id="chat-input" placeholder="Mensaje al médico..." class="flex-1 text-xs p-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800">
+              <button onclick="sendChatMessage()" class="px-3 py-2 bg-teal-600 text-white rounded-xl text-xs font-bold">Enviar</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 7: EJERCICIOS DESCARGABLES & OFFLINE -->
+      <!-- ============================================================== -->
+      <section id="tab-offline" class="tab-content space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">7. Ejercicios Descargables (Modo Offline)</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Descarga tu ficha clínica en PDF o guarda el paquete en caché local.</p>
+          </div>
+          <button onclick="downloadAllOfflinePack()" class="px-4 py-2 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 rounded-xl text-xs font-bold shadow transition self-start">
+            Descargar Paquete Offline Completo (32 MB)
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm space-y-3">
+            <h4 class="font-bold text-xs text-slate-900 dark:text-white">Memoria Local Cacheada</h4>
+            <div class="text-xs space-y-1.5 text-slate-600 dark:text-slate-400">
+              <p>• Rutina Fase 2: <strong>4.2 MB (Listo)</strong></p>
+              <p>• Videos HD: <strong>28.5 MB (Listo)</strong></p>
+              <p>• Registros pendientes sync: <strong>0</strong></p>
+            </div>
+            <button onclick="showToast('Sincronización', 'Memoria local sincronizada con el servidor.', '🔄')" class="w-full py-2 bg-teal-50 dark:bg-teal-950 text-teal-800 dark:text-teal-200 text-xs font-bold rounded-xl border border-teal-200 dark:border-teal-800">
+              Sincronizar Datos
+            </button>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-300 flex items-center justify-center font-bold text-lg mb-2">📄</div>
+              <h4 class="font-bold text-xs text-slate-900 dark:text-white">Ficha Imprimible PDF</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Guía gráfica de ejercicios con instrucciones para imprimir o llevar en el celular.</p>
+            </div>
+            <button onclick="showToast('Descarga PDF', 'Descargando Ficha_Clinica_Fase2.pdf...', '📄')" class="mt-4 w-full py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold transition">
+              Descargar Ficha PDF
+            </button>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-bold text-lg mb-2">🛡️</div>
+              <h4 class="font-bold text-xs text-slate-900 dark:text-white">Privacidad & Respaldo</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Cifrado de datos clínicos almacenados localmente según estándar HIPAA.</p>
+            </div>
+            <span class="mt-4 text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">● Cifrado Local Seguro</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 8: PERSONALIZACIÓN DE USUARIO & PERFIL -->
+      <!-- ============================================================== -->
+      <section id="tab-profile" class="tab-content space-y-6">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Personalización del Paciente & Ajustes</h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Modifica tus datos clínicos, foto de perfil, diagnóstico y preferencias del sistema.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Profile Card -->
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm flex flex-col items-center text-center">
+            <div id="profile-avatar-preview" class="w-24 h-24 rounded-3xl bg-teal-600 text-white flex items-center justify-center text-3xl font-black shadow-lg shadow-teal-600/30 mb-4">
+              CV
+            </div>
+            <h3 id="profile-name-preview" class="font-bold text-base text-slate-900 dark:text-white">Carlos Vega</h3>
+            <p id="profile-diag-preview" class="text-xs text-teal-600 dark:text-teal-400 font-semibold mt-0.5">Tendinopatía Manguito Rotador</p>
+            <p class="text-[11px] text-slate-500 mt-1">ID Clínico: #MED-88421 • Paciente Activo</p>
+
+            <div class="w-full mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 flex justify-between text-xs text-slate-600 dark:text-slate-400">
+              <span>Tema Visual:</span>
+              <button onclick="toggleDarkMode()" class="font-bold text-teal-600 dark:text-teal-400 hover:underline">
+                Alternar Día / Noche
+              </button>
+            </div>
+          </div>
+
+          <!-- Edit Profile Form -->
+          <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
+            <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-4">Editar Información Personal & Clínica</h3>
+            <form onsubmit="handleProfileUpdate(event)" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Nombre Completo</label>
+                  <input type="text" id="input-prof-name" value="Carlos Vega" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Diagnóstico Médico</label>
+                  <input type="text" id="input-prof-condition" value="Tendinopatía Manguito Rotador" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Médico Fisioterapeuta Asignado</label>
+                  <input type="text" value="Dr. Roberto Martínez (Traumatología)" readonly class="w-full text-xs p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/50 text-slate-500">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Objetivo de Rehabilitación</label>
+                  <input type="text" id="input-prof-goal" value="Recuperar abducción a 180° sin dolor" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+                </div>
+              </div>
+
+              <div class="pt-2 flex justify-end gap-3">
+                <button type="submit" class="px-5 py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-xl shadow transition">
+                  Guardar Cambios de Perfil
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL / VISTA: TÉRMINOS Y POLÍTICA DE CONDICIONES MÉDICAS -->
+  <!-- ============================================================== -->
+  <div id="modal-terms" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="w-full max-w-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-2xl max-h-[85vh] flex flex-col justify-between">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">📜</span>
+          <h3 class="font-bold text-base text-slate-900 dark:text-white">Términos de Servicio & Privacidad de Datos de Salud</h3>
+        </div>
+        <button onclick="closeTermsModal()" class="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 text-lg font-bold">✕</button>
+      </div>
+
+      <div class="overflow-y-auto py-4 space-y-4 text-xs text-slate-600 dark:text-slate-300 leading-relaxed pr-2">
+        <div class="p-3 bg-teal-50 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800 rounded-2xl">
+          <p class="font-bold text-teal-950 dark:text-teal-200">Consentimiento Informado para Tele-Rehabilitación y Almacenamiento Clínico</p>
+          <p class="text-[11px] text-teal-800 dark:text-teal-300 mt-1">Versión vigente: 2026.1 • Certificación internacional de interoperabilidad en salud.</p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-slate-900 dark:text-white uppercase text-[11px]">1. Tratamiento de Datos Médicos (HIPAA / GDPR / Ley de Datos)</h4>
+          <p class="mt-1">Toda la información capturada en los registros diarios (escala EVA de dolor, repeticiones, grabaciones y transcripciones de teleconsulta) es cifrada en tránsito (TLS 1.3) y en reposo mediante cifrado AES-256. El paciente mantiene la potestad de solicitar la exportación o eliminación de su historial en cualquier momento.</p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-slate-900 dark:text-white uppercase text-[11px]">2. Responsabilidad y Supervisión Fisioterapéutica</h4>
+          <p class="mt-1">Los ejercicios guiados y videos explicativos constituyen una herramienta de apoyo a la prescripción realizada por un profesional de la salud matriculado. En caso de presentar dolor agudo insoportable (> 6/10 EVA), mareos o entumecimiento, el paciente debe suspender de inmediato el ejercicio y contactar a su médico tratante.</p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-slate-900 dark:text-white uppercase text-[11px]">3. Uso del Modo Fuera de Línea (Offline)</h4>
+          <p class="mt-1">El almacenamiento de rutinas y videos en la memoria local del dispositivo no envía datos a terceros. Al restablecer la conexión a internet, los registros pendientes se sincronizan automáticamente con el servidor central hospitalario.</p>
+        </div>
+      </div>
+
+      <div class="border-t border-slate-200 dark:border-slate-800 pt-3 flex justify-end gap-2">
+        <button onclick="closeTermsModal()" class="px-5 py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-bold transition">
+          Entendido y Acepto las Condiciones
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Toast -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-slate-700 dark:border-slate-300">
+      <span id="toast-icon" class="text-lg">✅</span>
+      <div>
+        <p id="toast-title" class="font-bold text-xs">Acción</p>
+        <p id="toast-msg" class="text-[11px] text-slate-300 dark:text-slate-700">Mensaje</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Application Logic -->
+  <script>
+    // State
+    let isDarkMode = false;
+    let isOffline = false;
+    let timerRunning = false;
+    let timerSeconds = 30;
+    let timerInterval = null;
+    let currentExerciseIndex = 0;
+
+    const exercises = [
+      {
+        category: "Movilidad Escapular",
+        title: "Rotación Externa con Banda Elástica",
+        time: 30,
+        hint: "Mantén los codos pegados al cuerpo a 90° y realiza una rotación externa controlada."
+      },
+      {
+        category: "Fortalecimiento Suave",
+        title: "Elevación en Plano Escapular (Scaption)",
+        time: 45,
+        hint: "Eleva los brazos a 30° respecto al plano frontal sin encoger los hombros."
+      },
+      {
+        category: "Estiramiento",
+        title: "Elongación de Cápsula Posterior",
+        time: 30,
+        hint: "Cruza el brazo sobre el pecho y presiona suavemente con el antebrazo contrario."
+      }
+    ];
+
+    // Dark Mode Toggle
+    function toggleDarkMode() {
+      const html = document.documentElement;
+      isDarkMode = !isDarkMode;
+      if (isDarkMode) {
+        html.classList.add('dark');
+        showToast('Modo Noche', 'Tema oscuro activado para descanso visual.', '🌙');
+      } else {
+        html.classList.remove('dark');
+        showToast('Modo Día', 'Tema claro activado.', '☀️');
+      }
+    }
+
+    // Login & Logout Handlers
+    function handleLogin(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      const login = document.getElementById('screen-login');
+      const app = document.getElementById('screen-app');
+      if (login) {
+        login.classList.add('hidden');
+        login.classList.remove('flex');
+      }
+      if (app) {
+        app.classList.remove('hidden');
+        app.classList.add('flex');
+      }
+      showToast('Bienvenido', 'Sesión clínica iniciada con éxito.', '👋');
+    }
+
+    function handleLogout() {
+      const login = document.getElementById('screen-login');
+      const app = document.getElementById('screen-app');
+      if (app) {
+        app.classList.add('hidden');
+        app.classList.remove('flex');
+      }
+      if (login) {
+        login.classList.remove('hidden');
+        login.classList.add('flex');
+      }
+      showToast('Sesión Cerrada', 'Has salido del portal médico de manera segura.', '🔒');
+    }
+
+    function quickFillPatient() {
+      document.getElementById('login-email').value = 'carlos.vega@hospital.med';
+      document.getElementById('login-password').value = '12345678';
+      showToast('Datos cargados', 'Credenciales demo listas para acceder.', '⚡');
+    }
+
+    // Terms Modal
+    function openTermsModal() {
+      const m = document.getElementById('modal-terms');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+    }
+
+    function closeTermsModal() {
+      const m = document.getElementById('modal-terms');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+    }
+
+    // Profile Update Handler
+    function handleProfileUpdate(e) {
+      e.preventDefault();
+      const name = document.getElementById('input-prof-name').value;
+      const cond = document.getElementById('input-prof-condition').value;
+
+      document.getElementById('user-display-name').innerText = name;
+      document.getElementById('user-display-condition').innerText = cond;
+      document.getElementById('profile-name-preview').innerText = name;
+      document.getElementById('profile-diag-preview').innerText = cond;
+
+      const initials = name.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase();
+      document.getElementById('user-avatar-badge').innerText = initials;
+      document.getElementById('profile-avatar-preview').innerText = initials;
+
+      showToast('Perfil Actualizado', 'Tus datos clínicos fueron guardados correctamente.', '👤');
+    }
+
+    // Navigation Switcher
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('bg-teal-600', 'text-white');
+        btn.classList.add('text-slate-600', 'dark:text-slate-400');
+      });
+
+      const target = document.getElementById(tabId);
+      const btn = document.getElementById('btn-' + tabId);
+      if (target) target.classList.add('active');
+      if (btn) {
+        btn.classList.remove('text-slate-600', 'dark:text-slate-400');
+        btn.classList.add('bg-teal-600', 'text-white');
+      }
+    }
+
+    // Audio cue generator (Web Audio API)
+    function playAudioBeep(freq = 600, duration = 0.15) {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        gain.gain.value = 0.1;
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + duration);
+      } catch (e) {
+        console.log("Audio ready on user interaction");
+      }
+    }
+
+    // Exercise Guided Timer
+    function updateExerciseView() {
+      const ex = exercises[currentExerciseIndex];
+      document.getElementById('ex-category').innerText = ex.category;
+      document.getElementById('ex-title').innerText = ex.title;
+      document.getElementById('ex-step-badge').innerText = `Paso ${currentExerciseIndex + 1} de ${exercises.length}`;
+      document.getElementById('posture-hint').innerText = `"${ex.hint}"`;
+      
+      resetTimer(ex.time);
+      renderRoutineList();
+    }
+
+    function toggleTimer() {
+      if (timerRunning) {
+        clearInterval(timerInterval);
+        timerRunning = false;
+        document.getElementById('btn-timer-text').innerText = "Reanudar";
+      } else {
+        timerRunning = true;
+        document.getElementById('btn-timer-text').innerText = "Pausar";
+        playAudioBeep(880, 0.1);
+
+        timerInterval = setInterval(() => {
+          if (timerSeconds > 0) {
+            timerSeconds--;
+            renderTimer();
+          } else {
+            clearInterval(timerInterval);
+            timerRunning = false;
+            document.getElementById('btn-timer-text').innerText = "Completado";
+            playAudioBeep(1200, 0.4);
+            showToast("¡Ejercicio Finalizado!", "Excelente ejecución. Tomando descanso.", "🎉");
+          }
+        }, 1000);
+      }
+    }
+
+    function renderTimer() {
+      const mins = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
+      const secs = String(timerSeconds % 60).padStart(2, '0');
+      document.getElementById('timer-display').innerText = `${mins}:${secs}`;
+      
+      const total = exercises[currentExerciseIndex].time;
+      const pct = (timerSeconds / total) * 100;
+      document.getElementById('timer-bar').style.width = pct + '%';
+    }
+
+    function resetTimer(customTime) {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      timerSeconds = customTime || exercises[currentExerciseIndex].time;
+      document.getElementById('btn-timer-text').innerText = "Iniciar Guía";
+      renderTimer();
+    }
+
+    function nextExercise() {
+      if (currentExerciseIndex < exercises.length - 1) {
+        currentExerciseIndex++;
+        updateExerciseView();
+      } else {
+        showToast("¡Rutina Completada!", "Has finalizado todos los ejercicios guiados.", "🏆");
+      }
+    }
+
+    function prevExercise() {
+      if (currentExerciseIndex > 0) {
+        currentExerciseIndex--;
+        updateExerciseView();
+      }
+    }
+
+    function renderRoutineList() {
+      const container = document.getElementById('routine-list');
+      container.innerHTML = exercises.map((ex, i) => `
+        <div class="p-2.5 rounded-xl text-xs flex items-center justify-between ${i === currentExerciseIndex ? 'bg-teal-50 dark:bg-teal-950/40 border border-teal-300 dark:border-teal-700 font-bold text-teal-900 dark:text-teal-200' : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}">
+          <div class="flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] ${i === currentExerciseIndex ? 'bg-teal-600 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300'}">${i + 1}</span>
+            <span>${ex.title}</span>
+          </div>
+          <span>${ex.time}s</span>
+        </div>
+      `).join('');
+    }
+
+    // Pain scale badge
+    function updatePainLabel(val) {
+      const badge = document.getElementById('pain-val-badge');
+      let text = `${val} / 10 - Leve`;
+      if (val <= 2) {
+        badge.className = "px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300";
+        text = `${val} / 10 - Dolor Mínimo`;
+      } else if (val <= 5) {
+        badge.className = "px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300";
+        text = `${val} / 10 - Molestia Moderada`;
+      } else {
+        badge.className = "px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-300";
+        text = `${val} / 10 - Dolor Intenso ⚠️`;
+      }
+      badge.innerText = text;
+    }
+
+    // Log Submission
+    function handleLogSubmit(e) {
+      e.preventDefault();
+      const ex = document.getElementById('log-exercise').value;
+      const sets = document.getElementById('log-sets').value;
+      const reps = document.getElementById('log-reps').value;
+      const pain = document.getElementById('log-pain').value;
+      const notes = document.getElementById('log-notes').value;
+
+      const historyList = document.getElementById('log-history-list');
+      const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      const entry = document.createElement('div');
+      entry.className = "p-2.5 rounded-xl bg-teal-50 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800 text-xs";
+      entry.innerHTML = `
+        <div class="flex items-center justify-between font-bold text-teal-900 dark:text-teal-200">
+          <span>${ex}</span>
+          <span class="text-teal-700 dark:text-teal-400 text-[11px]">Dolor: ${pain}/10</span>
+        </div>
+        <p class="text-[10px] text-teal-600 dark:text-teal-400 mt-0.5">${sets} series x ${reps} reps • ${now} ${notes ? `• "${notes}"` : ''}</p>
+      `;
+      historyList.prepend(entry);
+      showToast("Registro Guardado", "Datos guardados en el historial.", "📝");
+      document.getElementById('log-notes').value = '';
+    }
+
+    // Telehealth Simulation
+    function startTelehealthCall() {
+      document.getElementById('call-start-btn').classList.add('hidden');
+      document.getElementById('end-call-btn').classList.remove('hidden');
+      document.getElementById('call-status-badge').innerText = "● Conectado en directo (HD 1080p)";
+      document.getElementById('call-status-badge').className = "text-xs text-emerald-400 mt-0.5 font-bold";
+      showToast("Videollamada", "Conectado con el Dr. Martínez.", "🩺");
+    }
+
+    function endTelehealthCall() {
+      document.getElementById('call-start-btn').classList.remove('hidden');
+      document.getElementById('end-call-btn').classList.add('hidden');
+      document.getElementById('call-status-badge').innerText = "Consulta finalizada.";
+      document.getElementById('call-status-badge').className = "text-xs text-slate-400 mt-0.5";
+      showToast("Consulta Finalizada", "Informe guardado en el expediente.", "📞");
+    }
+
+    function sendChatMessage() {
+      const input = document.getElementById('chat-input');
+      const val = input.value.trim();
+      if (!val) return;
+
+      const container = document.getElementById('chat-messages');
+      const msg = document.createElement('div');
+      msg.className = "p-2.5 rounded-xl bg-teal-100 dark:bg-teal-900 text-teal-950 dark:text-teal-100 text-xs";
+      msg.innerHTML = `<span class="font-bold">Paciente:</span><p class="mt-0.5">${val}</p>`;
+      container.appendChild(msg);
+      input.value = '';
+
+      setTimeout(() => {
+        const reply = document.createElement('div');
+        reply.className = "p-2.5 rounded-xl bg-teal-50 dark:bg-teal-950 border border-teal-200 dark:border-teal-800 text-teal-900 dark:text-teal-200 text-xs";
+        reply.innerHTML = `<span class="font-bold">Dr. Martínez:</span><p class="mt-0.5">Recibido. Cuidemos la postura en la siguiente repetición.</p>`;
+        container.appendChild(reply);
+      }, 1000);
+    }
+
+    // Offline Simulation
+    function toggleOfflineSim() {
+      isOffline = !isOffline;
+      const alert = document.getElementById('offline-alert');
+      const btn = document.getElementById('net-sim-btn');
+
+      if (isOffline) {
+        alert.classList.remove('hidden');
+        btn.innerText = "Conectar";
+        btn.classList.add('bg-amber-100', 'text-amber-800');
+        showToast("Modo Offline", "Trabajando con datos en memoria local.", "📡");
+      } else {
+        alert.classList.add('hidden');
+        btn.innerText = "Sin Red";
+        btn.classList.remove('bg-amber-100', 'text-amber-800');
+        showToast("En Línea", "Sincronización completada con el servidor.", "🌐");
+      }
+    }
+
+    function downloadAllOfflinePack() {
+      showToast("Descargando", "Guardando videos y fichas en caché...", "📦");
+      setTimeout(() => {
+        showToast("¡Listo!", "Paquete offline disponible sin conexión.", "✅");
+      }, 1000);
+    }
+
+    // Toast Utility
+    function showToast(title, msg, icon = "✅") {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-title').innerText = title;
+      document.getElementById('toast-msg').innerText = msg;
+      document.getElementById('toast-icon').innerText = icon;
+
+      toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+      }, 3000);
+    }
+
+    // Init
+    updateExerciseView();
+  </script>
+</body>
+</html>
