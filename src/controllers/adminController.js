@@ -44,9 +44,32 @@ exports.getPatients = (req, res) => {
 
 exports.createVideo = (req, res) => {
   try {
-    const { title, category, specialist_name, duration, video_url, markers = [] } = req.body;
+    const fs = require('fs');
+    const path = require('path');
+    const { title, category, specialist_name, duration, video_url, video_base64, video_filename, markers = [] } = req.body;
+    
     if (!title || !category || !specialist_name) {
       return res.status(400).json({ error: 'Título, categoría y nombre del especialista son obligatorios.' });
+    }
+
+    let finalVideoUrl = video_url || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
+
+    // If a local video file was uploaded as base64
+    if (video_base64) {
+      const uploadsDir = path.join(__dirname, '..', '..', 'public', 'uploads', 'videos');
+      if (!fs.existsSync(uploadsDir)) {
+        fs.mkdirSync(uploadsDir, { recursive: true });
+      }
+
+      const ext = path.extname(video_filename || '.mp4') || '.mp4';
+      const cleanName = `med_video_${Date.now()}${ext}`;
+      const filePath = path.join(uploadsDir, cleanName);
+
+      // Strip data uri prefix if present
+      const base64Data = video_base64.replace(/^data:video\/\w+;base64,/, '');
+      fs.writeFileSync(filePath, Buffer.from(base64Data, 'base64'));
+
+      finalVideoUrl = `/uploads/videos/${cleanName}`;
     }
 
     const markersJson = typeof markers === 'string' ? markers : JSON.stringify(markers);
@@ -59,8 +82,8 @@ exports.createVideo = (req, res) => {
       category,
       specialist_name,
       duration || '03:30',
-      video_url || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-      '🎬',
+      finalVideoUrl,
+      'fa-solid fa-video',
       markersJson
     );
 
@@ -73,6 +96,7 @@ exports.createVideo = (req, res) => {
       }
     });
   } catch (error) {
+    console.error('Error creating video:', error);
     res.status(500).json({ error: error.message });
   }
 };

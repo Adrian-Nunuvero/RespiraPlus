@@ -1,26 +1,27 @@
-// Service Worker Registration & Network Status Monitor
+// Service Worker Registration & Live Cache Invalidation
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js')
       .then((reg) => {
-        console.log('✅ Service Worker registrado con alcance:', reg.scope);
+        reg.update();
+        console.log('[PWA] Service Worker actualizado en v3.1.0:', reg.scope);
       })
       .catch((err) => {
-        console.warn('⚠️ No se pudo registrar el Service Worker:', err);
+        console.warn('[PWA] Service Worker status:', err);
       });
   });
 }
 
 // Window Online/Offline Event Listeners
 window.addEventListener('online', () => {
-  console.log('🌐 Conexión a internet restablecida');
+  console.log('[PWA] Conexión a internet restablecida');
   if (typeof handleNetworkChange === 'function') {
     handleNetworkChange(true);
   }
 });
 
 window.addEventListener('offline', () => {
-  console.log('📡 Sin conexión a internet');
+  console.log('[PWA] Sin conexión a internet');
   if (typeof handleNetworkChange === 'function') {
     handleNetworkChange(false);
   }

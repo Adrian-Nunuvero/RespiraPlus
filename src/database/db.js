@@ -43,7 +43,7 @@ function initDatabase() {
       posture_hint TEXT NOT NULL,
       safety_tips TEXT NOT NULL,
       order_index INTEGER DEFAULT 1,
-      image_badge TEXT DEFAULT '💪',
+      image_badge TEXT DEFAULT 'fa-solid fa-dumbbell',
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
@@ -54,7 +54,7 @@ function initDatabase() {
       specialist_name TEXT NOT NULL,
       duration TEXT NOT NULL,
       video_url TEXT,
-      thumbnail_badge TEXT DEFAULT '🎬',
+      thumbnail_badge TEXT DEFAULT 'fa-solid fa-video',
       markers_json TEXT, -- JSON Array: [{ time: "00:20", label: "Postura Inicial" }]
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
@@ -65,7 +65,7 @@ function initDatabase() {
       title TEXT NOT NULL,
       time_str TEXT NOT NULL,
       detail TEXT,
-      icon TEXT DEFAULT '⏰',
+      icon TEXT DEFAULT 'bell',
       is_enabled INTEGER DEFAULT 1,
       days_json TEXT DEFAULT '["L","M","X","J","V","S","D"]',
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -108,7 +108,67 @@ function initDatabase() {
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
     );
+
+    CREATE TABLE IF NOT EXISTS appointments (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      doctor_name TEXT NOT NULL DEFAULT 'Dr. Roberto Martínez (Fisiatría)',
+      appointment_date TEXT NOT NULL,
+      appointment_time TEXT NOT NULL,
+      consultation_type TEXT NOT NULL DEFAULT 'Control y Teleconsulta de Rehabilitación',
+      status TEXT DEFAULT 'confirmed', -- 'confirmed', 'completed', 'cancelled'
+      zoom_meeting_id TEXT,
+      zoom_join_url TEXT,
+      zoom_password TEXT,
+      notes TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+    );
+
+    CREATE TABLE IF NOT EXISTS app_settings (
+      key TEXT PRIMARY KEY,
+      value TEXT,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
   `);
+
+  // Ensure zoom columns exist in telehealth_sessions
+  try {
+    const tableInfo = db.prepare("PRAGMA table_info(telehealth_sessions)").all();
+    const colNames = tableInfo.map(c => c.name);
+    if (!colNames.includes('zoom_meeting_id')) {
+      db.exec("ALTER TABLE telehealth_sessions ADD COLUMN zoom_meeting_id TEXT;");
+    }
+    if (!colNames.includes('zoom_join_url')) {
+      db.exec("ALTER TABLE telehealth_sessions ADD COLUMN zoom_join_url TEXT;");
+    }
+    if (!colNames.includes('zoom_start_url')) {
+      db.exec("ALTER TABLE telehealth_sessions ADD COLUMN zoom_start_url TEXT;");
+    }
+    if (!colNames.includes('zoom_password')) {
+      db.exec("ALTER TABLE telehealth_sessions ADD COLUMN zoom_password TEXT;");
+    }
+    if (!colNames.includes('zoom_topic')) {
+      db.exec("ALTER TABLE telehealth_sessions ADD COLUMN zoom_topic TEXT;");
+    }
+
+    // Seed Zoom settings from env if available (do not overwrite existing unless empty)
+    const zAcc = process.env.ZOOM_ACCOUNT_ID || 'ss_m9m5WQ36alrYq6x2dXg';
+    const zCli = process.env.ZOOM_CLIENT_ID || 'pH08R4tOQOiqIntrPCIRUA';
+    const zSec = process.env.ZOOM_CLIENT_SECRET || 'SXSlhO0HJjedR0Uzk9QYfUTT93QKBoBD';
+
+    if (zAcc) {
+      db.prepare("INSERT INTO app_settings (key, value) VALUES ('zoom_account_id', ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value").run(zAcc);
+    }
+    if (zCli) {
+      db.prepare("INSERT INTO app_settings (key, value) VALUES ('zoom_client_id', ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value").run(zCli);
+    }
+    if (zSec) {
+      db.prepare("INSERT INTO app_settings (key, value) VALUES ('zoom_client_secret', ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value").run(zSec);
+    }
+  } catch (e) {
+    console.error("Migration error (telehealth_sessions zoom columns):", e.message);
+  }
 
   // Seed default data if empty
   seedInitialData();
@@ -122,6 +182,19 @@ function seedInitialData() {
       INSERT INTO users (email, password_hash, full_name, role, diagnosis, assigned_doctor, rehab_goal, phase, avatar_initials)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
+
+    // 0. Master Account (Super Admin)
+    insertUser.run(
+      'admin@gmail.com',
+      'admin123',
+      'Administrador Maestro',
+      'admin',
+      'Superintendencia y Control Global del Sistema',
+      'Dirección Médica Central',
+      'Gestión integral clínica y administrativa',
+      'Master',
+      'AD'
+    );
 
     // 1. Patient
     insertUser.run(
@@ -162,6 +235,28 @@ function seedInitialData() {
       'ML'
     );
   } else {
+    // Ensure Master Admin exists
+    const masterAdmin = db.prepare("SELECT * FROM users WHERE email = 'admin@gmail.com'").get();
+    if (!masterAdmin) {
+      db.prepare(`
+        INSERT INTO users (email, password_hash, full_name, role, diagnosis, assigned_doctor, rehab_goal, phase, avatar_initials)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `).run(
+        'admin@gmail.com',
+        'admin123',
+        'Administrador Maestro',
+        'admin',
+        'Superintendencia y Control Global del Sistema',
+        'Dirección Médica Central',
+        'Gestión integral clínica y administrativa',
+        'Master',
+        'AD'
+      );
+    } else {
+      // Update password and role to guarantee valid credentials
+      db.prepare("UPDATE users SET password_hash = 'admin123', role = 'admin', full_name = 'Administrador Maestro' WHERE email = 'admin@gmail.com'").run();
+    }
+
     // Ensure Doctor exists
     const doc = db.prepare("SELECT * FROM users WHERE email = 'doctor@hospital.med'").get();
     if (!doc) {
@@ -199,7 +294,7 @@ function seedInitialData() {
         posture_hint: 'Mantén los codos pegados al cuerpo a 90° y realiza una rotación externa controlada.',
         safety_tips: 'Si el dolor supera 3/10 EVA, detén el movimiento y reduce la resistencia de la banda.',
         order_index: 1,
-        image_badge: '🔄'
+        image_badge: 'fa-solid fa-arrows-rotate'
       },
       {
         category: 'Fortalecimiento Suave',
@@ -209,7 +304,7 @@ function seedInitialData() {
         posture_hint: 'Eleva los brazos a 30° respecto al plano frontal sin encoger los hombros y exhalando al subir.',
         safety_tips: 'No compenses arqueando la zona lumbar; mantén el abdomen activo.',
         order_index: 2,
-        image_badge: '🏋️'
+        image_badge: 'fa-solid fa-dumbbell'
       },
       {
         category: 'Flexibilidad & Respiración',
@@ -219,7 +314,7 @@ function seedInitialData() {
         posture_hint: 'Cruza el brazo sobre el pecho, toma aire profundamente por la nariz y presiona suavemente con el antebrazo contrario.',
         safety_tips: 'Realiza respiraciones diafragmáticas lentas y profundas durante el estiramiento.',
         order_index: 3,
-        image_badge: '🫁'
+        image_badge: 'fa-solid fa-lungs'
       },
       {
         category: 'Reeducación Diafragmática',
@@ -229,7 +324,7 @@ function seedInitialData() {
         posture_hint: 'Coloca una mano en el pecho y otra en el abdomen; infla el abdomen al inhalar en 4 segundos y exhala en 6 segundos con labios fruncidos.',
         safety_tips: 'Si sientes mareos leves, vuelve al ritmo respiratorio normal en reposo.',
         order_index: 4,
-        image_badge: '🌬️'
+        image_badge: 'fa-solid fa-wind'
       }
     ];
 
@@ -253,7 +348,7 @@ function seedInitialData() {
         specialist_name: 'Dr. Roberto Martínez',
         duration: '04:15',
         video_url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        thumbnail_badge: '🎥',
+        thumbnail_badge: 'fa-solid fa-video',
         markers_json: JSON.stringify([
           { time: '00:20', label: 'Alineación de hombros y postura' },
           { time: '01:30', label: 'Activación del serrato anterior' },
@@ -266,7 +361,7 @@ function seedInitialData() {
         specialist_name: 'Lic. Mariana Gómez (Fisioterapeuta)',
         duration: '03:40',
         video_url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        thumbnail_badge: '🧘',
+        thumbnail_badge: 'fa-solid fa-person-walking',
         markers_json: JSON.stringify([
           { time: '00:15', label: 'Posición neutra de columna' },
           { time: '01:10', label: 'Presión gradual sin dolor agudo' },
@@ -279,7 +374,7 @@ function seedInitialData() {
         specialist_name: 'Dra. Elena Vargas (Neumología)',
         duration: '05:10',
         video_url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
-        thumbnail_badge: '🫁',
+        thumbnail_badge: 'fa-solid fa-lungs',
         markers_json: JSON.stringify([
           { time: '00:30', label: 'Ubicación de manos en caja torácica' },
           { time: '02:00', label: 'Técnica de labios fruncidos PEEP' },
@@ -301,9 +396,20 @@ function seedInitialData() {
       VALUES (?, ?, ?, ?, ?, ?, ?)
     `);
 
-    insertRem.run(1, 'Movilidad y Respiración Matutina', '08:30', '15 minutos • Rutina Fase 2', '⏰', 1, '["L","M","X","J","V","S","D"]');
-    insertRem.run(1, 'Crioterapia / Compresa Post-Sesión', '19:00', 'Compresa fría 10 min en hombro/tórax', '🧊', 1, '["L","M","X","J","V","S","D"]');
-    insertRem.run(1, 'Control de Registro & Escala EVA', '21:00', 'Anotar sensaciones y dolor del día', '📝', 1, '["L","M","X","J","V","S","D"]');
+    insertRem.run(1, 'Movilidad y Respiración Matutina', '08:30', '15 minutos • Rutina Fase 2', 'bell', 1, '["L","M","X","J","V","S","D"]');
+    insertRem.run(1, 'Crioterapia / Compresa Post-Sesión', '19:00', 'Compresa fría 10 min en hombro/tórax', 'snowflake', 1, '["L","M","X","J","V","S","D"]');
+    insertRem.run(1, 'Control de Registro & Escala EVA', '21:00', 'Anotar sensaciones y dolor del día', 'clipboard-list', 1, '["L","M","X","J","V","S","D"]');
+  }
+
+  // Purge any legacy emoji icons in existing records
+  try {
+    db.prepare("UPDATE exercises SET image_badge = 'fa-solid fa-dumbbell' WHERE image_badge LIKE '%💪%' OR image_badge LIKE '%🔄%' OR image_badge LIKE '%🏋%' OR image_badge LIKE '%🫁%' OR image_badge LIKE '%🌬%'").run();
+    db.prepare("UPDATE videos SET thumbnail_badge = 'fa-solid fa-video' WHERE thumbnail_badge LIKE '%🎬%' OR thumbnail_badge LIKE '%🎥%' OR thumbnail_badge LIKE '%🧘%' OR thumbnail_badge LIKE '%🫁%'").run();
+    db.prepare("UPDATE reminders SET icon = 'bell' WHERE icon LIKE '%⏰%'").run();
+    db.prepare("UPDATE reminders SET icon = 'snowflake' WHERE icon LIKE '%🧊%'").run();
+    db.prepare("UPDATE reminders SET icon = 'clipboard-list' WHERE icon LIKE '%📝%'").run();
+  } catch (e) {
+    // ignore
   }
 
   // Check exercise_logs
@@ -337,6 +443,28 @@ function seedInitialData() {
     insertChat.run(1, 1, 'doctor', 'Dr. Roberto Martínez', '¡Hola Carlos! He revisado tu curva de dolor EVA. La reducción a 2/10 es un excelente indicador de progreso.', new Date(Date.now() - 3600000).toISOString());
     insertChat.run(1, 1, 'patient', 'Carlos Vega', 'Gracias Doctor, hoy sentí el hombro mucho más liberado al hacer la elevación.', new Date(Date.now() - 1800000).toISOString());
     insertChat.run(1, 1, 'doctor', 'Dr. Roberto Martínez', 'Excelente. Mantén la postura a 90° y no olvides registrar tu sesión de hoy.', new Date(Date.now() - 900000).toISOString());
+  }
+
+  // Check appointments
+  const apptCount = db.prepare('SELECT COUNT(*) as count FROM appointments').get().count;
+  if (apptCount === 0) {
+    const insertAppt = db.prepare(`
+      INSERT INTO appointments (user_id, doctor_name, appointment_date, appointment_time, consultation_type, status, zoom_meeting_id, zoom_join_url, zoom_password, notes)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+
+    insertAppt.run(
+      1,
+      'Dr. Roberto Martínez (Especialista en Fisiatría)',
+      '2026-10-06',
+      '10:30',
+      'Control y Teleconsulta de Rehabilitación',
+      'confirmed',
+      '8594726190',
+      'https://zoom.us/j/8594726190?pwd=medico',
+      'medico',
+      'Control semanal de movilidad escapular y reducción de dolor EVA.'
+    );
   }
 }
 

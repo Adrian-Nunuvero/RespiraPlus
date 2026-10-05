@@ -133,3 +133,14 @@ exports.updateProfile = (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.getMe = (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({ error: 'No autenticado' });
+  }
+  res.json({ valid: true, user: req.user });
+};
+
+exports.logout = (req, res) => {
+  res.json({ message: 'Sesión finalizada exitosamente' });
+};

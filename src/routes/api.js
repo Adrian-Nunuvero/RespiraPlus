@@ -11,15 +11,20 @@ const telehealthController = require('../controllers/telehealthController');
 const pdfController = require('../controllers/pdfController');
 const offlineController = require('../controllers/offlineController');
 const adminController = require('../controllers/adminController');
+const appointmentController = require('../controllers/appointmentController');
+
+const { authenticateSession, requireAdmin, requireAuth } = require('../middleware/authMiddleware');
 
 // Healthcheck
 router.get('/health', (req, res) => {
-  res.json({ status: 'ok', app: 'RespiraPlus MediRehab Pro', version: '2.4.0', time: new Date() });
+  res.json({ status: 'ok', app: 'RespiraPlus MediRehab Pro', version: '2.6.0', time: new Date() });
 });
 
-// 1. Auth & User Profile (Login, Register & Profile)
+// 1. Auth & Session Management (Login, Register, Session Validation & Profile)
 router.post('/auth/login', authController.login);
 router.post('/auth/register', authController.register);
+router.get('/auth/me', authenticateSession, authController.getMe);
+router.post('/auth/logout', authController.logout);
 router.get('/user/profile', authController.getProfile);
 router.put('/user/profile', authController.updateProfile);
 
@@ -43,23 +48,39 @@ router.post('/logs', logController.createLog);
 // 6. Progress & Analytics (Requerimiento 5)
 router.get('/progress', progressController.getProgressStats);
 
-// 7. Telehealth & Live Supervision (Requerimiento 6)
+// 7. Telehealth & Citas Médicas con Zoom API (Requerimiento 6)
 router.get('/telehealth', telehealthController.getTelehealthStatus);
+router.get('/telehealth/doctor/queue', telehealthController.getDoctorCallQueue);
 router.post('/telehealth/message', telehealthController.sendMessage);
 router.post('/telehealth/status', telehealthController.updateSessionStatus);
+router.post('/telehealth/zoom/create', telehealthController.createZoomMeeting);
+router.get('/telehealth/zoom/config', telehealthController.getZoomConfig);
+router.post('/telehealth/zoom/config', requireAdmin, telehealthController.saveZoomConfig);
+
+// WebRTC Live Telehealth Signaling
+router.post('/telehealth/signal/join', telehealthController.joinRoom);
+router.post('/telehealth/signal/send', telehealthController.sendSignal);
+router.get('/telehealth/signal/poll', telehealthController.pollSignals);
+router.post('/telehealth/signal/leave', telehealthController.leaveRoom);
+
+// Citas Médicas Agendadas & Especialistas
+router.get('/doctors', appointmentController.getDoctors);
+router.get('/appointments', appointmentController.getAppointments);
+router.post('/appointments', appointmentController.createAppointment);
+router.delete('/appointments/:id', appointmentController.deleteAppointment);
 
 // 8. PDF Download & Offline Sync (Requerimiento 7)
 router.get('/pdf/exercise-sheet', pdfController.generateExerciseSheetPDF);
 router.get('/offline/pack', offlineController.getOfflinePack);
 router.post('/offline/sync', offlineController.syncOfflineData);
 
-// 9. Admin Site & Doctor Portal Endpoints
-router.get('/admin/stats', adminController.getAdminStats);
-router.get('/admin/patients', adminController.getPatients);
-router.post('/admin/videos', adminController.createVideo);
-router.delete('/admin/videos/:id', adminController.deleteVideo);
-router.post('/admin/exercises', adminController.createExercise);
-router.delete('/admin/exercises/:id', adminController.deleteExercise);
-router.put('/admin/patients/:patientId/phase', adminController.updatePatientPhase);
+// 9. Admin Site & Doctor Portal Endpoints (Exclusivo para Administrador / Médico)
+router.get('/admin/stats', requireAdmin, adminController.getAdminStats);
+router.get('/admin/patients', requireAdmin, adminController.getPatients);
+router.post('/admin/videos', requireAdmin, adminController.createVideo);
+router.delete('/admin/videos/:id', requireAdmin, adminController.deleteVideo);
+router.post('/admin/exercises', requireAdmin, adminController.createExercise);
+router.delete('/admin/exercises/:id', requireAdmin, adminController.deleteExercise);
+router.put('/admin/patients/:patientId/phase', requireAdmin, adminController.updatePatientPhase);
 
 module.exports = router;

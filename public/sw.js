@@ -1,87 +1,63 @@
-const CACHE_NAME = 'respiraplus-v2.4.0';
+const CACHE_NAME = 'respiraplus-v5.4.0-zoom-exclusive';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
-  '/css/styles.css',
-  '/js/api.js',
-  '/js/app.js',
-  '/js/sw-register.js',
+  '/css/styles.css?v=9.6',
+  '/js/api.js?v=9.6',
+  '/js/app.js?v=9.6',
+  '/js/sw-register.js?v=9.6',
   '/manifest.json'
 ];
 
-// Install Event
+// Install Event - skip waiting immediately
 self.addEventListener('install', (event) => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[Service Worker] Precaching app shell assets');
+      console.log('[Service Worker] Precaching v3.1.0 assets');
       return cache.addAll(STATIC_ASSETS);
     })
   );
-  self.skipWaiting();
 });
 
-// Activate Event
+// Activate Event - purge all old caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
       return Promise.all(
         keys.map((key) => {
           if (key !== CACHE_NAME) {
-            console.log('[Service Worker] Removing old cache', key);
+            console.log('[Service Worker] Deleting obsolete cache:', key);
             return caches.delete(key);
           }
         })
       );
-    })
+    }).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
-// Fetch Event (Network First for API, Cache First for Static Assets)
+// Fetch Event - Network First for everything so live updates are instant, Fallback to cache when offline
 self.addEventListener('fetch', (event) => {
-  const url = new URL(event.request.url);
-
-  // If requesting API data
-  if (url.pathname.startsWith('/api/')) {
-    event.respondWith(
-      fetch(event.request)
-        .then((response) => {
-          // Clone and cache successful GET requests
-          if (event.request.method === 'GET' && response.status === 200) {
-            const clone = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-          }
-          return response;
-        })
-        .catch(() => {
-          // If network failed, return from cache if available
-          return caches.match(event.request).then((cached) => {
-            if (cached) return cached;
+  event.respondWith(
+    fetch(event.request)
+      .then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200 && event.request.method === 'GET') {
+          const clone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+        }
+        return networkResponse;
+      })
+      .catch(() => {
+        // Offline fallback
+        return caches.match(event.request).then((cachedResponse) => {
+          if (cachedResponse) return cachedResponse;
+          if (event.request.url.includes('/api/')) {
             return new Response(JSON.stringify({ offline: true, error: 'Sin conexión a internet' }), {
               headers: { 'Content-Type': 'application/json' }
             });
-          });
-        })
-    );
-    return;
-  }
-
-  // For static assets: Cache First with Network Fallback
-  event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      return fetch(event.request).then((networkResponse) => {
-        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
-          return networkResponse;
-        }
-        const responseToCache = networkResponse.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseToCache);
+          }
+          return caches.match('/');
         });
-        return networkResponse;
-      });
-    })
+      })
   );
 });

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="light">
+<html lang="es">
 <head>
   <!-- SEO & Meta Tags Fundamentales -->
   <meta charset="UTF-8">
@@ -12,11 +12,23 @@
   <meta name="author" content="RespiraPlus Medical Systems">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="theme-color" content="#0d9488">
-  <link rel="canonical" href="http://localhost:3000/">
+  <link rel="canonical" href="http://localhost:4000/">
+
+  <!-- Instant Theme Bootstrapper (Prevents Flash) -->
+  <script>
+    (function() {
+      const saved = localStorage.getItem('theme_mode');
+      if (saved === 'light') {
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
 
   <!-- Open Graph / Redes Sociales -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://localhost:3000/">
+  <meta property="og:url" content="http://localhost:4000/">
   <meta property="og:title" content="RespiraPlus MediRehab Pro - Plataforma Médica de Fisioterapia">
   <meta property="og:description" content="Rehabilitación médica guiada paso a paso, supervisión remota y fichas descargables con funcionamiento sin internet.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&auto=format&fit=crop&q=80">
@@ -75,27 +87,206 @@
       }
     }
   </script>
-  <link rel="stylesheet" href="/css/styles.css">
+  <!-- Google Fonts: Plus Jakarta Sans (Formal Clinical Typography) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome 6 Iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css?v=9.3">
+  <style>
+    /* DIRECT GUARANTEED DUAL THEME & AMBIENT WHITE LIGHTS */
+    html.dark body {
+      background-color: #090e17 !important;
+      color: #f8fafc !important;
+    }
+    html:not(.dark) body {
+      background-color: #f8fafc !important;
+      color: #0f172a !important;
+    }
+
+    /* 1. LOGIN BACKGROUND - AMBIENT WHITE LIGHTS */
+    html.dark .login-bg-ambient {
+      position: relative !important;
+      background-color: #070b14 !important;
+      background-image: radial-gradient(circle at 50% 50%, #0d1527 0%, #050811 100%) !important;
+    }
+    html:not(.dark) .login-bg-ambient {
+      position: relative !important;
+      background-color: #f1f5f9 !important;
+      background-image: radial-gradient(circle at 50% 50%, #ffffff 0%, #e2e8f0 100%) !important;
+    }
+
+    /* Floating Blurred Soft White Halos / Glows for Login */
+    .orb {
+      position: absolute !important;
+      border-radius: 50% !important;
+      pointer-events: none !important;
+      z-index: 1 !important;
+      transition: opacity 0.3s ease;
+      animation: floatOrb 12s ease-in-out infinite alternate;
+    }
+
+    html.dark .orb-white-1 {
+      width: 580px !important;
+      height: 580px !important;
+      filter: blur(100px) !important;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.08) 45%, transparent 75%) !important;
+      top: 5% !important;
+      left: 10% !important;
+    }
+    html.dark .orb-white-2 {
+      width: 620px !important;
+      height: 620px !important;
+      filter: blur(110px) !important;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.05) 50%, transparent 75%) !important;
+      bottom: 5% !important;
+      right: 10% !important;
+    }
+    html.dark .orb-white-3 {
+      width: 480px !important;
+      height: 480px !important;
+      filter: blur(90px) !important;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 50%, transparent 75%) !important;
+      top: 45% !important;
+      left: 45% !important;
+      transform: translate(-50%, -50%) !important;
+    }
+    html.dark .orb-white-4 {
+      width: 420px !important;
+      height: 420px !important;
+      filter: blur(95px) !important;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.03) 50%, transparent 75%) !important;
+      top: 65% !important;
+      left: 18% !important;
+    }
+
+    /* Light Mode White Glows */
+    html:not(.dark) .orb-white-1 {
+      width: 580px !important;
+      height: 580px !important;
+      filter: blur(80px) !important;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(226, 232, 240, 0.6) 50%, transparent 75%) !important;
+      top: 5% !important;
+      left: 10% !important;
+    }
+    html:not(.dark) .orb-white-2 {
+      width: 620px !important;
+      height: 620px !important;
+      filter: blur(85px) !important;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(226, 232, 240, 0.5) 50%, transparent 75%) !important;
+      bottom: 5% !important;
+      right: 10% !important;
+    }
+    html:not(.dark) .orb-white-3 {
+      width: 480px !important;
+      height: 480px !important;
+      filter: blur(75px) !important;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.90) 0%, rgba(226, 232, 240, 0.45) 50%, transparent 75%) !important;
+      top: 45% !important;
+      left: 45% !important;
+      transform: translate(-50%, -50%) !important;
+    }
+    html:not(.dark) .orb-white-4 {
+      width: 420px !important;
+      height: 420px !important;
+      filter: blur(80px) !important;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.85) 0%, rgba(226, 232, 240, 0.40) 50%, transparent 75%) !important;
+      top: 65% !important;
+      left: 18% !important;
+    }
+
+    /* Frosted Glass Login Card - SQUARED */
+    html.dark .glass-card {
+      position: relative !important;
+      z-index: 10 !important;
+      background: rgba(17, 24, 39, 0.60) !important;
+      backdrop-filter: blur(30px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(30px) saturate(180%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.16) !important;
+      border-radius: 8px !important;
+      box-shadow: 
+        0 25px 70px -10px rgba(0, 0, 0, 0.7),
+        0 0 35px -5px rgba(255, 255, 255, 0.06),
+        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.35) !important;
+      color: #ffffff;
+    }
+    html:not(.dark) .glass-card {
+      position: relative !important;
+      z-index: 10 !important;
+      background: rgba(255, 255, 255, 0.88) !important;
+      backdrop-filter: blur(30px) !important;
+      -webkit-backdrop-filter: blur(30px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.95) !important;
+      border-radius: 8px !important;
+      box-shadow: 
+        0 20px 50px -10px rgba(15, 23, 42, 0.08),
+        0 0 25px rgba(255, 255, 255, 0.8),
+        inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 1) !important;
+      color: #0f172a;
+    }
+
+    html.dark .glass-input {
+      background: rgba(255, 255, 255, 0.08) !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.20) !important;
+      border-radius: 6px !important;
+      color: #ffffff !important;
+    }
+    html:not(.dark) .glass-input {
+      background: rgba(255, 255, 255, 0.92) !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      border: 1px solid rgba(203, 213, 225, 0.95) !important;
+      border-radius: 6px !important;
+      color: #0f172a !important;
+    }
+
+    html.dark .glass-btn-subtle {
+      background: rgba(255, 255, 255, 0.10) !important;
+      backdrop-filter: blur(14px) !important;
+      -webkit-backdrop-filter: blur(14px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.22) !important;
+      border-radius: 6px !important;
+      color: #ffffff !important;
+    }
+    html:not(.dark) .glass-btn-subtle {
+      background: rgba(255, 255, 255, 0.75) !important;
+      backdrop-filter: blur(14px) !important;
+      -webkit-backdrop-filter: blur(14px) !important;
+      border: 1px solid rgba(203, 213, 225, 0.90) !important;
+      border-radius: 6px !important;
+      color: #0f172a !important;
+    }
+  </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased font-sans min-h-screen transition-colors duration-200">
+<body class="bg-slate-50 dark:bg-[#090e17] text-slate-800 dark:text-slate-100 antialiased font-sans min-h-screen transition-colors duration-200">
 
   <!-- ============================================================== -->
-  <!-- SCREEN 1: LOGIN & REGISTER (AUTENTICACIÓN Y ROLES) -->
+  <!-- SCREEN 1: LOGIN & REGISTER (FONDO CON LUCES BLANCAS DIFUMINADAS) -->
   <!-- ============================================================== -->
-  <div id="screen-login" class="min-h-screen w-full flex items-center justify-center p-4 bg-gradient-to-br from-teal-500/10 via-slate-50 to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-teal-950/20">
-    <div class="w-full max-w-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
-      <!-- Dark mode switch in login header -->
-      <div class="absolute top-4 right-4 flex items-center gap-2">
-        <button type="button" onclick="toggleDarkMode()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition text-sm" title="Alternar Modo Oscuro">
-          <span class="dark:hidden">🌙</span>
-          <span class="hidden dark:inline">☀️</span>
+  <div id="screen-login" class="min-h-screen w-full flex items-center justify-center p-4 login-bg-ambient relative overflow-hidden">
+    <!-- Floating Ambient Soft White Glows -->
+    <div class="orb orb-white-1"></div>
+    <div class="orb orb-white-2"></div>
+    <div class="orb orb-white-3"></div>
+    <div class="orb orb-white-4"></div>
+
+    <div class="w-full max-w-lg glass-card rounded-lg p-8 shadow-2xl relative z-10 overflow-hidden">
+      <!-- Discreet theme switcher button in login header -->
+      <div class="absolute top-5 right-5 flex items-center">
+        <button type="button" onclick="toggleDarkMode()" class="text-slate-400 hover:text-amber-500 dark:hover:text-amber-300 p-1.5 rounded-md hover:bg-black/5 dark:hover:bg-white/10 transition text-sm cursor-pointer opacity-80 hover:opacity-100" title="Cambiar Tema Día / Noche">
+          <i class="fa-solid fa-moon dark:hidden"></i>
+          <i class="fa-solid fa-sun hidden dark:inline text-amber-300"></i>
         </button>
       </div>
 
       <!-- Brand Logo -->
       <div class="flex items-center gap-3 mb-6">
-        <div class="w-12 h-12 rounded-2xl bg-teal-600 text-white flex items-center justify-center font-bold text-2xl shadow-lg shadow-teal-500/30">
-          +
+        <div class="w-10 h-10 rounded-md bg-teal-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-teal-500/30">
+          <i class="fa-solid fa-plus"></i>
         </div>
         <div>
           <h1 class="text-xl font-black tracking-tight text-slate-900 dark:text-white">RespiraPlus</h1>
@@ -104,117 +295,129 @@
       </div>
 
       <!-- Tabs: Iniciar Sesión / Registrarse -->
-      <div class="flex border-b border-slate-200 dark:border-slate-800 mb-6 text-xs font-bold">
-        <button type="button" onclick="setAuthMode('login')" id="auth-tab-login" class="flex-1 py-2.5 border-b-2 border-teal-600 text-teal-600 dark:text-teal-400 transition">
-          Iniciar Sesión
+      <div class="flex border-b border-slate-200/80 dark:border-white/10 mb-6 text-xs font-bold">
+        <button type="button" onclick="setAuthMode('login')" id="auth-tab-login" class="flex-1 py-2.5 border-b-2 border-teal-500 text-teal-600 dark:text-teal-400 transition cursor-pointer">
+          <i class="fa-solid fa-right-to-bracket mr-1.5"></i> Iniciar Sesión
         </button>
-        <button type="button" onclick="setAuthMode('register')" id="auth-tab-register" class="flex-1 py-2.5 border-b-2 border-transparent text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 transition">
-          Crear Cuenta (Registro)
+        <button type="button" onclick="setAuthMode('register')" id="auth-tab-register" class="flex-1 py-2.5 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 transition cursor-pointer">
+          <i class="fa-solid fa-user-plus mr-1.5"></i> Crear Cuenta (Registro)
         </button>
       </div>
 
       <!-- FORM 1: LOGIN -->
       <form id="form-login" onsubmit="handleLogin(event)" class="space-y-4">
         <div>
-          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Correo Electrónico / Identificación</label>
-          <input type="email" id="login-email" value="carlos.vega@hospital.med" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-teal-500 focus:outline-none transition">
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1.5">
+            <i class="fa-solid fa-envelope text-teal-500 text-[11px]"></i> Correo Electrónico / Identificación
+          </label>
+          <input type="email" id="login-email" placeholder="admin@gmail.com o tu correo" required class="w-full px-3.5 py-2.5 rounded-md glass-input text-slate-900 dark:text-white text-xs focus:outline-none transition">
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Contraseña Clínica</label>
-          <input type="password" id="login-password" value="12345678" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-teal-500 focus:outline-none transition">
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1.5">
+            <i class="fa-solid fa-lock text-teal-500 text-[11px]"></i> Contraseña Clínica
+          </label>
+          <input type="password" id="login-password" placeholder="Ingresa tu contraseña" required class="w-full px-3.5 py-2.5 rounded-md glass-input text-slate-900 dark:text-white text-xs focus:outline-none transition">
+        </div>
+
+        <!-- Quick Access Helper Pills -->
+        <div class="p-2.5 rounded-lg bg-slate-100/80 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 space-y-1.5">
+          <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Acceso Rápido de Prueba:</p>
+          <div class="flex flex-wrap gap-1.5 text-[11px]">
+            <button type="button" onclick="document.getElementById('login-email').value='admin@gmail.com'; document.getElementById('login-password').value='admin123';" class="px-2.5 py-1 bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 hover:bg-purple-200 rounded font-bold transition cursor-pointer">
+              <i class="fa-solid fa-user-shield mr-1"></i> Admin (admin123)
+            </button>
+            <button type="button" onclick="document.getElementById('login-email').value='doctor@hospital.med'; document.getElementById('login-password').value='admin123';" class="px-2.5 py-1 bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 hover:bg-blue-200 rounded font-bold transition cursor-pointer">
+              <i class="fa-solid fa-user-doctor mr-1"></i> Doctor (admin123)
+            </button>
+            <button type="button" onclick="document.getElementById('login-email').value='carlos.vega@hospital.med'; document.getElementById('login-password').value='12345678';" class="px-2.5 py-1 bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 hover:bg-teal-200 rounded font-bold transition cursor-pointer">
+              <i class="fa-solid fa-user mr-1"></i> Paciente (12345678)
+            </button>
+          </div>
         </div>
 
         <div class="flex items-center justify-between text-xs">
           <label class="flex items-center gap-2 cursor-pointer text-slate-600 dark:text-slate-400">
-            <input type="checkbox" checked class="rounded border-slate-300 text-teal-600 focus:ring-teal-500">
+            <input type="checkbox" checked class="rounded-sm border-slate-300 text-teal-600 focus:ring-teal-500">
             <span>Recordar este equipo</span>
           </label>
-          <button type="button" onclick="showToast('Recuperación', 'Se envió un enlace temporal a su correo.', '📧')" class="text-teal-600 dark:text-teal-400 hover:underline font-semibold">¿Olvidaste clave?</button>
+          <button type="button" onclick="showToast('Recuperación', 'Se envió un enlace temporal a su correo.', 'fa-solid fa-envelope')" class="text-teal-600 dark:text-teal-400 hover:underline font-semibold cursor-pointer">¿Olvidaste clave?</button>
         </div>
 
-        <button type="submit" class="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-bold shadow-lg shadow-teal-600/30 transition cursor-pointer">
-          Ingresar al Portal
+        <button type="submit" class="w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-md text-xs font-bold shadow-md shadow-teal-600/20 hover:scale-[1.01] transition cursor-pointer flex items-center justify-center gap-2">
+          <span>Ingresar al Portal</span>
+          <i class="fa-solid fa-arrow-right text-xs"></i>
         </button>
       </form>
 
-      <!-- FORM 2: REGISTER -->
+      <!-- FORM 2: REGISTER (SOLO PARA PACIENTES / USUARIOS) -->
       <form id="form-register" onsubmit="handleRegister(event)" class="space-y-3.5 hidden">
         <div>
-          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Nombre Completo</label>
-          <input type="text" id="reg-name" placeholder="Ej: Dr. Fernando Ruiz / Ana Morales" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-teal-500 focus:outline-none">
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1.5">
+            <i class="fa-solid fa-user text-teal-500 text-[11px]"></i> Nombre y Apellidos del Paciente
+          </label>
+          <input type="text" id="reg-name" placeholder="Ej: Ana Morales / Juan Pérez" required class="w-full px-3.5 py-2.5 rounded-md glass-input text-slate-900 dark:text-white text-xs focus:outline-none">
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Correo Electrónico</label>
-            <input type="email" id="reg-email" placeholder="usuario@hospital.med" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-teal-500 focus:outline-none">
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-envelope text-teal-500 text-[11px]"></i> Correo Electrónico
+            </label>
+            <input type="email" id="reg-email" placeholder="paciente@hospital.med" required class="w-full px-3.5 py-2.5 rounded-md glass-input text-slate-900 dark:text-white text-xs focus:outline-none">
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Tipo de Perfil / Rol</label>
-            <select id="reg-role" onchange="toggleRegisterRoleFields(this.value)" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-teal-500 focus:outline-none">
-              <option value="patient">Paciente en Rehabilitación</option>
-              <option value="doctor">Médico / Especialista Fisiatra</option>
-            </select>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-lock text-teal-500 text-[11px]"></i> Contraseña
+            </label>
+            <input type="password" id="reg-password" placeholder="Mínimo 6 caracteres" required class="w-full px-3.5 py-2.5 rounded-md glass-input text-slate-900 dark:text-white text-xs focus:outline-none">
           </div>
         </div>
 
-        <div>
-          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Contraseña</label>
-          <input type="password" id="reg-password" placeholder="Mínimo 6 caracteres" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-teal-500 focus:outline-none">
-        </div>
-
-        <div id="patient-only-fields" class="space-y-3">
+        <div class="space-y-3">
           <div>
-            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Diagnóstico Inicial (Opcional)</label>
-            <input type="text" id="reg-diagnosis" placeholder="Ej: Lesión escapular / Disnea post-viral" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs">
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-notes-medical text-teal-500 text-[11px]"></i> Diagnóstico / Motivo de Fisioterapia
+            </label>
+            <input type="text" id="reg-diagnosis" placeholder="Ej: Tendinopatía Manguito Rotador / Disnea respiratoria" class="w-full px-3.5 py-2.5 rounded-md glass-input text-slate-900 dark:text-white text-xs">
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Meta de Recuperación</label>
-            <input type="text" id="reg-goal" placeholder="Ej: Recuperar rango de movimiento sin dolor" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs">
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-bullseye text-teal-500 text-[11px]"></i> Objetivo Principal de Recuperación
+            </label>
+            <input type="text" id="reg-goal" placeholder="Ej: Recuperar movilidad articular y capacidad ventilatoria" class="w-full px-3.5 py-2.5 rounded-md glass-input text-slate-900 dark:text-white text-xs">
           </div>
         </div>
 
-        <button type="submit" class="w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-bold shadow-lg shadow-teal-600/30 transition cursor-pointer mt-2">
-          Crear Cuenta y Conectar a SQLite
+        <button type="submit" class="w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-md text-xs font-bold shadow-md shadow-teal-600/20 hover:scale-[1.01] transition cursor-pointer mt-2 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-user-plus"></i>
+          <span>Registrar Cuenta de Paciente</span>
         </button>
       </form>
 
-      <!-- Quick demo login helpers -->
-      <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 space-y-2 text-[11px]">
-        <p class="text-slate-500 font-semibold">Accesos Rápidos Demo:</p>
-        <div class="grid grid-cols-2 gap-2">
-          <button type="button" onclick="quickFillPatient()" class="p-2 rounded-xl bg-teal-50 dark:bg-teal-950/40 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 font-bold hover:bg-teal-100 transition text-center">
-            👤 Paciente: Carlos Vega
-          </button>
-          <button type="button" onclick="quickFillDoctor()" class="p-2 rounded-xl bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 font-bold hover:bg-purple-100 transition text-center">
-            🩺 Doctor: Dr. Martínez (Admin)
-          </button>
-        </div>
-      </div>
-
       <!-- Legal footer -->
-      <div class="mt-4 text-center">
-        <button type="button" onclick="openTermsModal()" class="text-[11px] text-slate-500 hover:text-teal-600 dark:hover:text-teal-400 transition underline">
-          Términos de Servicio y Privacidad de Datos Médicos (HIPAA / GDPR)
+      <div class="mt-6 text-center pt-2 border-t border-slate-200/60 dark:border-white/10">
+        <button type="button" onclick="openTermsModal()" class="text-[11px] text-slate-500 hover:text-teal-600 dark:hover:text-teal-400 transition underline cursor-pointer flex items-center justify-center gap-1.5 mx-auto">
+          <i class="fa-solid fa-shield-halved text-[10px]"></i>
+          <span>Términos de Servicio y Privacidad de Datos Médicos (HIPAA / GDPR)</span>
         </button>
       </div>
     </div>
   </div>
 
   <!-- ============================================================== -->
-  <!-- SCREEN 2: MAIN APPLICATION SHELL (PATIENT & ADMIN MODES) -->
+  <!-- SCREEN 2: MAIN APPLICATION SHELL (FONDO NEUTRO LIMPIO Y PROFESIONAL) -->
   <!-- ============================================================== -->
-  <div id="screen-app" class="hidden min-h-screen w-full flex-col md:flex-row">
+  <div id="screen-app" class="hidden min-h-screen w-full flex-col md:flex-row bg-slate-100 dark:bg-[#090e17] text-slate-800 dark:text-slate-100 relative overflow-x-hidden transition-colors duration-200">
     
     <!-- Sidebar -->
-    <aside class="w-full md:w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 p-4 flex flex-col justify-between shrink-0 shadow-sm">
+    <aside class="w-full md:w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 p-4 flex flex-col justify-between shrink-0 shadow-sm relative z-20">
       <div>
         <!-- Brand & Global controls -->
         <div class="flex items-center justify-between px-2 py-2 mb-3 border-b border-slate-200 dark:border-slate-800">
           <div class="flex items-center gap-2.5">
-            <div class="w-9 h-9 rounded-xl bg-teal-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-teal-600/20">
-              +
+            <div class="w-8 h-8 rounded-md bg-teal-600 text-white flex items-center justify-center font-bold text-sm shadow-sm shadow-teal-600/20">
+              <i class="fa-solid fa-plus text-xs"></i>
             </div>
             <div>
               <h1 class="font-bold text-sm leading-tight text-slate-900 dark:text-white">RespiraPlus</h1>
@@ -222,81 +425,80 @@
             </div>
           </div>
 
-          <!-- Night Mode Toggle -->
-          <button onclick="toggleDarkMode()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition text-sm" title="Cambiar Tema Día/Noche">
-            <span class="dark:hidden">🌙</span>
-            <span class="hidden dark:inline">☀️</span>
+          <!-- Discreet Night Mode Toggle -->
+          <button onclick="toggleDarkMode()" class="text-slate-400 hover:text-amber-500 dark:hover:text-amber-300 p-1.5 rounded-md hover:bg-black/5 dark:hover:bg-white/10 transition text-sm cursor-pointer opacity-80 hover:opacity-100" title="Cambiar Tema Día/Noche">
+            <i class="fa-solid fa-moon dark:hidden"></i>
+            <i class="fa-solid fa-sun hidden dark:inline text-amber-300"></i>
           </button>
         </div>
 
         <!-- User Profile Card -->
-        <div onclick="switchTab('tab-profile')" class="bg-teal-50 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800/80 rounded-2xl p-3 mb-4 cursor-pointer hover:border-teal-400 transition group">
+        <div onclick="switchTab('tab-profile')" class="bg-teal-50/70 dark:bg-teal-950/40 border border-teal-200/70 dark:border-teal-800/80 rounded-lg p-3 mb-4 cursor-pointer hover:border-teal-400 transition group">
           <div class="flex items-center gap-3">
-            <div class="user-avatar-text w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center font-bold text-sm shadow">
+            <div class="user-avatar-text w-9 h-9 rounded-md bg-teal-600 text-white flex items-center justify-center font-bold text-xs shadow-sm">
               CV
             </div>
             <div class="flex-1 min-w-0">
               <div class="flex items-center justify-between">
                 <p class="user-name-text font-bold text-xs text-teal-950 dark:text-teal-200 truncate">Carlos Vega</p>
-                <span class="user-phase-badge text-[9px] bg-teal-200 dark:bg-teal-800 text-teal-900 dark:text-teal-100 px-1.5 py-0.5 rounded-full font-bold">Fase 2</span>
+                <span class="user-role-badge text-[9px] bg-teal-200 dark:bg-teal-800 text-teal-900 dark:text-teal-100 px-1.5 py-0.5 rounded font-bold">Paciente</span>
               </div>
               <p class="user-condition-text text-[11px] text-teal-700 dark:text-teal-400 truncate">Tendinopatía Manguito Rotador</p>
             </div>
           </div>
           <div class="mt-2 pt-2 border-t border-teal-200/60 dark:border-teal-900/60 flex items-center justify-between text-[10px] text-teal-800 dark:text-teal-300 font-semibold">
-            <span>⚙️ Expediente & Ajustes</span>
-            <span class="group-hover:translate-x-0.5 transition">→</span>
+            <span><i class="fa-solid fa-id-card-clip mr-1 text-teal-600 dark:text-teal-400"></i> Expediente & Ajustes</span>
+            <span class="group-hover:translate-x-0.5 transition"><i class="fa-solid fa-arrow-right text-[10px]"></i></span>
           </div>
         </div>
 
-        <!-- Doctor / Admin Portal Shortcut Banner (Visible when user is doctor or toggle is pressed) -->
-        <div id="admin-switch-banner" class="mb-3 hidden">
-          <button onclick="switchTab('tab-admin')" id="btn-admin-portal" class="w-full py-2 px-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs flex items-center justify-between shadow-md transition">
-            <span>🛠️ Panel de Control AdminSite</span>
-            <span>→</span>
+        <!-- Doctor / Admin Portal Shortcut Banner -->
+        <div id="admin-switch-banner" class="admin-only mb-3 hidden">
+          <button onclick="switchTab('tab-admin')" id="btn-admin-portal" class="w-full py-2 px-3 rounded-md bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs flex items-center justify-between shadow-sm transition cursor-pointer">
+            <span><i class="fa-solid fa-shield-halved mr-1.5"></i> AdminSite (Gestión)</span>
+            <span><i class="fa-solid fa-arrow-right text-[10px]"></i></span>
           </button>
         </div>
 
-        <!-- Navigation items -->
+        <!-- Navigation items with FontAwesome Font Icons -->
         <nav class="space-y-1 text-xs font-semibold">
-          <button onclick="switchTab('tab-guided')" id="btn-tab-guided" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-teal-600 text-white transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <button onclick="switchTab('tab-guided')" id="btn-tab-guided" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-md bg-teal-600 text-white transition cursor-pointer">
+            <i class="fa-solid fa-person-walking text-sm w-4 text-center"></i>
             <span>1. Ejercicios Guiados</span>
           </button>
 
-          <button onclick="switchTab('tab-videos')" id="btn-tab-videos" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+          <button onclick="switchTab('tab-videos')" id="btn-tab-videos" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition cursor-pointer">
+            <i class="fa-solid fa-circle-play text-sm w-4 text-center"></i>
             <span>2. Videos Explicativos</span>
           </button>
 
-          <button onclick="switchTab('tab-reminders')" id="btn-tab-reminders" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <button onclick="switchTab('tab-reminders')" id="btn-tab-reminders" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition cursor-pointer">
+            <i class="fa-solid fa-bell text-sm w-4 text-center"></i>
             <span>3. Recordatorios</span>
           </button>
 
-          <button onclick="switchTab('tab-logging')" id="btn-tab-logging" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+          <button onclick="switchTab('tab-logging')" id="btn-tab-logging" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition cursor-pointer">
+            <i class="fa-solid fa-clipboard-list text-sm w-4 text-center"></i>
             <span>4. Registro de Sesión (EVA)</span>
           </button>
 
-          <button onclick="switchTab('tab-progress')" id="btn-tab-progress" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          <button onclick="switchTab('tab-progress')" id="btn-tab-progress" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition cursor-pointer">
+            <i class="fa-solid fa-chart-line text-sm w-4 text-center"></i>
             <span>5. Seguimiento & Progreso</span>
           </button>
 
-          <button onclick="switchTab('tab-telehealth')" id="btn-tab-telehealth" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
-            <span>6. Teleconsulta & Supervisión</span>
+          <button onclick="switchTab('tab-telehealth')" id="btn-tab-telehealth" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition cursor-pointer">
+            <i class="fa-solid fa-video text-sm w-4 text-center"></i>
+            <span>6. Teleconsulta Zoom</span>
           </button>
 
-          <button onclick="switchTab('tab-offline')" id="btn-tab-offline" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-            <span>7. Modo Offline & Descargas</span>
+          <button onclick="switchTab('tab-offline')" id="btn-tab-offline" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition cursor-pointer">
+            <i class="fa-solid fa-file-arrow-down text-sm w-4 text-center"></i>
+            <span>7. Descargas Clínicas & PDF</span>
           </button>
 
-          <!-- Admin Tab Button (Direct Access) -->
-          <button onclick="switchTab('tab-admin')" id="btn-tab-admin" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-950/40 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          <button onclick="switchTab('tab-admin')" id="btn-tab-admin" class="admin-only nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-md text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-950/40 transition cursor-pointer hidden">
+            <i class="fa-solid fa-shield-halved text-sm w-4 text-center"></i>
             <span>AdminSite & Gestión</span>
           </button>
         </nav>
@@ -304,19 +506,17 @@
 
       <!-- Bottom controls & Logout -->
       <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 space-y-3">
-        <!-- Terms Link & Offline Simulator -->
-        <div class="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 px-1">
-          <button onclick="openTermsModal()" class="hover:underline flex items-center gap-1">
-            <span>🛡️ Privacidad & HIPAA</span>
-          </button>
-          <button onclick="toggleOfflineSim()" id="net-sim-btn" class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold border border-slate-300 dark:border-slate-700 text-[10px]">
-            Sin Red
+        <!-- Terms Link -->
+        <div class="flex items-center justify-center text-[11px] text-slate-500 dark:text-slate-400 px-1">
+          <button onclick="openTermsModal()" class="hover:underline flex items-center gap-1.5 cursor-pointer">
+            <i class="fa-solid fa-shield-heart text-teal-600 text-xs"></i>
+            <span>Privacidad, Bioseguridad & HIPAA</span>
           </button>
         </div>
 
-        <!-- Logout Button -->
-        <button onclick="handleLogout()" class="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30 hover:bg-red-100 dark:hover:bg-red-900/40 border border-red-200 dark:border-red-900/60 transition cursor-pointer">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+        <!-- Logout Button with FontAwesome -->
+        <button onclick="handleLogout()" class="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-md text-xs font-bold text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30 hover:bg-red-100 dark:hover:bg-red-900/40 border border-red-200 dark:border-red-900/60 transition cursor-pointer">
+          <i class="fa-solid fa-right-from-bracket"></i>
           <span>Cerrar Sesión</span>
         </button>
       </div>
@@ -324,16 +524,6 @@
 
     <!-- Main Content Area -->
     <main class="flex-1 p-4 md:p-8 overflow-y-auto max-w-6xl mx-auto w-full">
-
-      <!-- Offline alert bar -->
-      <div id="offline-alert" class="hidden mb-6 bg-amber-50 dark:bg-amber-950/50 border-l-4 border-amber-500 p-4 rounded-r-2xl shadow-sm text-amber-900 dark:text-amber-200 text-xs flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <span>⚠️ <strong>Modo Sin Conexión Activado:</strong> Ejecutando desde base local segura. Tus registros (<span id="pending-sync-count" class="font-bold">0</span> pendientes) se sincronizarán al reconectar.</span>
-        </div>
-        <button onclick="triggerManualSync()" class="text-[10px] bg-amber-200 hover:bg-amber-300 dark:bg-amber-800 text-amber-900 dark:text-amber-100 px-2.5 py-1 rounded font-bold transition cursor-pointer">
-          Sincronizar Ahora
-        </button>
-      </div>
 
       <!-- ============================================================== -->
       <!-- TAB 1: EJERCICIOS GUIADOS -->
@@ -351,26 +541,26 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
+          <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-6 shadow-sm flex flex-col justify-between">
             <div class="flex items-center justify-between mb-4">
               <div>
                 <span id="ex-category" class="text-xs uppercase font-bold text-teal-600 dark:text-teal-400 tracking-wider">Movilidad Escapular</span>
                 <h3 id="ex-title" class="text-xl font-bold text-slate-900 dark:text-white mt-0.5">Rotación Externa con Banda Elástica</h3>
               </div>
-              <span id="ex-step-badge" class="px-3 py-1 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Ejercicio 1 de 4</span>
+              <span id="ex-step-badge" class="px-3 py-1 rounded-md text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Ejercicio 1 de 4</span>
             </div>
 
             <!-- Avatar / Animation Frame -->
-            <div class="relative bg-slate-950 rounded-2xl h-64 flex flex-col items-center justify-center overflow-hidden border border-slate-800 text-white shadow-inner">
+            <div class="relative bg-slate-950 rounded-lg h-64 flex flex-col items-center justify-center overflow-hidden border border-slate-800 text-white shadow-inner">
               <div class="transition-all duration-700 transform flex flex-col items-center">
-                <div class="w-16 h-16 rounded-2xl bg-teal-500/20 border-2 border-teal-400 flex items-center justify-center mb-2">
-                  <span class="text-3xl">🫁</span>
+                <div class="w-16 h-16 rounded-lg bg-teal-500/20 border-2 border-teal-400 flex items-center justify-center mb-2">
+                  <i class="fa-solid fa-lungs text-3xl text-teal-400"></i>
                 </div>
                 <p id="posture-hint" class="text-xs text-slate-300 font-medium px-4 text-center">"Mantén los codos pegados a 90° y realiza una rotación externa controlada."</p>
               </div>
 
               <!-- Large Countdown in bottom center -->
-              <div class="absolute bottom-3 right-4 bg-black/40 backdrop-blur px-3 py-1 rounded-xl border border-white/10">
+              <div class="absolute bottom-3 right-4 bg-black/40 backdrop-blur px-3 py-1 rounded-md border border-white/10">
                 <span id="timer-large" class="text-2xl font-mono font-black text-teal-400">00:30</span>
               </div>
             </div>
@@ -387,31 +577,32 @@
               </div>
 
               <div class="flex items-center justify-between pt-2">
-                <button onclick="prevExercise()" class="px-4 py-2 text-xs font-bold rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition cursor-pointer">Anterior</button>
+                <button onclick="prevExercise()" class="px-4 py-2 text-xs font-bold rounded-md border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition cursor-pointer">Anterior</button>
                 <div class="flex items-center gap-2">
-                  <button onclick="toggleTimer()" id="btn-timer-toggle" class="px-6 py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-xl shadow-md transition flex items-center gap-2 cursor-pointer">
+                  <button onclick="toggleTimer()" id="btn-timer-toggle" class="px-6 py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-md shadow-md transition flex items-center gap-2 cursor-pointer">
                     <span id="btn-timer-text">Iniciar Guía</span>
                   </button>
-                  <button onclick="resetTimer()" class="p-2.5 text-slate-500 hover:text-slate-800 dark:hover:text-white border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer" title="Reiniciar">
-                    🔄
-                  </button>
+                  <button onclick="resetTimer()" class="p-2.5 text-slate-500 hover:text-slate-800 dark:hover:text-white border border-slate-200 dark:border-slate-700 rounded-md hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer" title="Reiniciar">
+                    <i class="fa-solid fa-rotate-right"></i></button>
                 </div>
-                <button onclick="nextExercise()" class="px-4 py-2 text-xs font-bold rounded-xl bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 hover:bg-slate-800 transition cursor-pointer">Siguiente</button>
+                <button onclick="nextExercise()" class="px-4 py-2 text-xs font-bold rounded-md bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 hover:bg-slate-800 transition cursor-pointer">Siguiente</button>
               </div>
             </div>
           </div>
 
           <!-- Routine list -->
           <div class="space-y-4">
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-5 shadow-sm">
               <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-2">Pautas de Bioseguridad</h4>
-              <p id="ex-safety-text" class="text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 p-3 rounded-xl border border-amber-200 dark:border-amber-900">
+              <p id="ex-safety-text" class="text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 p-3 rounded-md border border-amber-200 dark:border-amber-900">
                 Si el dolor supera 3/10 EVA, detén la serie y aplica crioterapia.
               </p>
             </div>
 
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm">
-              <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-3">Bloque de Hoy (SQLite)</h4>
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-5 shadow-sm">
+              <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-3 flex items-center gap-1.5">
+                <i class="fa-solid fa-list-check text-teal-600"></i> Plan de Ejercicios del Día
+              </h4>
               <div class="space-y-2" id="routine-list">
                 <!-- Dynamically rendered -->
               </div>
@@ -429,22 +620,19 @@
             <h2 class="text-2xl font-bold text-slate-900 dark:text-white">2. Videos Explicativos Médicos</h2>
             <p class="text-xs text-slate-500 dark:text-slate-400">Demostraciones en alta resolución con marcadores de técnica y streaming.</p>
           </div>
-          <button onclick="switchTab('tab-admin')" class="px-3.5 py-1.5 rounded-xl bg-purple-100 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 font-bold text-xs border border-purple-300 dark:border-purple-800 hover:bg-purple-200 transition">
-            + Ingresar Nuevos Videos (Admin)
-          </button>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm">
+          <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg overflow-hidden shadow-sm">
             <div class="relative bg-slate-950 aspect-video flex items-center justify-center">
               <video id="main-video-player" controls class="w-full h-full object-cover hidden"></video>
               <div id="main-video-placeholder" class="text-center p-6">
-                <div class="w-14 h-14 rounded-2xl bg-teal-500/30 border border-teal-400 flex items-center justify-center mx-auto mb-2 text-teal-300 text-xl font-bold">
-                  ▶
+                <div class="w-14 h-14 rounded-lg bg-teal-500/30 border border-teal-400 flex items-center justify-center mx-auto mb-2 text-teal-300 text-xl font-bold">
+                  <i class="fa-solid fa-play"></i>
                 </div>
                 <h3 id="vid-player-title" class="text-base font-bold text-white">Técnica: Elevación en Plano Escapular</h3>
                 <p id="vid-player-author" class="text-xs text-slate-400 mt-0.5">Especialista: Dr. Roberto Martínez</p>
-                <button onclick="playCurrentVideo()" class="mt-3 px-4 py-1.5 bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs rounded-xl shadow transition">
+                <button onclick="playCurrentVideo()" class="mt-3 px-4 py-1.5 bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs rounded-md shadow transition">
                   Iniciar Reproducción HD
                 </button>
               </div>
@@ -477,7 +665,7 @@
             <h2 class="text-2xl font-bold text-slate-900 dark:text-white">3. Recordatorios Personalizados</h2>
             <p class="text-xs text-slate-500 dark:text-slate-400">Alarmas programables con sincronización en base de datos y control de adherencia.</p>
           </div>
-          <button onclick="openAddReminderModal()" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-bold shadow transition self-start cursor-pointer">
+          <button onclick="openAddReminderModal()" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-md text-xs font-bold shadow transition self-start cursor-pointer">
             + Añadir Alarma
           </button>
         </div>
@@ -487,14 +675,14 @@
             <!-- Dynamically rendered -->
           </div>
 
-          <div class="bg-gradient-to-br from-teal-700 to-teal-950 text-white rounded-3xl p-5 flex flex-col justify-between shadow-lg">
+          <div class="bg-gradient-to-br from-teal-700 to-teal-950 text-white rounded-lg p-5 flex flex-col justify-between shadow-lg">
             <div>
               <span class="text-xs uppercase tracking-wider text-teal-200 font-bold">Adherencia Semanal</span>
               <h3 class="text-4xl font-black mt-2">92%</h3>
               <p class="text-xs text-teal-100 mt-2">Cumplimiento excelente. Has completado tus recordatorios prescritos.</p>
             </div>
-            <button onclick="testPushNotification()" class="mt-4 w-full py-2 bg-white/20 hover:bg-white/30 text-white rounded-xl text-xs font-bold transition cursor-pointer">
-              🔔 Probar Notificación Push
+            <button onclick="testPushNotification()" class="mt-4 w-full py-2 bg-white/20 hover:bg-white/30 text-white rounded-md text-xs font-bold transition cursor-pointer">
+              <i class="fa-solid fa-bell mr-1.5"></i> Probar Notificación Push
             </button>
           </div>
         </div>
@@ -510,12 +698,12 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
+          <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-6 shadow-sm">
             <form id="log-form" onsubmit="handleLogSubmit(event)" class="space-y-4">
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Ejercicio Prescrito</label>
-                  <select id="log-exercise" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+                  <select id="log-exercise" class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
                     <!-- Populated dynamically -->
                   </select>
                 </div>
@@ -523,13 +711,13 @@
                 <div>
                   <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Series x Reps</label>
                   <div class="grid grid-cols-2 gap-2">
-                    <input type="number" id="log-sets" value="3" min="1" max="10" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-center font-bold">
-                    <input type="number" id="log-reps" value="12" min="1" max="50" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-center font-bold">
+                    <input type="number" id="log-sets" value="3" min="1" max="10" class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-center font-bold">
+                    <input type="number" id="log-reps" value="12" min="1" max="50" class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-center font-bold">
                   </div>
                 </div>
               </div>
 
-              <div class="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200 dark:border-slate-700">
+              <div class="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-lg border border-slate-200 dark:border-slate-700">
                 <div class="flex items-center justify-between mb-2">
                   <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Nivel de Dolor (Escala EVA 0-10)</label>
                   <span id="pain-val-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">2 / 10 - Dolor Mínimo</span>
@@ -539,16 +727,17 @@
 
               <div>
                 <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Observación Clínica / Sensaciones</label>
-                <textarea id="log-notes" rows="2" placeholder="Sensaciones musculares, respiratorias o molestias sentidas..." class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"></textarea>
+                <textarea id="log-notes" rows="2" placeholder="Sensaciones musculares, respiratorias o molestias sentidas..." class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"></textarea>
               </div>
 
-              <button type="submit" class="w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-xl shadow transition cursor-pointer">
-                Guardar en Expediente SQLite
+              <button type="submit" class="w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-md shadow transition cursor-pointer flex items-center justify-center gap-2">
+                <i class="fa-solid fa-floppy-disk"></i>
+                <span>Guardar Registro de Sesión</span>
               </button>
             </form>
           </div>
 
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-5 shadow-sm">
             <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-3">Historial Clínico Reciente</h4>
             <div class="space-y-2 overflow-y-auto max-h-72" id="log-history-list">
               <!-- Dynamically populated -->
@@ -567,19 +756,19 @@
         </div>
 
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4 shadow-sm">
             <p class="text-[11px] text-slate-500 font-semibold">Reducción del Dolor</p>
             <p id="stat-pain-reduction" class="text-2xl font-black text-emerald-600 mt-1">-60%</p>
           </div>
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4 shadow-sm">
             <p class="text-[11px] text-slate-500 font-semibold">Movilidad (ROM)</p>
             <p id="stat-rom" class="text-2xl font-black text-teal-600 mt-1">145° <span class="text-[10px] text-emerald-600 font-bold">+25°</span></p>
           </div>
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4 shadow-sm">
             <p class="text-[11px] text-slate-500 font-semibold">Sesiones Cumplidas</p>
             <p id="stat-sessions" class="text-2xl font-black text-blue-600 mt-1">18 / 20</p>
           </div>
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4 shadow-sm">
             <p class="text-[11px] text-slate-500 font-semibold">Tiempo Estimado Alta</p>
             <p id="stat-discharge" class="text-2xl font-black text-purple-600 mt-1">14 días</p>
           </div>
@@ -587,14 +776,14 @@
 
         <!-- Charts -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-5 shadow-sm">
             <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-4">Curva de Dolor EVA (Evolución Semanal)</h4>
             <div id="eva-bars-container" class="h-44 flex items-end justify-between gap-2 pt-6 px-2 border-b border-l border-slate-200 dark:border-slate-700">
               <!-- Dynamically populated -->
             </div>
           </div>
 
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-5 shadow-sm">
             <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-4">Cumplimiento Semanal del Protocolo</h4>
             <div class="grid grid-cols-7 gap-1.5 text-center" id="compliance-grid">
               <!-- Dynamically populated -->
@@ -604,107 +793,435 @@
       </section>
 
       <!-- ============================================================== -->
-      <!-- TAB 6: VIDEOLLAMADA Y SUPERVISIÓN -->
+      <!-- ============================================================== -->
+      <!-- TAB 6: TELECONSULTA & SALA DE VIDEOLLAMADA MÉDICA INTEGRADA -->
       <!-- ============================================================== -->
       <section id="tab-telehealth" class="tab-content space-y-6">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">6. Teleconsulta & Supervisión en Vivo</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400">Conexión con tu especialista médico para evaluación biomecánica y corrección de postura.</p>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300 border border-blue-200 dark:border-blue-800 flex items-center gap-1.5">
+                <i class="fa-solid fa-video text-blue-600 dark:text-blue-400"></i> Teleconsulta Médica Integrada
+              </span>
+              <span id="zoom-status-pill" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+                <i class="fa-solid fa-circle text-[8px] mr-1"></i> Conexión en Vivo
+              </span>
+            </div>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">6. Teleconsulta & Videollamada Médica</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Participa en tu sesión médica de rehabilitación directamente dentro del aplicativo en tiempo real.</p>
           </div>
-          <button onclick="startTelehealthCall()" id="call-start-btn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow transition flex items-center gap-2 self-start cursor-pointer">
-            <span>Conectar con Dr. Martínez</span>
-          </button>
+          
+          <!-- Mode Switcher -->
+          <!-- Mode Switcher -->
+          <div class="flex flex-wrap items-center bg-slate-200/80 dark:bg-slate-800 p-1 rounded-lg text-xs font-bold gap-1 self-start sm:self-auto">
+            <!-- Doctor / Admin Queue View Button -->
+            <button type="button" onclick="setTelehealthView('doctor-queue')" id="btn-view-doctor-queue" class="admin-only px-3.5 py-1.5 rounded-md text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition cursor-pointer flex items-center gap-1.5 hidden">
+              <i class="fa-solid fa-list-check text-purple-500"></i>
+              <span>Lista de Espera & Pacientes</span>
+            </button>
+            <button type="button" onclick="setTelehealthView('zoom')" id="btn-view-zoom" class="px-3.5 py-1.5 rounded-md bg-blue-600 text-white shadow transition cursor-pointer flex items-center gap-1.5">
+              <i class="fa-solid fa-video text-blue-300"></i>
+              <span id="zoom-view-btn-label">Sala de Teleconsulta Zoom</span>
+            </button>
+            <button type="button" onclick="setTelehealthView('booking')" id="btn-view-booking" class="px-3.5 py-1.5 rounded-md text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition cursor-pointer flex items-center gap-1.5">
+              <i class="fa-solid fa-calendar-days text-teal-500"></i>
+              <span>Agendar & Mis Citas</span>
+            </button>
+          </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div class="lg:col-span-2 bg-slate-900 rounded-3xl overflow-hidden shadow-xl border border-slate-800 flex flex-col justify-between min-h-[360px] relative text-white">
-            <div class="p-6 flex flex-col items-center justify-center flex-1 text-center">
-              <div id="doctor-status-avatar" class="w-20 h-20 rounded-full bg-teal-900 border-4 border-teal-500/40 flex items-center justify-center mb-3 text-3xl">
-                👨‍⚕️
+        <!-- VIEW 0: LISTA DE LLAMADAS & SALA DE ESPERA DE PACIENTES (DOCTOR / ADMIN COMMAND CENTER) -->
+        <div id="telehealth-view-doctor-queue" class="space-y-6 hidden">
+          <!-- Stats header -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4 shadow-sm flex items-center justify-between">
+              <div>
+                <p class="text-[11px] text-slate-500 font-semibold">Pacientes en Espera</p>
+                <p id="doc-stat-waiting" class="text-2xl font-black text-emerald-600 mt-0.5">2</p>
               </div>
-              <h3 class="font-bold text-base">Dr. Roberto Martínez</h3>
-              <p id="call-status-badge" class="text-xs text-slate-400 mt-0.5">En espera de conexión segura E2E</p>
+              <div class="w-10 h-10 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-600 flex items-center justify-center text-lg">
+                <i class="fa-solid fa-user-clock"></i>
+              </div>
             </div>
 
-            <!-- Self Camera PIP Frame -->
-            <div class="absolute top-4 right-4 w-28 h-20 bg-slate-800 border border-slate-700 rounded-xl overflow-hidden flex items-center justify-center text-[10px] text-slate-400 shadow-md">
-              <video id="camera-video" autoplay playsinline muted class="w-full h-full object-cover hidden"></video>
-              <span id="camera-placeholder">Tú (Cámara)</span>
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4 shadow-sm flex items-center justify-between">
+              <div>
+                <p class="text-[11px] text-slate-500 font-semibold">Consultas Asignadas Hoy</p>
+                <p id="doc-stat-total" class="text-2xl font-black text-blue-600 mt-0.5">4</p>
+              </div>
+              <div class="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-blue-600 flex items-center justify-center text-lg">
+                <i class="fa-solid fa-calendar-check"></i>
+              </div>
             </div>
 
-            <div class="p-4 bg-slate-950/80 backdrop-blur border-t border-slate-800 flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <button onclick="showToast('Micrófono', 'Micrófono activo.', '🎤')" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs">🎤 Mic</button>
-                <button onclick="showToast('Cámara', 'Cámara activa.', '📷')" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs">📷 Cam</button>
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4 shadow-sm flex items-center justify-between">
+              <div>
+                <p class="text-[11px] text-slate-500 font-semibold">Zoom Server-to-Server OAuth</p>
+                <p class="text-xs font-bold text-emerald-600 dark:text-emerald-400 mt-1 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                  API Oficial Conectada
+                </p>
               </div>
-              <button onclick="endTelehealthCall()" id="end-call-btn" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold hidden cursor-pointer">
-                Finalizar Consulta
-              </button>
+              <div class="w-10 h-10 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-600 flex items-center justify-center text-lg">
+                <i class="fa-solid fa-video"></i>
+              </div>
             </div>
           </div>
 
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm flex flex-col justify-between h-[380px]">
-            <div>
-              <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-3">Notas & Chat Médico</h4>
-              <div class="space-y-2 text-xs overflow-y-auto max-h-56 pr-1" id="chat-messages">
-                <!-- Dynamically populated -->
+          <!-- Doctor Queue Main Section -->
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-6 shadow-sm space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
+              <div>
+                <h3 class="font-bold text-base text-slate-900 dark:text-white flex items-center gap-2">
+                  <i class="fa-solid fa-users-viewfinder text-purple-600"></i> Fila de Teleconsultas & Pacientes en Espera
+                </h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Inicia la reunión de Zoom como anfitrión oficial para atender a cada paciente citado.</p>
+              </div>
+              <button onclick="loadDoctorCallQueue()" class="px-3.5 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-200 rounded-md text-xs font-bold transition cursor-pointer flex items-center gap-1.5 self-start sm:self-auto">
+                <i class="fa-solid fa-rotate"></i>
+                <span>Actualizar Fila</span>
+              </button>
+            </div>
+
+            <!-- Queue Cards List -->
+            <div id="doctor-queue-container" class="space-y-3">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- VIEW 1: SALA & CENTRO DE CONTROL ZOOM OFICIAL (PACIENTE Y DOCTOR) -->
+        <div id="telehealth-view-zoom" class="space-y-6">
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Active Zoom Meeting Card -->
+            <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm space-y-5">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
+                <div>
+                  <h3 class="font-bold text-base text-slate-900 dark:text-white flex items-center gap-2">
+                    <i class="fa-solid fa-video text-blue-600"></i> Sala de Teleconsulta Médica Oficial (Zoom)
+                  </h3>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Sesión clínica de fisioterapia y evaluación funcional en alta definición.</p>
+                </div>
+                <!-- Doctor Action: Create New Zoom Meeting -->
+                <button onclick="generateNewZoomMeeting()" id="btn-create-zoom" class="admin-only px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-xs font-bold shadow transition flex items-center gap-1.5 cursor-pointer">
+                  <i class="fa-solid fa-plus"></i>
+                  <span>Generar Nueva Sala Zoom</span>
+                </button>
+              </div>
+
+              <!-- Meeting Information Board -->
+              <div class="p-5 rounded-xl bg-gradient-to-br from-blue-900/10 via-slate-900/10 to-teal-900/10 border border-blue-200 dark:border-blue-900/60 space-y-4">
+                <div class="flex items-center justify-between">
+                  <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Sala Oficial Activa
+                  </span>
+                  <span id="zoom-meeting-topic" class="font-bold text-xs text-slate-700 dark:text-slate-300">Teleconsulta de Fisioterapia & Control Clínico</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div class="p-3 bg-white dark:bg-slate-800/80 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                    <div>
+                      <p class="text-[10px] text-slate-400 font-semibold uppercase">ID de Reunión Zoom Oficial</p>
+                      <p id="zoom-meeting-id" class="font-mono font-bold text-base text-blue-600 dark:text-blue-400">720 1923 1505</p>
+                    </div>
+                    <button onclick="copyZoomId()" class="p-2 text-slate-400 hover:text-blue-600 transition cursor-pointer" title="Copiar ID"><i class="fa-solid fa-copy"></i></button>
+                  </div>
+
+                  <div class="p-3 bg-white dark:bg-slate-800/80 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                    <div>
+                      <p class="text-[10px] text-slate-400 font-semibold uppercase">Código de Acceso / Password</p>
+                      <p id="zoom-meeting-pwd" class="font-mono font-bold text-base text-slate-900 dark:text-white">ehS0E9</p>
+                    </div>
+                    <button onclick="copyZoomPass()" class="p-2 text-slate-400 hover:text-blue-600 transition cursor-pointer" title="Copiar Clave"><i class="fa-solid fa-copy"></i></button>
+                  </div>
+                </div>
+
+                <!-- Action Buttons: Host & Patient -->
+                <div class="pt-2 flex flex-wrap items-center gap-3">
+                  <!-- Doctor Host Link (ZAK Token) -->
+                  <a id="btn-zoom-host-start" href="https://us04web.zoom.us/s/72019231505" target="_blank" rel="noopener noreferrer" class="admin-only px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-lg shadow-md transition flex items-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-rocket"></i>
+                    <span>Iniciar Reunión como Anfitrión (Host)</span>
+                  </a>
+
+                  <!-- Patient Join Link -->
+                  <a id="btn-zoom-patient-join" href="https://us04web.zoom.us/j/72019231505?pwd=su5NJDE1XdPRhsGlb0uQbb5STdx1t7.1" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-lg shadow-md transition flex items-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-video"></i>
+                    <span>Unirse a la Reunión de Zoom</span>
+                  </a>
+
+                  <!-- Share/Copy Button -->
+                  <button type="button" onclick="copyZoomFullInvite()" class="px-4 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs rounded-lg transition flex items-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-clipboard-check"></i>
+                    <span>Copiar Invitación Completa</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Zoom OAuth Status (Admin/Doctor) -->
+              <div class="admin-only p-4 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-lg bg-blue-600/20 text-blue-600 flex items-center justify-center text-sm font-bold">
+                    <i class="fa-solid fa-shield-halved"></i>
+                  </div>
+                  <div>
+                    <p class="font-bold text-slate-900 dark:text-white">Zoom API Server-to-Server OAuth</p>
+                    <p class="text-[11px] text-slate-500">Cuenta: adriannuno56@gmail.com • Estado: Activo</p>
+                  </div>
+                </div>
+                <button onclick="openZoomConfigModal()" class="px-3 py-1.5 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 hover:bg-slate-100 rounded-md font-bold text-slate-700 dark:text-slate-200 transition flex items-center gap-1.5 cursor-pointer self-start sm:self-auto">
+                  <i class="fa-solid fa-gear"></i>
+                  <span>Ajustes Zoom</span>
+                </button>
               </div>
             </div>
 
-            <div class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800 flex gap-2">
-              <input type="text" id="chat-input" onkeydown="if(event.key==='Enter') sendChatMessage()" placeholder="Mensaje al médico..." class="flex-1 text-xs p-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
-              <button onclick="sendChatMessage()" class="px-3 py-2 bg-teal-600 text-white rounded-xl text-xs font-bold cursor-pointer">Enviar</button>
+            <!-- Side Panel: Live Chat & Medical Notes -->
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-sm flex flex-col justify-between h-[520px]">
+              <div>
+                <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3 mb-3">
+                  <h4 class="font-bold text-xs text-slate-900 dark:text-white flex items-center gap-1.5">
+                    <i class="fa-solid fa-comments text-teal-600"></i> Chat & Observaciones Clínicas
+                  </h4>
+                  <span class="text-[10px] text-slate-400 font-mono">Canal Médico Seguro</span>
+                </div>
+                <div class="space-y-2.5 text-xs overflow-y-auto max-h-[380px] pr-1" id="chat-messages">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+
+              <div class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800 flex gap-2">
+                <input type="text" id="chat-input" onkeydown="if(event.key==='Enter') sendChatMessage()" placeholder="Escribe un mensaje al especialista..." class="flex-1 text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none">
+                <button onclick="sendChatMessage()" class="px-4 py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-md text-xs font-bold transition cursor-pointer flex items-center gap-1.5">
+                  <span>Enviar</span>
+                  <i class="fa-solid fa-paper-plane text-[10px]"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- VIEW 3: AGENDAMIENTO & CALENDARIO MÉDICO INTERACTIVO -->
+        <div id="telehealth-view-booking" class="space-y-6 hidden">
+          <!-- Specialist Selector & Doctor Header Card -->
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-sm space-y-4">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
+              <div>
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300 border border-teal-200 dark:border-teal-800 inline-flex items-center gap-1 mb-1">
+                  <i class="fa-solid fa-calendar-check"></i> Agenda Médica Multi-Especialista
+                </span>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Agenda & Disponibilidad de Especialistas</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Consulta los horarios libres de cada médico y agenda tu cita con sala de Zoom oficial generada automáticamente.</p>
+              </div>
+
+              <!-- Doctor Filter / Selector -->
+              <div class="flex items-center gap-2 self-start md:self-auto">
+                <label for="agenda-doctor-select" class="text-xs font-bold text-slate-700 dark:text-slate-300 whitespace-nowrap">
+                  <i class="fa-solid fa-user-doctor text-teal-600 mr-1"></i> Especialista:
+                </label>
+                <select id="agenda-doctor-select" onchange="handleAgendaDoctorSelect(this.value)" class="text-xs font-bold p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm min-w-[260px]">
+                  <!-- Dynamically populated with all Doctors and Admin from DB -->
+                </select>
+              </div>
+            </div>
+
+            <!-- Selected Doctor Summary Card -->
+            <div id="agenda-doctor-card" class="p-4 bg-gradient-to-r from-teal-500/10 via-blue-500/10 to-transparent border border-teal-200 dark:border-teal-900/50 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div class="flex items-center gap-3.5">
+                <div id="agenda-doc-avatar" class="w-12 h-12 rounded-xl bg-teal-600 text-white font-black flex items-center justify-center text-base shadow-md shrink-0">
+                  DR
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h4 id="agenda-doc-name" class="font-bold text-sm text-slate-900 dark:text-white">Dr. Roberto Martínez</h4>
+                    <span id="agenda-doc-badge" class="px-2 py-0.5 rounded text-[10px] font-bold bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300">
+                      Médico Fisiatra
+                    </span>
+                  </div>
+                  <p id="agenda-doc-specialty" class="text-xs text-slate-600 dark:text-slate-400 mt-0.5">Especialista Jefe de Fisiatría y Rehabilitación</p>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <div class="text-left sm:text-right">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Sala Zoom Vinculada
+                  </span>
+                  <p class="text-[10px] text-slate-500 mt-0.5">Duración estándar: 45 min</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Calendar Controls & Week Grid -->
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-sm space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-3">
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="navigateAgendaWeek(-1)" class="px-2.5 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold transition cursor-pointer">
+                  <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button type="button" onclick="resetAgendaToday()" class="px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold transition cursor-pointer">
+                  Hoy
+                </button>
+                <button type="button" onclick="navigateAgendaWeek(1)" class="px-2.5 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold transition cursor-pointer">
+                  <i class="fa-solid fa-chevron-right"></i>
+                </button>
+                <span id="agenda-week-label" class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white ml-2">
+                  <!-- e.g. Semana del 05 al 11 de Octubre, 2026 -->
+                </span>
+              </div>
+
+              <div class="flex items-center gap-3 text-[11px] text-slate-500 font-medium">
+                <span class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded bg-emerald-500/20 border border-emerald-500 inline-block"></span> Disponible
+                </span>
+                <span class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded bg-blue-500/20 border border-blue-500 inline-block"></span> Mi Cita Zoom
+                </span>
+                <span class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded bg-slate-400/20 border border-slate-400 inline-block"></span> Reservado
+                </span>
+              </div>
+            </div>
+
+            <!-- Weekly Matrix Grid -->
+            <div class="overflow-x-auto pb-2">
+              <div id="agenda-weekly-grid" class="min-w-[720px] grid grid-cols-7 gap-2">
+                <!-- Dynamically rendered weekly grid slots -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Booking & Confirmed Appointments Row -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Formulario: Agendar Cita -->
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-sm space-y-4">
+              <div class="border-b border-slate-200 dark:border-slate-800 pb-3">
+                <h3 class="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+                  <i class="fa-solid fa-calendar-plus text-blue-600"></i> Formulario de Agendamiento
+                </h3>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Selecciona tu especialista, fecha y motivo de consulta.</p>
+              </div>
+
+              <form id="form-book-appointment" onsubmit="handleBookAppointment(event)" class="space-y-3">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Médico Fisiatra / Especialista / Admin</label>
+                  <select id="appt-doctor" required class="w-full text-xs p-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+                    <!-- Dynamically populated from DB -->
+                  </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Fecha</label>
+                    <input type="date" id="appt-date" required class="w-full text-xs p-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Hora</label>
+                    <select id="appt-time" required class="w-full text-xs p-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+                      <option value="09:00">09:00 AM</option>
+                      <option value="10:30" selected>10:30 AM</option>
+                      <option value="12:00">12:00 PM</option>
+                      <option value="15:00">03:00 PM</option>
+                      <option value="16:30">04:30 PM</option>
+                      <option value="18:00">06:00 PM</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Tipo de Consulta</label>
+                  <select id="appt-type" class="w-full text-xs p-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+                    <option value="Control y Teleconsulta de Rehabilitación">Control y Teleconsulta de Rehabilitación</option>
+                    <option value="Evaluación Inicial de Rango Articular">Evaluación Inicial de Rango Articular</option>
+                    <option value="Revisión de Dolor en Escala EVA">Revisión de Dolor en Escala EVA</option>
+                    <option value="Supervisión Médica & Biomecánica">Supervisión Médica & Biomecánica</option>
+                    <option value="Alta Médica y Mantenimiento">Alta Médica y Mantenimiento</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Motivo / Síntomas Específicos</label>
+                  <textarea id="appt-notes" rows="2" placeholder="Describe brevemente tus síntomas o motivo de consulta..." class="w-full text-xs p-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"></textarea>
+                </div>
+
+                <button type="submit" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-lg shadow transition flex items-center justify-center gap-2 cursor-pointer">
+                  <i class="fa-solid fa-calendar-check"></i>
+                  <span>Confirmar Cita & Generar Sala Zoom</span>
+                </button>
+              </form>
+            </div>
+
+            <!-- Mis Citas Agendadas -->
+            <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-sm flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3 mb-4">
+                  <h3 class="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+                    <i class="fa-solid fa-clipboard-user text-teal-600"></i> Citas Médicas Agendadas & Salas Oficiales de Zoom
+                  </h3>
+                  <span class="text-[11px] text-slate-500 font-semibold">1-Clic para Ingresar a Zoom</span>
+                </div>
+                <div id="appointments-list" class="space-y-3 max-h-[420px] overflow-y-auto pr-1">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       <!-- ============================================================== -->
-      <!-- TAB 7: EJERCICIOS DESCARGABLES & OFFLINE -->
+      <!-- TAB 7: DESCARGAS CLÍNICAS & DOCUMENTOS OFICIALES -->
       <!-- ============================================================== -->
       <section id="tab-offline" class="tab-content space-y-6">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">7. Ejercicios Descargables (Modo Offline)</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400">Descarga tu ficha médica en PDF con PDFKit o guarda el paquete en la caché local PWA.</p>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">7. Descargas Clínicas & Documentos Oficiales</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Descarga tu ficha médica personalizada en PDF con código QR y consulta la guía de bioseguridad.</p>
           </div>
-          <button onclick="downloadAllOfflinePack()" class="px-4 py-2 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 rounded-xl text-xs font-bold shadow transition self-start cursor-pointer">
-            Descargar Paquete Offline Completo (32 MB)
+          <button onclick="downloadPDFExerciseSheet()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-xs font-bold shadow transition self-start cursor-pointer flex items-center gap-2">
+            <i class="fa-solid fa-file-pdf"></i>
+            <span>Descargar Ficha PDF Oficial</span>
           </button>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm space-y-3">
-            <h4 class="font-bold text-xs text-slate-900 dark:text-white">Memoria Local Cacheada</h4>
-            <div class="text-xs space-y-1.5 text-slate-600 dark:text-slate-400">
-              <p>• Rutina Fase 2: <strong>4.2 MB (Listo)</strong></p>
-              <p>• Videos HD: <strong>28.5 MB (Listo)</strong></p>
-              <p>• Registros pendientes sync: <strong id="pending-sync-count-box">0</strong></p>
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-5 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="w-10 h-10 rounded-md bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-300 flex items-center justify-center font-bold text-lg mb-2"><i class="fa-solid fa-file-pdf"></i></div>
+              <h4 class="font-bold text-xs text-slate-900 dark:text-white">Ficha Imprimible PDF Oficial</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Generación dinámica en servidor Express con PDFKit, plan de ejercicios, series, repeticiones y código QR.</p>
             </div>
-            <button onclick="triggerManualSync()" class="w-full py-2 bg-teal-50 dark:bg-teal-950 text-teal-800 dark:text-teal-200 text-xs font-bold rounded-xl border border-teal-200 dark:border-teal-800 cursor-pointer">
-              Sincronizar Datos con Servidor
+            <button onclick="downloadPDFExerciseSheet()" class="mt-4 w-full py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-md text-xs font-bold transition cursor-pointer flex items-center justify-center gap-2">
+              <i class="fa-solid fa-file-arrow-down"></i>
+              <span>Descargar Ficha PDF</span>
             </button>
           </div>
 
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm flex flex-col justify-between">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-5 shadow-sm flex flex-col justify-between">
             <div>
-              <div class="w-10 h-10 rounded-xl bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-300 flex items-center justify-center font-bold text-lg mb-2">📄</div>
-              <h4 class="font-bold text-xs text-slate-900 dark:text-white">Ficha Imprimible PDF</h4>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Generación dinámica en servidor Express con PDFKit, rutinas y bioseguridad.</p>
+              <div class="w-10 h-10 rounded-md bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 flex items-center justify-center font-bold text-lg mb-2"><i class="fa-solid fa-book-medical"></i></div>
+              <h4 class="font-bold text-xs text-slate-900 dark:text-white">Guía Clínica de Ejercicios</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Protocolos posturales, biomecánica de hombro y técnicas de respiración diafragmática para el paciente.</p>
             </div>
-            <button onclick="downloadPDFExerciseSheet()" class="mt-4 w-full py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold transition cursor-pointer">
-              Descargar Ficha PDF Oficial
+            <button onclick="downloadAllOfflinePack()" class="mt-4 w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-md text-xs font-bold transition cursor-pointer flex items-center justify-center gap-2">
+              <i class="fa-solid fa-download"></i>
+              <span>Descargar Guía Médica</span>
             </button>
           </div>
 
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm flex flex-col justify-between">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-5 shadow-sm flex flex-col justify-between">
             <div>
-              <div class="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-bold text-lg mb-2">🛡️</div>
-              <h4 class="font-bold text-xs text-slate-900 dark:text-white">Seguridad & HIPAA</h4>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Cifrado de datos de salud en reposo y en tránsito según estándares médicos internacionales.</p>
+              <div class="w-10 h-10 rounded-md bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-bold text-lg mb-2"><i class="fa-solid fa-shield-halved"></i></div>
+              <h4 class="font-bold text-xs text-slate-900 dark:text-white">Privacidad Médica & HIPAA</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Consentimiento informado y cifrado TLS 1.3 / AES-256 de los datos de salud conforme a normativas internacionales.</p>
             </div>
-            <span class="mt-4 text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">● Cifrado Local Activo</span>
+            <button onclick="openTermsModal()" class="mt-4 w-full py-2.5 bg-slate-800 hover:bg-slate-900 text-white dark:bg-slate-700 dark:hover:bg-slate-600 rounded-md text-xs font-bold transition cursor-pointer flex items-center justify-center gap-2">
+              <i class="fa-solid fa-file-contract"></i>
+              <span>Ver Consentimiento HIPAA</span>
+            </button>
           </div>
         </div>
       </section>
@@ -715,13 +1232,13 @@
       <section id="tab-profile" class="tab-content space-y-6">
         <div>
           <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Personalización del Paciente & Expediente</h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Modifica tus datos clínicos, diagnóstico y objetivos con guardado permanente en SQLite.</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Modifica tus datos clínicos, diagnóstico y objetivos de recuperación médica.</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <!-- Profile Card -->
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm flex flex-col items-center text-center">
-            <div class="user-avatar-text w-24 h-24 rounded-3xl bg-teal-600 text-white flex items-center justify-center text-3xl font-black shadow-lg shadow-teal-600/30 mb-4">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-6 shadow-sm flex flex-col items-center text-center">
+            <div class="user-avatar-text w-24 h-24 rounded-lg bg-teal-600 text-white flex items-center justify-center text-3xl font-black shadow-lg shadow-teal-600/30 mb-4">
               CV
             </div>
             <h3 class="user-name-text font-bold text-base text-slate-900 dark:text-white">Carlos Vega</h3>
@@ -737,34 +1254,35 @@
           </div>
 
           <!-- Edit Profile Form -->
-          <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
+          <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-6 shadow-sm">
             <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-4">Editar Información Personal & Clínica</h3>
             <form onsubmit="handleProfileUpdate(event)" class="space-y-4">
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Nombre Completo</label>
-                  <input type="text" id="input-prof-name" value="Carlos Vega" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+                  <input type="text" id="input-prof-name" value="Carlos Vega" class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
                 </div>
                 <div>
                   <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Diagnóstico Médico</label>
-                  <input type="text" id="input-prof-condition" value="Tendinopatía Manguito Rotador" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+                  <input type="text" id="input-prof-condition" value="Tendinopatía Manguito Rotador" class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
                 </div>
               </div>
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Médico Fisioterapeuta Asignado</label>
-                  <input type="text" value="Dr. Roberto Martínez (Especialista en Rehabilitación)" readonly class="w-full text-xs p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/50 text-slate-500">
+                  <input type="text" value="Dr. Roberto Martínez (Especialista en Rehabilitación)" readonly class="w-full text-xs p-2.5 rounded-md border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/50 text-slate-500">
                 </div>
                 <div>
                   <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Objetivo de Rehabilitación</label>
-                  <input type="text" id="input-prof-goal" value="Recuperar abducción a 180° y capacidad ventilatoria" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+                  <input type="text" id="input-prof-goal" value="Recuperar abducción a 180° y capacidad ventilatoria" class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
                 </div>
               </div>
 
               <div class="pt-2 flex justify-end gap-3">
-                <button type="submit" class="px-5 py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-xl shadow transition cursor-pointer">
-                  Guardar Cambios en SQLite
+                <button type="submit" class="px-5 py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-md shadow transition cursor-pointer flex items-center justify-center gap-2">
+                  <i class="fa-solid fa-floppy-disk"></i>
+                  <span>Guardar Cambios en Expediente</span>
                 </button>
               </div>
             </form>
@@ -785,27 +1303,27 @@
             <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Crea ejercicios, sube videos clínicos, supervisa expedientes y ajusta fases terapéuticas.</p>
           </div>
           <div class="flex items-center gap-2 self-start">
-            <button onclick="loadAdminData()" class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold hover:bg-slate-200 transition">
-              🔄 Actualizar Datos
+            <button onclick="loadAdminData()" class="px-3.5 py-2 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold hover:bg-slate-200 transition">
+              <i class="fa-solid fa-rotate-right mr-1.5"></i> Actualizar Datos
             </button>
           </div>
         </div>
 
         <!-- Admin KPI Metric Cards -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4 shadow-sm">
             <p class="text-[11px] text-slate-500 font-semibold">Pacientes Registrados</p>
             <p id="adm-stat-patients" class="text-2xl font-black text-purple-600 mt-1">0</p>
           </div>
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4 shadow-sm">
             <p class="text-[11px] text-slate-500 font-semibold">Ejercicios en Catálogo</p>
             <p id="adm-stat-exercises" class="text-2xl font-black text-teal-600 mt-1">0</p>
           </div>
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4 shadow-sm">
             <p class="text-[11px] text-slate-500 font-semibold">Videos Demostrativos</p>
             <p id="adm-stat-videos" class="text-2xl font-black text-blue-600 mt-1">0</p>
           </div>
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4 shadow-sm">
             <p class="text-[11px] text-slate-500 font-semibold">Registros Clínicos EVA</p>
             <p id="adm-stat-logs" class="text-2xl font-black text-emerald-600 mt-1">0</p>
           </div>
@@ -815,49 +1333,74 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
           <!-- 1. GESTOR DE VIDEOS CLÍNICOS -->
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-4">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-6 shadow-sm space-y-4">
             <div class="flex items-center justify-between">
               <h3 class="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
-                <span>🎬</span> Ingresar Nuevo Video Clínico
+                <i class="fa-solid fa-film text-purple-600"></i> Ingresar Nuevo Video Clínico
               </h3>
               <span class="text-[10px] text-purple-600 dark:text-purple-400 font-bold bg-purple-50 dark:bg-purple-950 px-2 py-0.5 rounded">Catálogo</span>
             </div>
 
             <form onsubmit="handleAdminCreateVideo(event)" class="space-y-3">
               <div>
-                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Título del Video</label>
-                <input type="text" id="adm-vid-title" placeholder="Ej: Técnica de Abducción con Mancuerna Ligera" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Título del Video Demostrativo</label>
+                <input type="text" id="adm-vid-title" placeholder="Ej: Técnica de Abducción con Mancuerna Ligera" required class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
               </div>
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Categoría Médica</label>
-                  <input type="text" id="adm-vid-cat" placeholder="Ej: Fuerza Escapular / Neumología" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
+                  <input type="text" id="adm-vid-cat" placeholder="Ej: Fuerza Escapular / Neumología" required class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
                 </div>
                 <div>
-                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Especialista</label>
-                  <input type="text" id="adm-vid-doc" value="Dr. Roberto Martínez" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Especialista / Autor</label>
+                  <input type="text" id="adm-vid-doc" value="Dr. Roberto Martínez" required class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
                 </div>
               </div>
 
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Duración (mm:ss)</label>
-                  <input type="text" id="adm-vid-dur" value="03:45" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
+              <!-- Video Source Selector: Local File or URL -->
+              <div class="space-y-2">
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300">Origen del Video Médico</label>
+                
+                <!-- File Upload Box -->
+                <div class="border-2 border-dashed border-purple-300 dark:border-purple-800/80 rounded-lg p-3 bg-purple-50/50 dark:bg-purple-950/20 text-center hover:bg-purple-50 dark:hover:bg-purple-950/40 transition">
+                  <input type="file" id="adm-vid-file" accept="video/mp4,video/webm,video/ogg" onchange="handleAdminVideoFileSelect(event)" class="hidden">
+                  <label for="adm-vid-file" class="cursor-pointer flex flex-col items-center justify-center gap-1 text-xs text-purple-700 dark:text-purple-300">
+                    <i class="fa-solid fa-cloud-arrow-up text-lg text-purple-600"></i>
+                    <span class="font-bold" id="adm-vid-file-name">Seleccionar Video desde tu Dispositivo (.mp4, .webm)</span>
+                    <span class="text-[10px] text-slate-500">Haz clic para buscar en tus archivos</span>
+                  </label>
                 </div>
-                <div>
-                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">URL Video (MP4 / Web)</label>
-                  <input type="url" id="adm-vid-url" value="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
+
+                <!-- Video Preview Box (if selected) -->
+                <video id="adm-vid-preview" controls class="hidden w-full h-36 rounded-md bg-black mt-2 object-contain"></video>
+
+                <div class="relative flex py-1 items-center">
+                  <div class="flex-grow border-t border-slate-200 dark:border-slate-700"></div>
+                  <span class="flex-shrink mx-2 text-[10px] text-slate-400 uppercase font-bold">O ingresar URL</span>
+                  <div class="flex-grow border-t border-slate-200 dark:border-slate-700"></div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Duración (mm:ss)</label>
+                    <input type="text" id="adm-vid-dur" value="03:45" required class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">URL Directa de Video</label>
+                    <input type="url" id="adm-vid-url" placeholder="https://..." value="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
+                  </div>
                 </div>
               </div>
 
               <div>
                 <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Marcador Inicial de Técnica</label>
-                <input type="text" id="adm-vid-marker" placeholder="Ej: 00:30 - Control de respiración" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
+                <input type="text" id="adm-vid-marker" placeholder="Ej: 00:30 - Control de respiración" class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
               </div>
 
-              <button type="submit" class="w-full py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-bold shadow transition cursor-pointer">
-                + Guardar Video en SQLite
+              <button type="submit" id="btn-adm-submit-video" class="w-full py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-md text-xs font-bold shadow transition cursor-pointer flex items-center justify-center gap-2">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <span>Publicar Video Clínico</span>
               </button>
             </form>
 
@@ -870,10 +1413,10 @@
           </div>
 
           <!-- 2. GESTOR DE EJERCICIOS Y PROTOCOLOS -->
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-4">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-6 shadow-sm space-y-4">
             <div class="flex items-center justify-between">
               <h3 class="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
-                <span>💪</span> Añadir Ejercicio a la Rutina
+                <i class="fa-solid fa-dumbbell text-teal-600"></i> Añadir Ejercicio a la Rutina
               </h3>
               <span class="text-[10px] text-teal-600 dark:text-teal-400 font-bold bg-teal-50 dark:bg-teal-950 px-2 py-0.5 rounded">Protocolo</span>
             </div>
@@ -881,38 +1424,39 @@
             <form onsubmit="handleAdminCreateExercise(event)" class="space-y-3">
               <div>
                 <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Nombre del Ejercicio</label>
-                <input type="text" id="adm-ex-title" placeholder="Ej: Tracción con Polea para Serrato" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
+                <input type="text" id="adm-ex-title" placeholder="Ej: Tracción con Polea para Serrato" required class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
               </div>
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Categoría</label>
-                  <input type="text" id="adm-ex-cat" placeholder="Ej: Fortalecimiento Escapular" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
+                  <input type="text" id="adm-ex-cat" placeholder="Ej: Fortalecimiento Escapular" required class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
                 </div>
                 <div>
                   <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Prescripción</label>
-                  <input type="text" id="adm-ex-pres" value="3 series x 10 reps" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
+                  <input type="text" id="adm-ex-pres" value="3 series x 10 reps" required class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
                 </div>
               </div>
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Duración (segundos)</label>
-                  <input type="number" id="adm-ex-dur" value="45" min="10" max="300" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
+                  <input type="number" id="adm-ex-dur" value="45" min="10" max="300" required class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
                 </div>
                 <div>
                   <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Bioseguridad</label>
-                  <input type="text" id="adm-ex-safe" value="Detener si dolor EVA > 3/10" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
+                  <input type="text" id="adm-ex-safe" value="Detener si dolor EVA > 3/10" required class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white">
                 </div>
               </div>
 
               <div>
                 <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Consejo Postural & Biomecánica</label>
-                <textarea id="adm-ex-hint" rows="2" placeholder="Indicaciones para el paciente durante la ejecución..." required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white"></textarea>
+                <textarea id="adm-ex-hint" rows="2" placeholder="Indicaciones para el paciente durante la ejecución..." required class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white"></textarea>
               </div>
 
-              <button type="submit" class="w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-bold shadow transition cursor-pointer">
-                + Guardar Ejercicio en SQLite
+              <button type="submit" class="w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-md text-xs font-bold shadow transition cursor-pointer flex items-center justify-center gap-2">
+                <i class="fa-solid fa-plus"></i>
+                <span>Prescribir Ejercicio Clínico</span>
               </button>
             </form>
 
@@ -927,10 +1471,10 @@
         </div>
 
         <!-- 3. EXPEDIENTES DE PACIENTES REGISTRADOS -->
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-4">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-6 shadow-sm space-y-4">
           <div class="flex items-center justify-between">
             <h3 class="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
-              <span>👥</span> Directorio de Pacientes & Historial Clínico
+              <i class="fa-solid fa-users text-purple-600"></i> Directorio de Pacientes & Historial Clínico
             </h3>
             <span class="text-xs text-slate-500">Expedientes sincronizados en tiempo real</span>
           </div>
@@ -963,38 +1507,38 @@
   <!-- MODAL: AGREGAR RECORDATORIO -->
   <!-- ============================================================== -->
   <div id="modal-add-reminder" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-2xl">
+    <div class="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-6 shadow-2xl">
       <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
-        <h3 class="font-bold text-sm text-slate-900 dark:text-white">⏰ Crear Nuevo Recordatorio</h3>
-        <button onclick="closeAddReminderModal()" class="text-slate-500 hover:text-slate-800 text-lg font-bold">✕</button>
+        <h3 class="font-bold text-sm text-slate-900 dark:text-white"><i class="fa-solid fa-bell text-teal-600 mr-1.5"></i> Crear Nuevo Recordatorio</h3>
+        <button onclick="closeAddReminderModal()" class="text-slate-500 hover:text-slate-800 text-base"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <form onsubmit="handleAddReminderSubmit(event)" class="space-y-3 mt-4">
         <div>
           <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Título del Recordatorio</label>
-          <input type="text" id="new-rem-title" placeholder="Ej: Ejercicio de Flexibilidad Tarde" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+          <input type="text" id="new-rem-title" placeholder="Ej: Ejercicio de Flexibilidad Tarde" required class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Hora</label>
-            <input type="time" id="new-rem-time" value="16:00" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+            <input type="time" id="new-rem-time" value="16:00" required class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
           </div>
           <div>
             <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Icono</label>
-            <select id="new-rem-icon" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
-              <option value="⏰">⏰ Alarma Reloj</option>
-              <option value="🧊">🧊 Crioterapia / Hielo</option>
-              <option value="🫁">🫁 Respiración Diafragmática</option>
-              <option value="💊">💊 Medicamento</option>
+            <select id="new-rem-icon" class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+              <option value="bell">Alarma Reloj</option>
+              <option value="snowflake">Crioterapia / Hielo</option>
+              <option value="lungs">Respiración Diafragmática</option>
+              <option value="pills">Medicamento</option>
             </select>
           </div>
         </div>
         <div>
           <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Detalle / Duración</label>
-          <input type="text" id="new-rem-detail" placeholder="Ej: 15 minutos • 3 series" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+          <input type="text" id="new-rem-detail" placeholder="Ej: 15 minutos • 3 series" class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
         </div>
         <div class="pt-2 flex justify-end gap-2">
-          <button type="button" onclick="closeAddReminderModal()" class="px-4 py-2 text-xs rounded-xl border border-slate-300 text-slate-600">Cancelar</button>
-          <button type="submit" class="px-4 py-2 bg-teal-600 text-white rounded-xl text-xs font-bold">Crear Alarma</button>
+          <button type="button" onclick="closeAddReminderModal()" class="px-4 py-2 text-xs rounded-md border border-slate-300 text-slate-600">Cancelar</button>
+          <button type="submit" class="px-4 py-2 bg-teal-600 text-white rounded-md text-xs font-bold">Crear Alarma</button>
         </div>
       </form>
     </div>
@@ -1004,10 +1548,10 @@
   <!-- MODAL: CAMBIAR FASE DE PACIENTE (ADMIN) -->
   <!-- ============================================================== -->
   <div id="modal-patient-phase" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="w-full max-w-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-2xl">
+    <div class="w-full max-w-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-6 shadow-2xl">
       <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
-        <h3 class="font-bold text-sm text-slate-900 dark:text-white">🩺 Actualizar Fase Terapéutica</h3>
-        <button onclick="closePatientPhaseModal()" class="text-slate-500 hover:text-slate-800 text-lg font-bold">✕</button>
+        <h3 class="font-bold text-sm text-slate-900 dark:text-white"><i class="fa-solid fa-stethoscope text-purple-600 mr-1.5"></i> Actualizar Fase Terapéutica</h3>
+        <button onclick="closePatientPhaseModal()" class="text-slate-500 hover:text-slate-800 text-base"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <form onsubmit="handleSavePatientPhase(event)" class="space-y-3 mt-4">
         <input type="hidden" id="edit-patient-id">
@@ -1017,7 +1561,7 @@
         </div>
         <div>
           <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Nueva Fase Terapéutica</label>
-          <select id="edit-patient-phase-select" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+          <select id="edit-patient-phase-select" class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
             <option value="Fase 1">Fase 1 (Control de Inflamación y Dolor)</option>
             <option value="Fase 2">Fase 2 (Movilidad y Fortalecimiento Activo)</option>
             <option value="Fase 3">Fase 3 (Readaptación Funcional)</option>
@@ -1025,8 +1569,8 @@
           </select>
         </div>
         <div class="pt-2 flex justify-end gap-2">
-          <button type="button" onclick="closePatientPhaseModal()" class="px-4 py-2 text-xs rounded-xl border border-slate-300 text-slate-600">Cancelar</button>
-          <button type="submit" class="px-4 py-2 bg-purple-600 text-white rounded-xl text-xs font-bold">Guardar Cambios</button>
+          <button type="button" onclick="closePatientPhaseModal()" class="px-4 py-2 text-xs rounded-md border border-slate-300 text-slate-600">Cancelar</button>
+          <button type="submit" class="px-4 py-2 bg-purple-600 text-white rounded-md text-xs font-bold">Guardar Cambios</button>
         </div>
       </form>
     </div>
@@ -1036,24 +1580,24 @@
   <!-- MODAL: TÉRMINOS Y PRIVACIDAD -->
   <!-- ============================================================== -->
   <div id="modal-terms" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="w-full max-w-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-2xl max-h-[85vh] flex flex-col justify-between">
+    <div class="w-full max-w-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-6 shadow-2xl max-h-[85vh] flex flex-col justify-between">
       <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
         <div class="flex items-center gap-2">
-          <span class="text-xl">📜</span>
+          <i class="fa-solid fa-file-lines text-teal-600 text-xl"></i>
           <h3 class="font-bold text-base text-slate-900 dark:text-white">Términos de Servicio & Privacidad de Datos de Salud</h3>
         </div>
-        <button onclick="closeTermsModal()" class="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 text-lg font-bold">✕</button>
+        <button onclick="closeTermsModal()" class="p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 text-base"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
       <div class="overflow-y-auto py-4 space-y-4 text-xs text-slate-600 dark:text-slate-300 leading-relaxed pr-2">
-        <div class="p-3 bg-teal-50 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800 rounded-2xl">
+        <div class="p-3 bg-teal-50 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800 rounded-lg">
           <p class="font-bold text-teal-950 dark:text-teal-200">Consentimiento Informado para Tele-Rehabilitación y Almacenamiento Clínico</p>
           <p class="text-[11px] text-teal-800 dark:text-teal-300 mt-1">Versión vigente: 2026.1 • Certificación internacional de interoperabilidad en salud.</p>
         </div>
 
         <div>
           <h4 class="font-bold text-slate-900 dark:text-white uppercase text-[11px]">1. Tratamiento de Datos Médicos (HIPAA / GDPR / Ley de Datos)</h4>
-          <p class="mt-1">Toda la información capturada en los registros diarios (escala EVA de dolor, repeticiones, grabaciones y transcripciones de teleconsulta) es cifrada en tránsito (TLS 1.3) y en reposo mediante cifrado AES-256 en la base de datos persistente SQLite.</p>
+          <p class="mt-1">Toda la información capturada en los registros diarios (escala EVA de dolor, repeticiones, grabaciones y transcripciones de teleconsulta) es cifrada en tránsito (TLS 1.3) y en reposo mediante cifrado AES-256 en la base de datos clínica protegida.</p>
         </div>
 
         <div>
@@ -1068,17 +1612,99 @@
       </div>
 
       <div class="border-t border-slate-200 dark:border-slate-800 pt-3 flex justify-end gap-2">
-        <button onclick="closeTermsModal()" class="px-5 py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-bold transition cursor-pointer">
+        <button onclick="closeTermsModal()" class="px-5 py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-md text-xs font-bold transition cursor-pointer">
           Entendido y Acepto las Condiciones
         </button>
       </div>
     </div>
   </div>
 
+  <!-- ============================================================== -->
+  <!-- MODAL: CONFIGURACIÓN ZOOM API -->
+  <!-- ============================================================== -->
+  <div id="modal-zoom-config" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="w-full max-w-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-6 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center text-sm">
+            <i class="fa-solid fa-video"></i>
+          </div>
+          <h3 class="font-bold text-sm text-slate-900 dark:text-white">Configuración Zoom API (OAuth Gratuito)</h3>
+        </div>
+        <button onclick="closeZoomConfigModal()" class="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 text-base p-1 rounded-md transition cursor-pointer" title="Cerrar">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="my-3 p-3 bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/80 rounded-lg text-[11px] text-blue-900 dark:text-blue-200 leading-relaxed">
+        <p class="font-bold flex items-center gap-1.5 mb-1">
+          <i class="fa-solid fa-circle-info text-blue-600"></i> ¿Cómo obtener tus credenciales gratuitas de Zoom?
+        </p>
+        <ol class="list-decimal list-inside space-y-0.5 text-blue-800 dark:text-blue-300">
+          <li>Inicia sesión gratis en <a href="https://marketplace.zoom.us/develop/create" target="_blank" class="underline font-bold text-blue-600 dark:text-blue-400">Zoom App Marketplace</a>.</li>
+          <li>Crea una aplicación de tipo <strong>Server-to-Server OAuth</strong>.</li>
+          <li>Copia tu <strong>Account ID</strong>, <strong>Client ID</strong> y <strong>Client Secret</strong> y pégalos a continuación:</li>
+        </ol>
+      </div>
+
+      <form onsubmit="handleSaveZoomConfig(event)" class="space-y-3 mt-2">
+        <!-- Direct Real Zoom Meeting Room (Instant & 100% Functional) -->
+        <div class="p-3 bg-slate-50 dark:bg-slate-800/80 rounded-lg border border-slate-200 dark:border-slate-700 space-y-2">
+          <label class="block text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+            <i class="fa-solid fa-link text-blue-600"></i> Tu Enlace o ID de Reunión Personal de Zoom (PMI)
+          </label>
+          <input type="text" id="zoom-cfg-personal-url" placeholder="Ej: https://zoom.us/j/1234567890 o tu ID de 10 dígitos" class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-mono">
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-[10px] text-slate-500 font-semibold mb-0.5">ID de Reunión (Opcional)</label>
+              <input type="text" id="zoom-cfg-personal-id" placeholder="Ej: 7891234567" class="w-full text-xs p-2 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-mono">
+            </div>
+            <div>
+              <label class="block text-[10px] text-slate-500 font-semibold mb-0.5">Contraseña (Opcional)</label>
+              <input type="text" id="zoom-cfg-personal-pwd" placeholder="Ej: 123456" class="w-full text-xs p-2 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-mono">
+            </div>
+          </div>
+          <p class="text-[10px] text-slate-500">Pega tu sala personal de tu app de Zoom para que tus pacientes se unan directamente a tu reunión real.</p>
+        </div>
+
+        <details class="text-xs border border-slate-200 dark:border-slate-800 rounded-lg p-2.5">
+          <summary class="font-bold text-slate-700 dark:text-slate-300 cursor-pointer flex items-center justify-between">
+            <span>Credenciales API Server-to-Server OAuth (Opcional)</span>
+            <i class="fa-solid fa-chevron-down text-[10px]"></i>
+          </summary>
+          <div class="space-y-2.5 mt-3 pt-2 border-t border-slate-200 dark:border-slate-800">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Zoom Account ID</label>
+              <input type="text" id="zoom-cfg-account-id" placeholder="Ej: AbCdEfGhIj12345" class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-mono">
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Zoom Client ID</label>
+              <input type="text" id="zoom-cfg-client-id" placeholder="Ej: xYz9876543210" class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-mono">
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Zoom Client Secret</label>
+              <input type="password" id="zoom-cfg-client-secret" placeholder="••••••••••••••••••••••••" class="w-full text-xs p-2.5 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-mono">
+            </div>
+          </div>
+        </details>
+
+        <div class="pt-3 flex justify-end gap-2 border-t border-slate-200 dark:border-slate-800">
+          <button type="button" onclick="closeZoomConfigModal()" class="px-4 py-2 text-xs rounded-md border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">Cancelar</button>
+          <button type="submit" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
+            <i class="fa-solid fa-floppy-disk"></i>
+            <span>Guardar Configuración</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- Global Toast Notification -->
   <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
-    <div class="bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-slate-700 dark:border-slate-300">
-      <span id="toast-icon" class="text-lg">✅</span>
+    <div class="bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 px-4 py-3 rounded-lg shadow-2xl flex items-center gap-3 border border-slate-700 dark:border-slate-300">
+      <span id="toast-icon" class="text-lg flex items-center justify-center"><i class="fa-solid fa-circle-check text-emerald-400"></i></span>
       <div>
         <p id="toast-title" class="font-bold text-xs">Acción</p>
         <p id="toast-msg" class="text-[11px] text-slate-300 dark:text-slate-700">Mensaje</p>
@@ -1087,8 +1713,8 @@
   </div>
 
   <!-- Application Scripts -->
-  <script src="/js/api.js"></script>
-  <script src="/js/app.js"></script>
-  <script src="/js/sw-register.js"></script>
+  <script src="/js/api.js?v=9.7"></script>
+  <script src="/js/app.js?v=9.7"></script>
+  <script src="/js/sw-register.js?v=9.7"></script>
 </body>
 </html>
