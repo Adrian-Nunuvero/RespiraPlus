@@ -1,11 +1,11 @@
-const CACHE_NAME = 'respiraplus-v5.4.0-zoom-exclusive';
+const CACHE_NAME = 'respiraplus-v9.9.0-vibrant-mesh';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
-  '/css/styles.css?v=9.6',
-  '/js/api.js?v=9.6',
-  '/js/app.js?v=9.6',
-  '/js/sw-register.js?v=9.6',
+  '/css/styles.css?v=9.9.0',
+  '/js/api.js?v=9.9.0',
+  '/js/app.js?v=9.9.0',
+  '/js/sw-register.js?v=9.9.0',
   '/manifest.json'
 ];
 

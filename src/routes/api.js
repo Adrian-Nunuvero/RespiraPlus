@@ -44,6 +44,7 @@ router.delete('/reminders/:id', reminderController.deleteReminder);
 // 5. Logs & EVA Pain scale (Requerimiento 4)
 router.get('/logs', logController.getLogs);
 router.post('/logs', logController.createLog);
+router.delete('/logs/:id', logController.deleteLog);
 
 // 6. Progress & Analytics (Requerimiento 5)
 router.get('/progress', progressController.getProgressStats);
@@ -68,6 +69,8 @@ router.get('/doctors', appointmentController.getDoctors);
 router.get('/appointments', appointmentController.getAppointments);
 router.post('/appointments', appointmentController.createAppointment);
 router.delete('/appointments/:id', appointmentController.deleteAppointment);
+router.get('/doctor/schedule-blocks', appointmentController.getScheduleBlocks);
+router.post('/doctor/schedule-blocks/toggle', appointmentController.toggleScheduleBlock);
 
 // 8. PDF Download & Offline Sync (Requerimiento 7)
 router.get('/pdf/exercise-sheet', pdfController.generateExerciseSheetPDF);

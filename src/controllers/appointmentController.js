@@ -105,3 +105,46 @@ exports.deleteAppointment = (req, res) => {
     res.status(500).json({ error: 'Error al cancelar la cita médica.' });
   }
 };
+
+// Get doctor schedule blocks
+exports.getScheduleBlocks = (req, res) => {
+  try {
+    const doctorId = req.query.doctorId || 1;
+    const blocks = db.prepare(`
+      SELECT * FROM doctor_schedule_blocks 
+      WHERE doctor_id = ?
+    `).all(doctorId);
+    res.json(blocks);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Toggle a schedule block (Enable / Block slot)
+exports.toggleScheduleBlock = (req, res) => {
+  try {
+    const { doctor_id = 1, block_date, block_time, reason = 'No disponible' } = req.body;
+    if (!block_date || !block_time) {
+      return res.status(400).json({ error: 'Fecha y hora requeridas' });
+    }
+
+    const existing = db.prepare(`
+      SELECT * FROM doctor_schedule_blocks 
+      WHERE doctor_id = ? AND block_date = ? AND block_time = ?
+    `).get(doctor_id, block_date, block_time);
+
+    if (existing) {
+      db.prepare('DELETE FROM doctor_schedule_blocks WHERE id = ?').run(existing.id);
+      return res.json({ action: 'unblocked', message: 'Horario habilitado correctamente.', block_date, block_time });
+    } else {
+      db.prepare(`
+        INSERT INTO doctor_schedule_blocks (doctor_id, block_date, block_time, reason)
+        VALUES (?, ?, ?, ?)
+      `).run(doctor_id, block_date, block_time, reason);
+      return res.json({ action: 'blocked', message: 'Horario bloqueado correctamente.', block_date, block_time });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+

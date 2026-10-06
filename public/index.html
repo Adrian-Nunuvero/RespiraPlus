@@ -94,135 +94,163 @@
 
   <!-- FontAwesome 6 Iconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="/css/styles.css?v=9.3">
+  <link rel="stylesheet" href="/css/styles.css?v=9.9.0">
   <style>
     /* DIRECT GUARANTEED DUAL THEME & AMBIENT WHITE LIGHTS */
     html.dark body {
-      background-color: #090e17 !important;
+      background-color: #070b14 !important;
       color: #f8fafc !important;
     }
     html:not(.dark) body {
-      background-color: #f8fafc !important;
+      background-color: #e0f2fe !important;
       color: #0f172a !important;
     }
 
-    /* 1. LOGIN BACKGROUND - AMBIENT WHITE LIGHTS */
-    html.dark .login-bg-ambient {
+    /* 1. AURORA MESH BACKGROUND - LOGIN & SHELL */
+    html:not(.dark) .login-bg-ambient,
+    html:not(.dark) .app-bg-mesh {
       position: relative !important;
-      background-color: #070b14 !important;
-      background-image: radial-gradient(circle at 50% 50%, #0d1527 0%, #050811 100%) !important;
-    }
-    html:not(.dark) .login-bg-ambient {
-      position: relative !important;
-      background-color: #f1f5f9 !important;
-      background-image: radial-gradient(circle at 50% 50%, #ffffff 0%, #e2e8f0 100%) !important;
+      background-color: #f0fdf4 !important;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(20, 184, 166, 0.35) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(56, 189, 248, 0.40) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(168, 85, 247, 0.22) 0px, transparent 55%),
+        radial-gradient(at 0% 100%, rgba(99, 102, 241, 0.30) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(20, 184, 166, 0.35) 0px, transparent 50%),
+        linear-gradient(135deg, #e0f2fe 0%, #f0fdfa 50%, #f5f3ff 100%) !important;
+      background-attachment: fixed !important;
     }
 
-    /* Floating Blurred Soft White Halos / Glows for Login */
+    html.dark .login-bg-ambient,
+    html.dark .app-bg-mesh {
+      position: relative !important;
+      background-color: #070b14 !important;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(13, 148, 136, 0.35) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(14, 165, 233, 0.30) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(99, 102, 241, 0.25) 0px, transparent 55%),
+        radial-gradient(at 0% 100%, rgba(168, 85, 247, 0.28) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(20, 184, 166, 0.30) 0px, transparent 50%),
+        linear-gradient(135deg, #070b14 0%, #0b1329 50%, #060913 100%) !important;
+      background-attachment: fixed !important;
+    }
+
+    /* Floating Blurred Aurora Glowing Orbs */
     .orb {
       position: absolute !important;
       border-radius: 50% !important;
       pointer-events: none !important;
       z-index: 1 !important;
-      transition: opacity 0.3s ease;
-      animation: floatOrb 12s ease-in-out infinite alternate;
+      transition: opacity 0.5s ease;
+      animation: floatOrb 16s ease-in-out infinite alternate;
     }
 
-    html.dark .orb-white-1 {
-      width: 580px !important;
-      height: 580px !important;
-      filter: blur(100px) !important;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.08) 45%, transparent 75%) !important;
-      top: 5% !important;
-      left: 10% !important;
-    }
-    html.dark .orb-white-2 {
-      width: 620px !important;
-      height: 620px !important;
-      filter: blur(110px) !important;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.05) 50%, transparent 75%) !important;
-      bottom: 5% !important;
-      right: 10% !important;
-    }
-    html.dark .orb-white-3 {
-      width: 480px !important;
-      height: 480px !important;
-      filter: blur(90px) !important;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 50%, transparent 75%) !important;
-      top: 45% !important;
-      left: 45% !important;
-      transform: translate(-50%, -50%) !important;
-    }
-    html.dark .orb-white-4 {
-      width: 420px !important;
-      height: 420px !important;
-      filter: blur(95px) !important;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.03) 50%, transparent 75%) !important;
-      top: 65% !important;
-      left: 18% !important;
-    }
-
-    /* Light Mode White Glows */
+    /* Light Mode Visible Aurora Orbs */
     html:not(.dark) .orb-white-1 {
-      width: 580px !important;
-      height: 580px !important;
+      width: 600px !important;
+      height: 600px !important;
       filter: blur(80px) !important;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(226, 232, 240, 0.6) 50%, transparent 75%) !important;
-      top: 5% !important;
-      left: 10% !important;
+      background: radial-gradient(circle, rgba(20, 184, 166, 0.45) 0%, rgba(13, 148, 136, 0.20) 50%, transparent 75%) !important;
+      top: -100px !important;
+      left: -80px !important;
     }
     html:not(.dark) .orb-white-2 {
-      width: 620px !important;
-      height: 620px !important;
-      filter: blur(85px) !important;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(226, 232, 240, 0.5) 50%, transparent 75%) !important;
-      bottom: 5% !important;
-      right: 10% !important;
+      width: 650px !important;
+      height: 650px !important;
+      filter: blur(90px) !important;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.45) 0%, rgba(14, 165, 233, 0.20) 50%, transparent 75%) !important;
+      bottom: -100px !important;
+      right: -80px !important;
+      animation-duration: 20s !important;
+      animation-delay: -4s !important;
     }
     html:not(.dark) .orb-white-3 {
-      width: 480px !important;
-      height: 480px !important;
-      filter: blur(75px) !important;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.90) 0%, rgba(226, 232, 240, 0.45) 50%, transparent 75%) !important;
-      top: 45% !important;
-      left: 45% !important;
-      transform: translate(-50%, -50%) !important;
+      width: 520px !important;
+      height: 520px !important;
+      filter: blur(85px) !important;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.35) 0%, rgba(129, 140, 248, 0.15) 50%, transparent 75%) !important;
+      top: 35% !important;
+      left: 60% !important;
+      animation-duration: 22s !important;
+      animation-delay: -8s !important;
     }
     html:not(.dark) .orb-white-4 {
-      width: 420px !important;
-      height: 420px !important;
+      width: 480px !important;
+      height: 480px !important;
       filter: blur(80px) !important;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.85) 0%, rgba(226, 232, 240, 0.40) 50%, transparent 75%) !important;
-      top: 65% !important;
-      left: 18% !important;
+      background: radial-gradient(circle, rgba(244, 63, 94, 0.25) 0%, rgba(251, 113, 133, 0.10) 50%, transparent 75%) !important;
+      top: 60% !important;
+      left: 10% !important;
+      animation-duration: 18s !important;
+      animation-delay: -2s !important;
     }
 
-    /* Frosted Glass Login Card - SQUARED */
+    /* Dark Mode Visible Aurora Orbs */
+    html.dark .orb-white-1 {
+      width: 600px !important;
+      height: 600px !important;
+      filter: blur(90px) !important;
+      background: radial-gradient(circle, rgba(20, 184, 166, 0.35) 0%, rgba(13, 148, 136, 0.12) 50%, transparent 75%) !important;
+      top: -100px !important;
+      left: -80px !important;
+    }
+    html.dark .orb-white-2 {
+      width: 650px !important;
+      height: 650px !important;
+      filter: blur(95px) !important;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.32) 0%, rgba(14, 165, 233, 0.10) 50%, transparent 75%) !important;
+      bottom: -100px !important;
+      right: -80px !important;
+      animation-duration: 20s !important;
+      animation-delay: -4s !important;
+    }
+    html.dark .orb-white-3 {
+      width: 520px !important;
+      height: 520px !important;
+      filter: blur(90px) !important;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.28) 0%, rgba(99, 102, 241, 0.08) 50%, transparent 75%) !important;
+      top: 35% !important;
+      left: 60% !important;
+      animation-duration: 22s !important;
+      animation-delay: -8s !important;
+    }
+    html.dark .orb-white-4 {
+      width: 480px !important;
+      height: 480px !important;
+      filter: blur(85px) !important;
+      background: radial-gradient(circle, rgba(244, 63, 94, 0.20) 0%, rgba(251, 113, 133, 0.06) 50%, transparent 75%) !important;
+      top: 60% !important;
+      left: 10% !important;
+      animation-duration: 18s !important;
+      animation-delay: -2s !important;
+    }
+
+    /* Frosted Glass Login Card */
     html.dark .glass-card {
       position: relative !important;
       z-index: 10 !important;
-      background: rgba(17, 24, 39, 0.60) !important;
-      backdrop-filter: blur(30px) saturate(180%) !important;
-      -webkit-backdrop-filter: blur(30px) saturate(180%) !important;
+      background: rgba(15, 23, 42, 0.70) !important;
+      backdrop-filter: blur(28px) saturate(190%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(190%) !important;
       border: 1px solid rgba(255, 255, 255, 0.16) !important;
-      border-radius: 8px !important;
+      border-radius: 12px !important;
       box-shadow: 
         0 25px 70px -10px rgba(0, 0, 0, 0.7),
-        0 0 35px -5px rgba(255, 255, 255, 0.06),
-        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.35) !important;
+        0 0 35px -5px rgba(20, 184, 166, 0.2),
+        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.3) !important;
       color: #ffffff;
     }
     html:not(.dark) .glass-card {
       position: relative !important;
       z-index: 10 !important;
-      background: rgba(255, 255, 255, 0.88) !important;
-      backdrop-filter: blur(30px) !important;
-      -webkit-backdrop-filter: blur(30px) !important;
+      background: rgba(255, 255, 255, 0.82) !important;
+      backdrop-filter: blur(28px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
       border: 1px solid rgba(255, 255, 255, 0.95) !important;
-      border-radius: 8px !important;
+      border-radius: 12px !important;
       box-shadow: 
-        0 20px 50px -10px rgba(15, 23, 42, 0.08),
-        0 0 25px rgba(255, 255, 255, 0.8),
+        0 20px 50px -10px rgba(15, 23, 42, 0.12),
+        0 0 35px -5px rgba(13, 148, 136, 0.15),
         inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 1) !important;
       color: #0f172a;
     }
@@ -232,15 +260,15 @@
       backdrop-filter: blur(16px) !important;
       -webkit-backdrop-filter: blur(16px) !important;
       border: 1px solid rgba(255, 255, 255, 0.20) !important;
-      border-radius: 6px !important;
+      border-radius: 8px !important;
       color: #ffffff !important;
     }
     html:not(.dark) .glass-input {
-      background: rgba(255, 255, 255, 0.92) !important;
+      background: rgba(255, 255, 255, 0.95) !important;
       backdrop-filter: blur(16px) !important;
       -webkit-backdrop-filter: blur(16px) !important;
       border: 1px solid rgba(203, 213, 225, 0.95) !important;
-      border-radius: 6px !important;
+      border-radius: 8px !important;
       color: #0f172a !important;
     }
 
@@ -249,15 +277,15 @@
       backdrop-filter: blur(14px) !important;
       -webkit-backdrop-filter: blur(14px) !important;
       border: 1px solid rgba(255, 255, 255, 0.22) !important;
-      border-radius: 6px !important;
+      border-radius: 8px !important;
       color: #ffffff !important;
     }
     html:not(.dark) .glass-btn-subtle {
-      background: rgba(255, 255, 255, 0.75) !important;
+      background: rgba(255, 255, 255, 0.85) !important;
       backdrop-filter: blur(14px) !important;
       -webkit-backdrop-filter: blur(14px) !important;
       border: 1px solid rgba(203, 213, 225, 0.90) !important;
-      border-radius: 6px !important;
+      border-radius: 8px !important;
       color: #0f172a !important;
     }
   </style>
@@ -406,12 +434,17 @@
   </div>
 
   <!-- ============================================================== -->
-  <!-- SCREEN 2: MAIN APPLICATION SHELL (FONDO NEUTRO LIMPIO Y PROFESIONAL) -->
+  <!-- SCREEN 2: MAIN APPLICATION SHELL (AURORA MESH & GLASSMORPHISM) -->
   <!-- ============================================================== -->
-  <div id="screen-app" class="hidden min-h-screen w-full flex-col md:flex-row bg-slate-100 dark:bg-[#090e17] text-slate-800 dark:text-slate-100 relative overflow-x-hidden transition-colors duration-200">
+  <div id="screen-app" class="hidden min-h-screen w-full flex-col md:flex-row app-bg-mesh text-slate-800 dark:text-slate-100 relative overflow-x-hidden transition-colors duration-200">
     
-    <!-- Sidebar -->
-    <aside class="w-full md:w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 p-4 flex flex-col justify-between shrink-0 shadow-sm relative z-20">
+    <!-- Ambient Floating Mesh Orbs -->
+    <div class="app-mesh-orb app-mesh-orb-1"></div>
+    <div class="app-mesh-orb app-mesh-orb-2"></div>
+    <div class="app-mesh-orb app-mesh-orb-3"></div>
+
+    <!-- Sidebar with Glassmorphic Translucency -->
+    <aside class="w-full md:w-72 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border-r border-slate-200/80 dark:border-slate-800/80 p-4 flex flex-col justify-between shrink-0 shadow-sm relative z-20">
       <div>
         <!-- Brand & Global controls -->
         <div class="flex items-center justify-between px-2 py-2 mb-3 border-b border-slate-200 dark:border-slate-800">
@@ -523,7 +556,7 @@
     </aside>
 
     <!-- Main Content Area -->
-    <main class="flex-1 p-4 md:p-8 overflow-y-auto max-w-6xl mx-auto w-full">
+    <main class="flex-1 p-4 md:p-8 overflow-y-auto max-w-6xl mx-auto w-full relative z-10">
 
       <!-- ============================================================== -->
       <!-- TAB 1: EJERCICIOS GUIADOS -->
@@ -923,7 +956,7 @@
                   <div class="p-3 bg-white dark:bg-slate-800/80 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-between">
                     <div>
                       <p class="text-[10px] text-slate-400 font-semibold uppercase">ID de Reunión Zoom Oficial</p>
-                      <p id="zoom-meeting-id" class="font-mono font-bold text-base text-blue-600 dark:text-blue-400">720 1923 1505</p>
+                      <p id="zoom-meeting-id" class="font-mono font-bold text-base text-blue-600 dark:text-blue-400">790 2834 9537</p>
                     </div>
                     <button onclick="copyZoomId()" class="p-2 text-slate-400 hover:text-blue-600 transition cursor-pointer" title="Copiar ID"><i class="fa-solid fa-copy"></i></button>
                   </div>
@@ -931,7 +964,7 @@
                   <div class="p-3 bg-white dark:bg-slate-800/80 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-between">
                     <div>
                       <p class="text-[10px] text-slate-400 font-semibold uppercase">Código de Acceso / Password</p>
-                      <p id="zoom-meeting-pwd" class="font-mono font-bold text-base text-slate-900 dark:text-white">ehS0E9</p>
+                      <p id="zoom-meeting-pwd" class="font-mono font-bold text-base text-slate-900 dark:text-white">F56wad</p>
                     </div>
                     <button onclick="copyZoomPass()" class="p-2 text-slate-400 hover:text-blue-600 transition cursor-pointer" title="Copiar Clave"><i class="fa-solid fa-copy"></i></button>
                   </div>
@@ -940,13 +973,13 @@
                 <!-- Action Buttons: Host & Patient -->
                 <div class="pt-2 flex flex-wrap items-center gap-3">
                   <!-- Doctor Host Link (ZAK Token) -->
-                  <a id="btn-zoom-host-start" href="https://us04web.zoom.us/s/72019231505" target="_blank" rel="noopener noreferrer" class="admin-only px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-lg shadow-md transition flex items-center gap-2 cursor-pointer">
+                  <a id="btn-zoom-host-start" href="https://us04web.zoom.us/s/79028349537" target="_blank" rel="noopener noreferrer" class="admin-only px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-lg shadow-md transition flex items-center gap-2 cursor-pointer">
                     <i class="fa-solid fa-rocket"></i>
                     <span>Iniciar Reunión como Anfitrión (Host)</span>
                   </a>
 
                   <!-- Patient Join Link -->
-                  <a id="btn-zoom-patient-join" href="https://us04web.zoom.us/j/72019231505?pwd=su5NJDE1XdPRhsGlb0uQbb5STdx1t7.1" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-lg shadow-md transition flex items-center gap-2 cursor-pointer">
+                  <a id="btn-zoom-patient-join" href="https://us04web.zoom.us/j/79028349537?pwd=pQa0IknWIk1SODliogbGiC7sHaLzHH.1" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-lg shadow-md transition flex items-center gap-2 cursor-pointer">
                     <i class="fa-solid fa-video"></i>
                     <span>Unirse a la Reunión de Zoom</span>
                   </a>
@@ -1009,21 +1042,29 @@
           <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-sm space-y-4">
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
               <div>
-                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300 border border-teal-200 dark:border-teal-800 inline-flex items-center gap-1 mb-1">
+                <span id="agenda-header-pill" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300 border border-teal-200 dark:border-teal-800 inline-flex items-center gap-1 mb-1">
                   <i class="fa-solid fa-calendar-check"></i> Agenda Médica Multi-Especialista
                 </span>
-                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Agenda & Disponibilidad de Especialistas</h3>
-                <p class="text-xs text-slate-500 dark:text-slate-400">Consulta los horarios libres de cada médico y agenda tu cita con sala de Zoom oficial generada automáticamente.</p>
+                <h3 id="agenda-header-title" class="text-lg font-bold text-slate-900 dark:text-white">Agenda & Disponibilidad de Especialistas</h3>
+                <p id="agenda-header-subtitle" class="text-xs text-slate-500 dark:text-slate-400">Consulta los horarios libres de cada médico y agenda tu cita con sala de Zoom oficial generada automáticamente.</p>
               </div>
 
-              <!-- Doctor Filter / Selector -->
-              <div class="flex items-center gap-2 self-start md:self-auto">
+              <!-- Doctor Filter / Selector (Visible for Patients) -->
+              <div id="agenda-patient-selector" class="patient-only flex items-center gap-2 self-start md:self-auto">
                 <label for="agenda-doctor-select" class="text-xs font-bold text-slate-700 dark:text-slate-300 whitespace-nowrap">
                   <i class="fa-solid fa-user-doctor text-teal-600 mr-1"></i> Especialista:
                 </label>
                 <select id="agenda-doctor-select" onchange="handleAgendaDoctorSelect(this.value)" class="text-xs font-bold p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm min-w-[260px]">
-                  <!-- Dynamically populated with all Doctors and Admin from DB -->
+                  <!-- Dynamically populated with all Doctors from DB -->
                 </select>
+              </div>
+
+              <!-- Doctor / Admin Schedule Controls (Visible for Doctor/Admin) -->
+              <div id="agenda-doctor-controls" class="admin-only hidden flex items-center gap-2 self-start md:self-auto">
+                <button type="button" onclick="toggleDoctorScheduleEditMode()" id="btn-toggle-edit-schedule" class="px-3.5 py-2 rounded-lg bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs shadow-sm transition flex items-center gap-2 cursor-pointer">
+                  <i class="fa-solid fa-calendar-days"></i>
+                  <span id="btn-edit-schedule-label">Editar Mi Horario</span>
+                </button>
               </div>
             </div>
 
@@ -1046,10 +1087,10 @@
 
               <div class="flex items-center gap-3">
                 <div class="text-left sm:text-right">
-                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
+                  <span id="agenda-doc-status-badge" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Sala Zoom Vinculada
                   </span>
-                  <p class="text-[10px] text-slate-500 mt-0.5">Duración estándar: 45 min</p>
+                  <p id="agenda-doc-subtext" class="text-[10px] text-slate-500 mt-0.5">Duración estándar: 45 min</p>
                 </div>
               </div>
             </div>
@@ -1078,10 +1119,10 @@
                   <span class="w-3 h-3 rounded bg-emerald-500/20 border border-emerald-500 inline-block"></span> Disponible
                 </span>
                 <span class="flex items-center gap-1.5">
-                  <span class="w-3 h-3 rounded bg-blue-500/20 border border-blue-500 inline-block"></span> Mi Cita Zoom
+                  <span class="w-3 h-3 rounded bg-blue-500/20 border border-blue-500 inline-block"></span> Cita Zoom
                 </span>
                 <span class="flex items-center gap-1.5">
-                  <span class="w-3 h-3 rounded bg-slate-400/20 border border-slate-400 inline-block"></span> Reservado
+                  <span class="w-3 h-3 rounded bg-rose-500/20 border border-rose-500 inline-block"></span> Bloqueado
                 </span>
               </div>
             </div>
@@ -1096,8 +1137,8 @@
 
           <!-- Booking & Confirmed Appointments Row -->
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Formulario: Agendar Cita -->
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-sm space-y-4">
+            <!-- Formulario: Agendar Cita (SOLO PARA PACIENTES) -->
+            <div id="booking-form-card" class="patient-only bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-sm space-y-4">
               <div class="border-b border-slate-200 dark:border-slate-800 pb-3">
                 <h3 class="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
                   <i class="fa-solid fa-calendar-plus text-blue-600"></i> Formulario de Agendamiento
@@ -1107,7 +1148,7 @@
 
               <form id="form-book-appointment" onsubmit="handleBookAppointment(event)" class="space-y-3">
                 <div>
-                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Médico Fisiatra / Especialista / Admin</label>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Médico Fisiatra / Especialista</label>
                   <select id="appt-doctor" required class="w-full text-xs p-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
                     <!-- Dynamically populated from DB -->
                   </select>
@@ -1154,14 +1195,56 @@
               </form>
             </div>
 
-            <!-- Mis Citas Agendadas -->
+            <!-- Panel de Gestión de Disponibilidad (SOLO PARA DOCTOR / ADMIN) -->
+            <div id="doctor-schedule-management-card" class="admin-only hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-sm space-y-4">
+              <div class="border-b border-slate-200 dark:border-slate-800 pb-3">
+                <h3 class="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+                  <i class="fa-solid fa-sliders text-teal-600"></i> Control de Mi Disponibilidad
+                </h3>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Activa o bloquea turnos de atención para tus pacientes.</p>
+              </div>
+
+              <div class="space-y-3">
+                <div class="p-3 bg-teal-50 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800 rounded-lg text-xs space-y-1.5">
+                  <p class="font-bold text-teal-900 dark:text-teal-200 flex items-center gap-1.5">
+                    <i class="fa-solid fa-circle-info text-teal-600"></i> Edición Rápida de Horarios
+                  </p>
+                  <p class="text-[11px] text-teal-800 dark:text-teal-300">
+                    Haz clic directamente en cualquier celda de la matriz semanal para <strong>Bloquear</strong> (marcar no disponible) o <strong>Habilitar</strong> el horario.
+                  </p>
+                </div>
+
+                <div class="space-y-2">
+                  <p class="text-xs font-bold text-slate-700 dark:text-slate-300">Horarios de Turno Habitual:</p>
+                  <div class="grid grid-cols-2 gap-2 text-xs">
+                    <div class="p-2.5 bg-slate-50 dark:bg-slate-800/80 rounded-lg border border-slate-200 dark:border-slate-700">
+                      <p class="font-bold text-slate-800 dark:text-slate-200">Mañana</p>
+                      <p class="text-[11px] text-slate-500 font-mono">09:00 - 12:00 PM</p>
+                    </div>
+                    <div class="p-2.5 bg-slate-50 dark:bg-slate-800/80 rounded-lg border border-slate-200 dark:border-slate-700">
+                      <p class="font-bold text-slate-800 dark:text-slate-200">Tarde</p>
+                      <p class="text-[11px] text-slate-500 font-mono">03:00 - 06:00 PM</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pt-2">
+                  <button type="button" onclick="resetAllDoctorBlocks()" class="w-full py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                    <span>Restablecer Todos los Horarios Libres</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mis Citas / Asignaciones Médicas -->
             <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-sm flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3 mb-4">
-                  <h3 class="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+                  <h3 id="appointments-list-title" class="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
                     <i class="fa-solid fa-clipboard-user text-teal-600"></i> Citas Médicas Agendadas & Salas Oficiales de Zoom
                   </h3>
-                  <span class="text-[11px] text-slate-500 font-semibold">1-Clic para Ingresar a Zoom</span>
+                  <span id="appointments-list-subtitle" class="text-[11px] text-slate-500 font-semibold">1-Clic para Ingresar a Zoom</span>
                 </div>
                 <div id="appointments-list" class="space-y-3 max-h-[420px] overflow-y-auto pr-1">
                   <!-- Dynamically populated -->
@@ -1713,8 +1796,9 @@
   </div>
 
   <!-- Application Scripts -->
-  <script src="/js/api.js?v=9.7"></script>
-  <script src="/js/app.js?v=9.7"></script>
-  <script src="/js/sw-register.js?v=9.7"></script>
+  <script src="/js/api.js?v=9.8"></script>
+  <script src="/js/app.js?v=9.8"></script>
+  <script src="/js/sw-register.js?v=9.8"></script>
 </body>
 </html>
+

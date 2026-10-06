@@ -130,6 +130,16 @@ function initDatabase() {
       value TEXT,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
+
+    CREATE TABLE IF NOT EXISTS doctor_schedule_blocks (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      doctor_id INTEGER NOT NULL,
+      block_date TEXT NOT NULL,
+      block_time TEXT NOT NULL,
+      reason TEXT DEFAULT 'No disponible / Horario Bloqueado',
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      UNIQUE(doctor_id, block_date, block_time)
+    );
   `);
 
   // Ensure zoom columns exist in telehealth_sessions

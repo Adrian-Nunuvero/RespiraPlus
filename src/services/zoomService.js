@@ -94,14 +94,14 @@ async function createZoomMeeting({ topic = 'Teleconsulta Fisioterapia - RespiraP
 
       const meetingPayload = {
         topic: topic,
-        type: 1, // 1 = Instant meeting, 2 = Scheduled meeting
-        duration: duration,
+        type: 3, // 3 = Recurring meeting with no fixed time (PERMANENT, NEVER EXPIRES)
         timezone: 'America/Lima',
         agenda: agenda,
         settings: {
           host_video: true,
           participant_video: true,
           join_before_host: true,
+          jbh_time: 0,
           mute_upon_entry: false,
           waiting_room: false,
           meeting_authentication: false,

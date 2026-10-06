@@ -187,6 +187,13 @@ const API = {
     }
   },
 
+  async deleteLog(id) {
+    return this.request(`/logs/${id}`, {
+      method: 'DELETE'
+    });
+  },
+
+
   // Offline Queue Management
   saveLogToOfflineQueue(logData) {
     const queue = JSON.parse(localStorage.getItem('offline_logs_queue') || '[]');
@@ -318,6 +325,19 @@ const API = {
       method: 'DELETE'
     });
   },
+
+  async getScheduleBlocks(doctorId) {
+    return this.request(`/doctor/schedule-blocks?doctorId=${doctorId || this.getUserId()}`);
+  },
+
+  async toggleScheduleBlock(blockData) {
+    const docId = blockData.doctor_id || this.getUserId();
+    return this.request('/doctor/schedule-blocks/toggle', {
+      method: 'POST',
+      body: JSON.stringify({ ...blockData, doctor_id: docId })
+    });
+  },
+
 
   // 8. PDF Download & Offline Pack (Requerimiento 7)
   getPDFDownloadUrl(userId) {

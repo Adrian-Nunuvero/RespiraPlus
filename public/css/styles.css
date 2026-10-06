@@ -78,115 +78,120 @@ input[type="range"] {
 /* AMBIENT WHITE LIGHTS & SEPARATED DUAL BACKGROUNDS */
 /* ============================================================== */
 
-/* 1. LOGIN BACKGROUND - AMBIENT WHITE LIGHTS */
-html.dark .login-bg-ambient {
-  position: relative;
+/* ============================================================== */
+/* AURORA MESH GRADIENT & GLASSMORPHISM BACKGROUND SYSTEM */
+/* ============================================================== */
+
+/* 1. APP SHELL MESH BACKGROUND - LIGHT MODE */
+html:not(.dark) .app-bg-mesh {
+  background-color: #f0fdf4 !important;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(20, 184, 166, 0.35) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(56, 189, 248, 0.40) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(168, 85, 247, 0.22) 0px, transparent 55%),
+    radial-gradient(at 0% 100%, rgba(99, 102, 241, 0.30) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(20, 184, 166, 0.35) 0px, transparent 50%),
+    linear-gradient(135deg, #e0f2fe 0%, #f0fdfa 50%, #f5f3ff 100%) !important;
+  background-attachment: fixed !important;
+}
+
+/* APP SHELL MESH BACKGROUND - DARK MODE */
+html.dark .app-bg-mesh {
   background-color: #070b14 !important;
-  background-image: radial-gradient(circle at 50% 50%, #0d1527 0%, #050811 100%) !important;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(13, 148, 136, 0.35) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(14, 165, 233, 0.30) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(99, 102, 241, 0.25) 0px, transparent 55%),
+    radial-gradient(at 0% 100%, rgba(168, 85, 247, 0.28) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(20, 184, 166, 0.30) 0px, transparent 50%),
+    linear-gradient(135deg, #070b14 0%, #0b1329 50%, #060913 100%) !important;
+  background-attachment: fixed !important;
 }
 
-html:not(.dark) .login-bg-ambient {
-  position: relative;
-  background-color: #f1f5f9 !important;
-  background-image: radial-gradient(circle at 50% 50%, #ffffff 0%, #e2e8f0 100%) !important;
-}
-
-/* Floating Blurred Soft White Halos / Glows for Login */
-.orb {
-  position: absolute;
+/* Ambient Floating Mesh Orbs for App Shell */
+.app-mesh-orb {
+  position: fixed;
   border-radius: 50%;
   pointer-events: none;
-  z-index: 1;
-  transition: opacity 0.3s ease;
-  animation: floatOrb 12s ease-in-out infinite alternate;
+  z-index: 0;
+  transition: opacity 0.5s ease;
+  animation: floatMeshOrb 20s ease-in-out infinite alternate;
 }
 
-html.dark .orb-white-1 {
-  width: 580px;
-  height: 580px;
-  filter: blur(100px);
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.08) 45%, transparent 75%);
-  top: 5%;
-  left: 10%;
-}
-
-html.dark .orb-white-2 {
-  width: 620px;
-  height: 620px;
-  filter: blur(110px);
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.05) 50%, transparent 75%);
-  bottom: 5%;
-  right: 10%;
-  animation-duration: 15s;
-  animation-delay: -3s;
-}
-
-html.dark .orb-white-3 {
-  width: 480px;
-  height: 480px;
-  filter: blur(90px);
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 50%, transparent 75%);
-  top: 45%;
-  left: 45%;
-  transform: translate(-50%, -50%);
-  animation-duration: 13s;
-  animation-delay: -6s;
-}
-
-html.dark .orb-white-4 {
-  width: 420px;
-  height: 420px;
-  filter: blur(95px);
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.03) 50%, transparent 75%);
-  top: 65%;
-  left: 18%;
-  animation-duration: 16s;
-  animation-delay: -9s;
-}
-
-/* Light Mode White Glows */
-html:not(.dark) .orb-white-1 {
-  width: 580px;
-  height: 580px;
-  filter: blur(80px);
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(226, 232, 240, 0.6) 50%, transparent 75%);
-  top: 5%;
-  left: 10%;
-}
-
-html:not(.dark) .orb-white-2 {
-  width: 620px;
-  height: 620px;
+html:not(.dark) .app-mesh-orb-1 {
+  width: 650px;
+  height: 650px;
   filter: blur(85px);
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(226, 232, 240, 0.5) 50%, transparent 75%);
-  bottom: 5%;
-  right: 10%;
-  animation-duration: 15s;
-  animation-delay: -3s;
+  background: radial-gradient(circle, rgba(20, 184, 166, 0.40) 0%, rgba(13, 148, 136, 0.15) 50%, transparent 75%);
+  top: -120px;
+  left: -80px;
 }
 
-html:not(.dark) .orb-white-3 {
-  width: 480px;
-  height: 480px;
-  filter: blur(75px);
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.90) 0%, rgba(226, 232, 240, 0.45) 50%, transparent 75%);
-  top: 45%;
-  left: 45%;
-  transform: translate(-50%, -50%);
-  animation-duration: 13s;
-  animation-delay: -6s;
+html:not(.dark) .app-mesh-orb-2 {
+  width: 700px;
+  height: 700px;
+  filter: blur(95px);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.40) 0%, rgba(14, 165, 233, 0.15) 50%, transparent 75%);
+  top: 30%;
+  right: -100px;
+  animation-duration: 24s;
+  animation-delay: -5s;
 }
 
-html:not(.dark) .orb-white-4 {
-  width: 420px;
-  height: 420px;
-  filter: blur(80px);
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.85) 0%, rgba(226, 232, 240, 0.40) 50%, transparent 75%);
-  top: 65%;
-  left: 18%;
-  animation-duration: 16s;
-  animation-delay: -9s;
+html:not(.dark) .app-mesh-orb-3 {
+  width: 750px;
+  height: 750px;
+  filter: blur(100px);
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.30) 0%, rgba(129, 140, 248, 0.12) 50%, transparent 75%);
+  bottom: -150px;
+  left: 25%;
+  animation-duration: 28s;
+  animation-delay: -10s;
 }
+
+html.dark .app-mesh-orb-1 {
+  width: 650px;
+  height: 650px;
+  filter: blur(95px);
+  background: radial-gradient(circle, rgba(20, 184, 166, 0.35) 0%, rgba(13, 148, 136, 0.10) 50%, transparent 75%);
+  top: -120px;
+  left: -80px;
+}
+
+html.dark .app-mesh-orb-2 {
+  width: 700px;
+  height: 700px;
+  filter: blur(105px);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.30) 0%, rgba(14, 165, 233, 0.08) 50%, transparent 75%);
+  top: 30%;
+  right: -100px;
+  animation-duration: 24s;
+  animation-delay: -5s;
+}
+
+html.dark .app-mesh-orb-3 {
+  width: 750px;
+  height: 750px;
+  filter: blur(115px);
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.25) 0%, rgba(99, 102, 241, 0.08) 50%, transparent 75%);
+  bottom: -150px;
+  left: 25%;
+  animation-duration: 28s;
+  animation-delay: -10s;
+}
+
+@keyframes floatMeshOrb {
+  0% {
+    transform: translate(0px, 0px) scale(1) rotate(0deg);
+  }
+  50% {
+    transform: translate(50px, -40px) scale(1.08) rotate(8deg);
+  }
+  100% {
+    transform: translate(-40px, 50px) scale(0.94) rotate(-6deg);
+  }
+}
+
 
 @keyframes floatOrb {
   0% {

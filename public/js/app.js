@@ -246,7 +246,7 @@ function renderUserProfile() {
   if (inputDiag) inputDiag.value = u.diagnosis;
   if (inputGoal) inputGoal.value = u.rehab_goal;
 
-  // Strict Role Control: Show or Hide AdminSite Elements
+  // Strict Role Control: Show or Hide AdminSite and Patient Elements
   const adminElements = document.querySelectorAll('.admin-only, #admin-switch-banner');
   adminElements.forEach(el => {
     if (isAdmin) {
@@ -257,7 +257,22 @@ function renderUserProfile() {
       el.style.display = 'none';
     }
   });
+
+  const patientElements = document.querySelectorAll('.patient-only');
+  patientElements.forEach(el => {
+    if (isAdmin) {
+      el.classList.add('hidden');
+      el.style.display = 'none';
+    } else {
+      el.classList.remove('hidden');
+      el.style.display = '';
+    }
+  });
+
+  renderDoctorsDropdowns();
 }
+
+
 
 // ==========================================
 // 3. NAVIGATION & TABS (CON PERSISTENCIA DE URL Y ROLES)
@@ -852,16 +867,33 @@ function renderLogHistory(logs) {
     const dateStr = new Date(l.logged_at).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
     const painColor = l.pain_eva <= 2 ? 'text-emerald-600' : (l.pain_eva <= 5 ? 'text-amber-600' : 'text-red-600');
     return `
-      <div class="p-2.5 rounded-md bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-xs">
-        <div class="flex justify-between font-bold text-slate-800 dark:text-slate-200">
-          <span class="truncate">${l.exercise_name}</span>
-          <span class="${painColor} font-bold text-[11px] shrink-0">Dolor: ${l.pain_eva}/10</span>
+      <div class="p-2.5 rounded-md bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-xs flex items-center justify-between gap-3 group hover:border-slate-300 dark:hover:border-slate-600 transition">
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center justify-between font-bold text-slate-800 dark:text-slate-200 mb-0.5">
+            <span class="truncate pr-2">${l.exercise_name}</span>
+            <span class="${painColor} font-bold text-[11px] shrink-0">Dolor: ${l.pain_eva}/10</span>
+          </div>
+          <p class="text-[10px] text-slate-500 truncate">${l.sets} series x ${l.reps} reps • ${dateStr} ${l.notes ? `• "${l.notes}"` : ''}</p>
         </div>
-        <p class="text-[10px] text-slate-500 mt-0.5">${l.sets} series x ${l.reps} reps • ${dateStr} ${l.notes ? `• "${l.notes}"` : ''}</p>
+        <button onclick="deleteExerciseLog(${l.id})" class="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40 rounded transition cursor-pointer shrink-0" title="Eliminar este registro">
+          <i class="fa-solid fa-trash-can text-xs"></i>
+        </button>
       </div>
     `;
   }).join('');
 }
+
+async function deleteExerciseLog(logId) {
+  if (!confirm('¿Deseas eliminar este registro de sesión del historial?')) return;
+  try {
+    await API.deleteLog(logId);
+    showToast("Registro Eliminado", "El registro fue removido del expediente.", "fa-solid fa-trash-can text-red-400");
+    await loadLogsAndProgress();
+  } catch (err) {
+    showToast("Error", "No se pudo eliminar el registro", "fa-solid fa-triangle-exclamation text-amber-400");
+  }
+}
+
 
 // ==========================================
 // 8. REQ 5: SEGUIMIENTO & PROGRESO
@@ -910,21 +942,21 @@ function renderProgressStats(data) {
 // 9. REQ 6: TELECONSULTA & ZOOM API OFICIAL
 // ==========================================
 let currentZoomData = {
-  meetingId: '8594726190',
-  password: 'medico',
-  joinUrl: 'https://zoom.us/j/8594726190?pwd=medico',
-  webClientUrl: 'https://app.zoom.us/wc/8594726190/join?pwd=medico',
-  topic: 'Teleconsulta Fisioterapia - RespiraPlus'
+  meetingId: '79028349537',
+  password: 'F56wad',
+  joinUrl: 'https://us04web.zoom.us/j/79028349537?pwd=pQa0IknWIk1SODliogbGiC7sHaLzHH.1',
+  startUrl: 'https://us04web.zoom.us/s/79028349537',
+  topic: 'Teleconsulta de Fisioterapia & Rehabilitación Pulmonar'
 };
 
 function renderZoomMeetingData(data) {
   if (!data) return;
-  const rawId = String(data.meetingId || data.zoom_meeting_id || data.id || '72019231505');
+  const rawId = String(data.meetingId || data.zoom_meeting_id || data.id || '79028349537');
   const formattedId = rawId.replace(/(\d{3})(\d{3,4})(\d{4})/, '$1 $2 $3');
-  const pwd = data.password || data.zoom_password || 'ehS0E9';
+  const pwd = data.password || data.zoom_password || 'F56wad';
   const topic = data.topic || data.zoom_topic || 'Teleconsulta Oficial RespiraPlus';
-  const joinUrl = data.joinUrl || data.zoom_join_url || data.join_url || `https://zoom.us/j/${rawId}?pwd=${pwd}`;
-  const startUrl = data.startUrl || data.zoom_start_url || data.start_url || `https://zoom.us/s/${rawId}`;
+  const joinUrl = data.joinUrl || data.zoom_join_url || data.join_url || `https://us04web.zoom.us/j/${rawId}?pwd=${pwd}`;
+  const startUrl = data.startUrl || data.zoom_start_url || data.start_url || `https://us04web.zoom.us/s/${rawId}`;
 
   currentZoomData = {
     meetingId: rawId,
@@ -960,6 +992,8 @@ function copyZoomFullInvite() {
 appState.doctors = [];
 appState.agendaCurrentDate = new Date();
 appState.agendaSelectedDoctor = null;
+appState.doctorBlocks = [];
+appState.doctorScheduleEditMode = false;
 
 async function loadDoctorsList() {
   try {
@@ -972,27 +1006,106 @@ async function loadDoctorsList() {
 }
 
 function renderDoctorsDropdowns() {
+  const isDoctorOrAdmin = appState.user && (appState.user.role === 'doctor' || appState.user.role === 'admin');
   const apptSelect = document.getElementById('appt-doctor');
   const agendaSelect = document.getElementById('agenda-doctor-select');
-  if (!appState.doctors || appState.doctors.length === 0) return;
+  const patientSelector = document.getElementById('agenda-patient-selector');
+  const doctorControls = document.getElementById('agenda-doctor-controls');
+  const bookingFormCard = document.getElementById('booking-form-card');
+  const docManagementCard = document.getElementById('doctor-schedule-management-card');
+  const headerPill = document.getElementById('agenda-header-pill');
+  const headerTitle = document.getElementById('agenda-header-title');
+  const headerSub = document.getElementById('agenda-header-subtitle');
+  const apptListTitle = document.getElementById('appointments-list-title');
 
-  const optionsHtml = appState.doctors.map((doc, idx) => {
-    const isDoc = (doc.role || '').toLowerCase() === 'doctor';
-    const prefix = isDoc ? '' : '[Admin] ';
-    const label = `${prefix}${doc.full_name} (${doc.specialty || (isDoc ? 'Especialista Fisiatra' : 'Superintendencia')})`;
-    const isSelected = idx === 0 ? 'selected' : '';
-    return `<option value="${doc.full_name}" data-id="${doc.id}" ${isSelected}>${label}</option>`;
-  }).join('');
-
-  if (apptSelect) apptSelect.innerHTML = optionsHtml;
-  if (agendaSelect) {
-    agendaSelect.innerHTML = optionsHtml;
-    // Set active doctor
-    if (!appState.agendaSelectedDoctor && appState.doctors.length > 0) {
-      appState.agendaSelectedDoctor = appState.doctors[0];
+  if (isDoctorOrAdmin) {
+    // DOCTOR / ADMIN: Hide doctor selector, show personal schedule and assignments
+    if (patientSelector) {
+      patientSelector.classList.add('hidden');
+      patientSelector.style.display = 'none';
     }
+    if (doctorControls) {
+      doctorControls.classList.remove('hidden');
+      doctorControls.style.display = 'flex';
+    }
+    if (bookingFormCard) {
+      bookingFormCard.classList.add('hidden');
+      bookingFormCard.style.display = 'none';
+    }
+    if (docManagementCard) {
+      docManagementCard.classList.remove('hidden');
+      docManagementCard.style.display = 'block';
+    }
+
+    if (headerPill) headerPill.innerHTML = `<i class="fa-solid fa-user-doctor"></i> Mi Agenda Médica & Horarios de Atención`;
+    if (headerTitle) headerTitle.innerText = `Mi Agenda & Asignaciones de Consultas`;
+    if (headerSub) headerSub.innerText = `Visualiza tus pacientes programados y haz clic en los horarios libres para habilitar o bloquear turnos.`;
+    if (apptListTitle) apptListTitle.innerHTML = `<i class="fa-solid fa-clipboard-user text-teal-600"></i> Mis Consultas Asignadas (Pacientes Programados)`;
+
+    appState.agendaSelectedDoctor = {
+      id: appState.user.id,
+      full_name: appState.user.full_name || 'Administrador Maestro',
+      role: appState.user.role,
+      specialty: appState.user.diagnosis || (appState.user.role === 'admin' ? 'Superintendencia y Control Global del Sistema' : 'Especialista en Rehabilitación'),
+      avatar_initials: appState.user.avatar_initials || 'AD'
+    };
+
     updateAgendaDoctorCard();
+    loadScheduleBlocks();
+  } else {
+    // PATIENT: Show doctor picker and booking form
+    if (patientSelector) {
+      patientSelector.classList.remove('hidden');
+      patientSelector.style.display = 'flex';
+    }
+    if (doctorControls) {
+      doctorControls.classList.add('hidden');
+      doctorControls.style.display = 'none';
+    }
+    if (bookingFormCard) {
+      bookingFormCard.classList.remove('hidden');
+      bookingFormCard.style.display = 'block';
+    }
+    if (docManagementCard) {
+      docManagementCard.classList.add('hidden');
+      docManagementCard.style.display = 'none';
+    }
+
+    if (headerPill) headerPill.innerHTML = `<i class="fa-solid fa-calendar-check"></i> Agenda Médica Multi-Especialista`;
+    if (headerTitle) headerTitle.innerText = `Agenda & Disponibilidad de Especialistas`;
+    if (headerSub) headerSub.innerText = `Consulta los horarios libres de cada médico y agenda tu cita con sala de Zoom oficial generada automáticamente.`;
+    if (apptListTitle) apptListTitle.innerHTML = `<i class="fa-solid fa-clipboard-user text-teal-600"></i> Citas Médicas Agendadas & Salas Oficiales de Zoom`;
+
+    if (!appState.doctors || appState.doctors.length === 0) return;
+
+    const optionsHtml = appState.doctors.map((doc, idx) => {
+      const isDoc = (doc.role || '').toLowerCase() === 'doctor';
+      const prefix = isDoc ? '' : '[Admin] ';
+      const label = `${prefix}${doc.full_name} (${doc.specialty || (isDoc ? 'Especialista Fisiatra' : 'Superintendencia')})`;
+      const isSelected = idx === 0 ? 'selected' : '';
+      return `<option value="${doc.full_name}" data-id="${doc.id}" ${isSelected}>${label}</option>`;
+    }).join('');
+
+    if (apptSelect) apptSelect.innerHTML = optionsHtml;
+    if (agendaSelect) {
+      agendaSelect.innerHTML = optionsHtml;
+      if (!appState.agendaSelectedDoctor && appState.doctors.length > 0) {
+        appState.agendaSelectedDoctor = appState.doctors[0];
+      }
+      updateAgendaDoctorCard();
+      loadScheduleBlocks();
+    }
+  }
+}
+
+async function loadScheduleBlocks() {
+  try {
+    const docId = appState.agendaSelectedDoctor ? appState.agendaSelectedDoctor.id : (appState.user ? appState.user.id : 1);
+    const blocks = await API.getScheduleBlocks(docId).catch(() => []);
+    appState.doctorBlocks = blocks || [];
     renderAgendaWeeklyGrid();
+  } catch (e) {
+    console.warn('Error loading schedule blocks:', e);
   }
 }
 
@@ -1001,7 +1114,7 @@ function handleAgendaDoctorSelect(docName) {
   if (found) {
     appState.agendaSelectedDoctor = found;
     updateAgendaDoctorCard();
-    renderAgendaWeeklyGrid();
+    loadScheduleBlocks();
   }
 }
 
@@ -1013,6 +1126,9 @@ function updateAgendaDoctorCard() {
   const name = document.getElementById('agenda-doc-name');
   const badge = document.getElementById('agenda-doc-badge');
   const specialty = document.getElementById('agenda-doc-specialty');
+  const statusBadge = document.getElementById('agenda-doc-status-badge');
+  const subtext = document.getElementById('agenda-doc-subtext');
+  const isDoctorOrAdmin = appState.user && (appState.user.role === 'doctor' || appState.user.role === 'admin');
 
   if (avatar) avatar.innerText = doc.avatar_initials || (doc.role === 'admin' ? 'AD' : 'DR');
   if (name) name.innerText = doc.full_name;
@@ -1025,9 +1141,71 @@ function updateAgendaDoctorCard() {
   }
   if (specialty) specialty.innerText = doc.specialty || (doc.role === 'admin' ? 'Superintendencia y Control Global del Sistema' : 'Especialista en Rehabilitación');
 
+  if (isDoctorOrAdmin) {
+    if (statusBadge) {
+      statusBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-teal-500"></span> Horario Activo: Lun - Sáb`;
+      statusBadge.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300 border border-teal-300 dark:border-teal-800";
+    }
+    if (subtext) subtext.innerText = `Clic en horario libre para Bloquear / Habilitar`;
+  }
+
   // Also sync booking select
   const apptDoc = document.getElementById('appt-doctor');
   if (apptDoc) apptDoc.value = doc.full_name;
+}
+
+function toggleDoctorScheduleEditMode() {
+  appState.doctorScheduleEditMode = !appState.doctorScheduleEditMode;
+  const btnLabel = document.getElementById('btn-edit-schedule-label');
+  const btn = document.getElementById('btn-toggle-edit-schedule');
+
+  if (appState.doctorScheduleEditMode) {
+    if (btnLabel) btnLabel.innerText = 'Finalizar Edición';
+    if (btn) btn.className = 'px-3.5 py-2 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow transition flex items-center gap-2 cursor-pointer animate-pulse';
+    showToast('Modo Edición Activo', 'Haz clic en cualquier horario de la matriz para bloquearlo o habilitarlo.', 'fa-solid fa-sliders text-amber-400');
+  } else {
+    if (btnLabel) btnLabel.innerText = 'Editar Mi Horario';
+    if (btn) btn.className = 'px-3.5 py-2 rounded-lg bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs shadow-sm transition flex items-center gap-2 cursor-pointer';
+    showToast('Horario Guardado', 'Disponibilidad de atención actualizada.', 'fa-solid fa-check text-emerald-400');
+  }
+  renderAgendaWeeklyGrid();
+}
+
+async function handleToggleDoctorBlock(dateStr, timeStr) {
+  const isDoctorOrAdmin = appState.user && (appState.user.role === 'doctor' || appState.user.role === 'admin');
+  if (!isDoctorOrAdmin) return;
+
+  try {
+    const docId = appState.user.id;
+    const res = await API.toggleScheduleBlock({
+      doctor_id: docId,
+      block_date: dateStr,
+      block_time: timeStr
+    });
+
+    if (res.action === 'blocked') {
+      showToast('Horario Bloqueado', `${dateStr} a las ${timeStr} marcado como no disponible.`, 'fa-solid fa-lock text-rose-400');
+    } else {
+      showToast('Horario Habilitado', `${dateStr} a las ${timeStr} disponible para citas.`, 'fa-solid fa-lock-open text-emerald-400');
+    }
+    await loadScheduleBlocks();
+  } catch (err) {
+    showToast('Error', 'No se pudo actualizar el horario', 'fa-solid fa-triangle-exclamation text-amber-400');
+  }
+}
+
+async function resetAllDoctorBlocks() {
+  if (!confirm('¿Deseas restablecer y habilitar todos los horarios como libres?')) return;
+  try {
+    const docId = appState.user.id;
+    for (const b of (appState.doctorBlocks || [])) {
+      await API.toggleScheduleBlock({ doctor_id: docId, block_date: b.block_date, block_time: b.block_time });
+    }
+    showToast('Horarios Restablecidos', 'Todos los turnos semanales están ahora habilitados.', 'fa-solid fa-arrows-rotate text-emerald-400');
+    await loadScheduleBlocks();
+  } catch (e) {
+    showToast('Error', 'No se pudo restablecer los horarios', 'fa-solid fa-triangle-exclamation text-amber-400');
+  }
 }
 
 function navigateAgendaWeek(direction) {
@@ -1115,54 +1293,108 @@ function renderAgendaWeeklyGrid() {
     // 6 Day cells
     days.forEach(d => {
       const dateStr = formatDateISO(d);
-      // Find matching appointment for this doctor and date/time
+      
+      // 1. Check matching appointment
       const appt = (appState.appointments || []).find(a => {
         const matchesDate = a.appointment_date === dateStr;
         const matchesTime = (a.appointment_time || '').startsWith(slot.substring(0, 2));
-        const matchesDoc = !selectedDocName || (a.doctor_name && a.doctor_name.includes(selectedDocName.split(' ')[0]));
+        const matchesDoc = isDoctorOrAdmin || !selectedDocName || (a.doctor_name && a.doctor_name.includes(selectedDocName.split(' ')[0]));
         return matchesDate && matchesTime && matchesDoc;
       });
 
-      if (appt) {
-        const isMine = appt.user_id === currentUserId || isDoctorOrAdmin;
-        const rawId = appt.zoom_meeting_id || currentZoomData.meetingId || '72019231505';
-        const pwd = appt.zoom_password || currentZoomData.password || 'ehS0E9';
-        const joinUrl = appt.zoom_join_url || currentZoomData.joinUrl || `https://zoom.us/j/${rawId}?pwd=${pwd}`;
+      // 2. Check matching schedule block
+      const isBlocked = (appState.doctorBlocks || []).some(b => b.block_date === dateStr && (b.block_time || '').startsWith(slot.substring(0, 2)));
 
-        if (isMine) {
+      if (appt) {
+        const rawId = appt.zoom_meeting_id || currentZoomData.meetingId || '79028349537';
+        const pwd = appt.zoom_password || currentZoomData.password || 'F56wad';
+        const joinUrl = appt.zoom_join_url || currentZoomData.joinUrl || `https://us04web.zoom.us/j/${rawId}?pwd=${pwd}`;
+        const hostUrl = currentZoomData.startUrl || `https://us04web.zoom.us/s/${rawId}`;
+
+        if (isDoctorOrAdmin) {
+          // Doctor / Admin viewing assigned patient appointment
           html += `
-            <div class="p-2 bg-blue-500/10 dark:bg-blue-950/50 border border-blue-400 dark:border-blue-700 rounded-lg flex flex-col justify-between transition hover:shadow-md">
+            <div class="p-2 bg-blue-500/10 dark:bg-blue-950/60 border border-blue-400 dark:border-blue-600 rounded-lg flex flex-col justify-between transition hover:shadow-md">
               <div>
                 <span class="inline-block px-1.5 py-0.5 rounded text-[9px] font-black bg-blue-600 text-white">
-                  ● Cita Zoom
+                  ● Asignado
                 </span>
-                <p class="text-[10px] font-bold text-blue-900 dark:text-blue-200 mt-1 line-clamp-1">
-                  ${isDoctorOrAdmin ? (appt.patient_name || 'Paciente') : 'Tu Consulta'}
+                <p class="text-[10px] font-bold text-blue-950 dark:text-blue-200 mt-1 line-clamp-1" title="${appt.patient_name || 'Paciente'}">
+                  ${appt.patient_name || 'Consulta Médica'}
                 </p>
               </div>
-              <a href="${joinUrl}" target="_blank" rel="noopener noreferrer" class="mt-1.5 py-1 px-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] rounded text-center block transition cursor-pointer">
-                <i class="fa-solid fa-video text-[9px]"></i> Zoom
+              <a href="${hostUrl}" target="_blank" rel="noopener noreferrer" class="mt-1.5 py-1 px-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] rounded text-center block transition cursor-pointer" title="Iniciar como Anfitrión">
+                <i class="fa-solid fa-rocket text-[9px]"></i> Host Zoom
               </a>
             </div>
+          `;
+        } else {
+          // Patient viewing
+          const isMine = appt.user_id === currentUserId;
+          if (isMine) {
+            html += `
+              <div class="p-2 bg-teal-500/10 dark:bg-teal-950/50 border border-teal-400 dark:border-teal-700 rounded-lg flex flex-col justify-between transition hover:shadow-md">
+                <div>
+                  <span class="inline-block px-1.5 py-0.5 rounded text-[9px] font-black bg-teal-600 text-white">
+                    ● Tu Cita
+                  </span>
+                  <p class="text-[10px] font-bold text-teal-900 dark:text-teal-200 mt-1 line-clamp-1">
+                    ${appt.doctor_name.split(' ')[0]}
+                  </p>
+                </div>
+                <a href="${joinUrl}" target="_blank" rel="noopener noreferrer" class="mt-1.5 py-1 px-1.5 bg-teal-600 hover:bg-teal-700 text-white font-bold text-[10px] rounded text-center block transition cursor-pointer">
+                  <i class="fa-solid fa-video text-[9px]"></i> Unirse
+                </a>
+              </div>
+            `;
+          } else {
+            html += `
+              <div class="p-2 bg-slate-100 dark:bg-slate-800/60 border border-slate-300 dark:border-slate-700 rounded-lg flex flex-col items-center justify-center text-center opacity-75">
+                <i class="fa-solid fa-lock text-[10px] text-slate-400 mb-0.5"></i>
+                <span class="text-[10px] font-bold text-slate-500 dark:text-slate-400">Ocupado</span>
+              </div>
+            `;
+          }
+        }
+      } else if (isBlocked) {
+        // Slot is Blocked by Doctor
+        if (isDoctorOrAdmin) {
+          html += `
+            <button type="button" onclick="handleToggleDoctorBlock('${dateStr}', '${slot}')" class="p-2 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-300 dark:border-rose-900/60 rounded-lg flex flex-col items-center justify-center text-center transition cursor-pointer group" title="Horario bloqueado. Clic para habilitar.">
+              <i class="fa-solid fa-ban text-[10px] text-rose-500 group-hover:scale-110 transition-transform"></i>
+              <span class="text-[10px] font-bold text-rose-600 dark:text-rose-400 mt-0.5">Bloqueado</span>
+              <span class="text-[8px] text-rose-400">Habilitar</span>
+            </button>
           `;
         } else {
           html += `
             <div class="p-2 bg-slate-100 dark:bg-slate-800/60 border border-slate-300 dark:border-slate-700 rounded-lg flex flex-col items-center justify-center text-center opacity-75">
               <i class="fa-solid fa-lock text-[10px] text-slate-400 mb-0.5"></i>
-              <span class="text-[10px] font-bold text-slate-500 dark:text-slate-400">Ocupado</span>
+              <span class="text-[10px] font-bold text-slate-500 dark:text-slate-400">No disp.</span>
             </div>
           `;
         }
       } else {
         // Free Slot
-        html += `
-          <button type="button" onclick="selectAgendaSlot('${dateStr}', '${slot}')" class="p-2 bg-emerald-500/5 hover:bg-emerald-500/15 border border-dashed border-emerald-400 dark:border-emerald-600/60 hover:border-emerald-500 rounded-lg flex flex-col items-center justify-center text-center transition group cursor-pointer" title="Agendar en este horario">
-            <span class="text-[10px] font-black text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">
-              <i class="fa-solid fa-plus text-[9px]"></i> Libre
-            </span>
-            <span class="text-[9px] text-emerald-500/80 mt-0.5 font-medium">Reservar</span>
-          </button>
-        `;
+        if (isDoctorOrAdmin) {
+          html += `
+            <button type="button" onclick="handleToggleDoctorBlock('${dateStr}', '${slot}')" class="p-2 bg-emerald-500/5 hover:bg-emerald-500/15 border border-dashed border-emerald-400 dark:border-emerald-600/60 hover:border-emerald-500 rounded-lg flex flex-col items-center justify-center text-center transition group cursor-pointer" title="Horario disponible. Clic para bloquear.">
+              <span class="text-[10px] font-black text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">
+                <i class="fa-solid fa-check text-[9px]"></i> Libre
+              </span>
+              <span class="text-[8px] text-slate-400 mt-0.5 font-medium">Bloquear</span>
+            </button>
+          `;
+        } else {
+          html += `
+            <button type="button" onclick="selectAgendaSlot('${dateStr}', '${slot}')" class="p-2 bg-emerald-500/5 hover:bg-emerald-500/15 border border-dashed border-emerald-400 dark:border-emerald-600/60 hover:border-emerald-500 rounded-lg flex flex-col items-center justify-center text-center transition group cursor-pointer" title="Agendar en este horario">
+              <span class="text-[10px] font-black text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">
+                <i class="fa-solid fa-plus text-[9px]"></i> Libre
+              </span>
+              <span class="text-[9px] text-emerald-500/80 mt-0.5 font-medium">Reservar</span>
+            </button>
+          `;
+        }
       }
     });
   });
@@ -1171,6 +1403,9 @@ function renderAgendaWeeklyGrid() {
 }
 
 function selectAgendaSlot(dateStr, timeStr) {
+  const isDoctorOrAdmin = appState.user && (appState.user.role === 'doctor' || appState.user.role === 'admin');
+  if (isDoctorOrAdmin) return;
+
   const dateInput = document.getElementById('appt-date');
   const timeInput = document.getElementById('appt-time');
   const form = document.getElementById('form-book-appointment');
@@ -1197,7 +1432,7 @@ async function loadAppointments() {
     const list = await API.getAppointments(appState.user.id);
     appState.appointments = list || [];
     renderAppointmentsList();
-    renderAgendaWeeklyGrid();
+    await loadScheduleBlocks();
 
     const role = (appState.user.role || '').toLowerCase();
     if (role === 'admin' || role === 'doctor') {
@@ -1242,10 +1477,10 @@ function renderDoctorCallQueue(queue) {
   container.innerHTML = queue.map(item => {
     const isOnline = item.isOnline;
     const appt = item.appointment || {};
-    const rawId = appt.zoom_meeting_id || currentZoomData.meetingId || '72019231505';
-    const pwd = appt.zoom_password || currentZoomData.password || 'ehS0E9';
-    const joinUrl = appt.zoom_join_url || currentZoomData.joinUrl || `https://zoom.us/j/${rawId}?pwd=${pwd}`;
-    const hostUrl = currentZoomData.startUrl || `https://zoom.us/s/${rawId}`;
+    const rawId = appt.zoom_meeting_id || currentZoomData.meetingId || '79028349537';
+    const pwd = appt.zoom_password || currentZoomData.password || 'F56wad';
+    const joinUrl = appt.zoom_join_url || currentZoomData.joinUrl || `https://us04web.zoom.us/j/${rawId}?pwd=${pwd}`;
+    const hostUrl = currentZoomData.startUrl || `https://us04web.zoom.us/s/${rawId}`;
 
     const statusBadge = isOnline
       ? `<span class="px-2.5 py-1 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> En Línea</span>`
@@ -1315,10 +1550,11 @@ function renderAppointmentsList() {
   }
 
   container.innerHTML = appState.appointments.map(appt => {
-    const rawId = String(appt.zoom_meeting_id || currentZoomData.meetingId || '72019231505');
+    const rawId = String(appt.zoom_meeting_id || currentZoomData.meetingId || '79028349537');
     const formattedId = rawId.replace(/(\d{3})(\d{3,4})(\d{4})/, '$1 $2 $3');
-    const pwd = appt.zoom_password || currentZoomData.password || 'ehS0E9';
-    const joinUrl = appt.zoom_join_url || currentZoomData.joinUrl || `https://zoom.us/j/${rawId}?pwd=${pwd}`;
+    const pwd = appt.zoom_password || currentZoomData.password || 'F56wad';
+    const joinUrl = appt.zoom_join_url || currentZoomData.joinUrl || `https://us04web.zoom.us/j/${rawId}?pwd=${pwd}`;
+
 
     return `
       <div class="p-4 bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 rounded-md flex flex-col md:flex-row md:items-center justify-between gap-3 transition hover:border-blue-300">
@@ -1483,6 +1719,9 @@ function setTelehealthView(view) {
   } else if (view === 'booking') {
     if (vBooking) vBooking.classList.remove('hidden');
     if (bBooking) bBooking.className = "px-3.5 py-1.5 rounded-md bg-teal-600 text-white shadow transition cursor-pointer flex items-center gap-1.5";
+    renderUserProfile();
+    renderDoctorsDropdowns();
+    renderAgendaWeeklyGrid();
   } else {
     // Default: Official Zoom Teleconsultation Room
     if (vZoom) vZoom.classList.remove('hidden');
